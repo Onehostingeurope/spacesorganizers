@@ -81,7 +81,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1.5 }}
+              transition={{ duration: 0.8 }}
               className="absolute inset-0"
             >
               <iframe
@@ -97,7 +97,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1.5 }}
+              transition={{ duration: 0.8 }}
               src={slide.url}
               autoPlay
               muted
@@ -112,7 +112,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               animate={{ opacity: 1, scale: 1.15 }}
               exit={{ opacity: 0, scale: 1.2 }}
               transition={{
-                opacity: { duration: 1.5, ease: "easeOut" },
+                opacity: { duration: 0.8, ease: "easeOut" },
                 scale: { duration: (settings?.autoplay_speed || 15) + 2, ease: "linear" },
               }}
               className="absolute inset-0"
@@ -221,16 +221,18 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
       {/* Progress Indicator */}
       {sorted.length > 1 && (
         <div className="absolute bottom-16 right-24 flex items-end gap-6 z-20">
-           <div className="flex flex-col gap-4">
+           <div className="flex flex-col gap-2">
               {sorted.map((s, i) => (
                 <button
                   key={s.id}
                   onClick={() => setCurrent(i)}
-                  className={`w-1 transition-all duration-700 ${
-                    i === current ? "h-12 bg-primary" : "h-4 bg-outline-variant hover:bg-primary"
-                  }`}
+                  className="px-4 py-2 -mx-4 group cursor-pointer flex items-end justify-center"
                   aria-label={`Go to slide ${i + 1}`}
-                />
+                >
+                  <div className={`w-1 transition-all duration-700 ${
+                    i === current ? "h-12 bg-primary" : "h-4 bg-outline-variant group-hover:bg-primary group-hover:h-6"
+                  }`} />
+                </button>
               ))}
            </div>
            <p className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant vertical-text pb-2 uppercase drop-shadow-sm">
