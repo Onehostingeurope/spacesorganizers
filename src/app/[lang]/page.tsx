@@ -11,6 +11,9 @@ import { FAQAccordion } from "@/components/blocks/FAQAccordion";
 import { CTASection } from "@/components/blocks/CTASection";
 import { ContactForm } from "@/components/blocks/ContactForm";
 import { ServiceCard } from "@/components/blocks/ServiceCard";
+import { ServicesSection } from "@/components/blocks/ServicesSection";
+import { SpacesSection } from "@/components/blocks/SpacesSection";
+import { PortfolioHighlights } from "@/components/blocks/PortfolioHighlights";
 import { Section } from "@/components/ui/Section";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
 import { getCollection } from "@/lib/db";
@@ -26,6 +29,9 @@ export default async function Home({
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
   const heroSlides = await getCollection<any>("hero");
+  const services = await getCollection<any>("services");
+  const spaces = await getCollection<any>("spaces");
+  const portfolio = await getCollection<any>("portfolio");
   
   // Fetch dynamic homepage settings
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -142,10 +148,19 @@ export default async function Home({
           </div>
         </section>
 
+        {/* SERVICES */}
+        <ServicesSection services={services} lang={lang} dict={dict} />
+
+        {/* SPACES */}
+        <SpacesSection spaces={spaces} lang={lang} dict={dict} />
+
         {/* PROCESS */}
-        <section className="bg-surface py-48 md:py-64">
+        <section className="bg-surface py-48 md:py-64 border-y border-outline-variant/10">
           <ProcessSteps dict={dict} />
         </section>
+
+        {/* PORTFOLIO HIGHLIGHTS */}
+        <PortfolioHighlights items={portfolio} lang={lang} dict={dict} />
 
         <Testimonials dict={dict} />
 
