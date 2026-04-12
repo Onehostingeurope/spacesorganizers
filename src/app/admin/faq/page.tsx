@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Heading, Body } from "@/components/ui/Typography";
+import { Button } from "@/components/ui/Button";
 
 export default function FAQAdmin() {
   const [faqs, setFaqs] = useState<any[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
 
   const fetchFaqs = () => fetch("/api/faq").then(res => res.json()).then(setFaqs);
-
   useEffect(() => { fetchFaqs() }, []);
 
   const deleteFaq = async (id: string) => {
@@ -16,14 +17,39 @@ export default function FAQAdmin() {
     }
   };
 
+  const handleAdd = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const newFaq = {
+      question: formData.get("question"),
+      answer: formData.get("answer")
+    };
+
+    await fetch("/api/faq", { method: "POST", body: JSON.stringify(newFaq) });
+    setIsAdding(false);
+    fetchFaqs();
+  };
+
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-5xl pb-24">
        <div className="flex justify-between items-end mb-12 border-b border-charcoal/10 pb-6">
          <div>
            <Heading as="h1" className="text-4xl mb-2">FAQ</Heading>
            <Body className="text-charcoal/60 text-base">Manage frequently asked questions.</Body>
          </div>
+         <Button onClick={() => setIsAdding(!isAdding)} variant="primary" size="sm">
+            {isAdding ? "Cancel" : "Add FAQ"}
+         </Button>
       </div>
+
+      {isAdding && (
+        <form onSubmit={handleAdd} className="bg-charcoal/5 p-8 mb-12 space-y-6">
+           <h3 className="font-serif text-2xl text-charcoal mb-4">Create FAQ</h3>
+           <input required name="question" placeholder="Question" className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none" />
+           <textarea required name="answer" placeholder="Answer" rows={3} className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none resize-none"></textarea>
+           <Button type="submit">Save FAQ</Button>
+        </form>
+      )}
 
       <div className="space-y-4">
         {faqs.map((faq: any) => (
@@ -32,12 +58,7 @@ export default function FAQAdmin() {
               <h3 className="font-serif text-xl text-charcoal mb-2">{faq.question}</h3>
               <p className="font-sans text-sm font-light text-charcoal/70 line-clamp-1">{faq.answer}</p>
             </div>
-            <button 
-               onClick={() => deleteFaq(faq.id)}
-               className="text-red-500/50 hover:text-red-500 text-xs uppercase tracking-widest font-semibold transition-colors opacity-0 group-hover:opacity-100"
-            >
-              Remove
-            </button>
+            <button onClick={() => deleteFaq(faq.id)} className="text-red-500/50 hover:text-red-500 text-xs uppercase tracking-widest font-semibold transition-colors opacity-0 group-hover:opacity-100">Remove</button>
           </div>
         ))}
         {faqs.length === 0 && <p className="text-charcoal/40 font-light italic">No FAQs configured yet.</p>}
