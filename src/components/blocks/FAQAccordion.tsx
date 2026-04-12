@@ -9,11 +9,17 @@ import type { Dictionary } from "@/lib/dictionaries";
 
 interface FAQAccordionProps {
   dict: Dictionary;
+  data?: {
+    label: string;
+    heading: string;
+  };
 }
 
-export function FAQAccordion({ dict }: FAQAccordionProps) {
+export function FAQAccordion({ dict, data }: FAQAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const f = dict.faq;
+  const label = data?.label || dict.faq.label;
+  const heading = data?.heading || dict.faq.heading;
+  const items = dict.faq.items;
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);

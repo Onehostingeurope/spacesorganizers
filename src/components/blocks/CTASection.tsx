@@ -8,20 +8,33 @@ import type { Dictionary } from "@/lib/dictionaries";
 interface CTASectionProps {
   dict: Dictionary;
   lang: string;
+  data?: {
+    label: string;
+    heading: string;
+    description: string;
+  };
 }
 
-export function CTASection({ dict, lang }: CTASectionProps) {
-  const c = dict.cta;
+export function CTASection({ dict, lang, data }: CTASectionProps) {
+  const label = data?.label || dict.cta.label;
+  const heading = data?.heading || dict.cta.heading;
+  const description = data?.description || dict.cta.description;
+
   return (
     <Section className="bg-surface-container-high pt-32 pb-48 text-center">
       <div className="max-w-4xl mx-auto px-6">
-        <Subheading className="mb-6 opacity-60">{c.label}</Subheading>
-        <Heading className="mb-10 text-5xl md:text-6xl tracking-tight leading-[1.1]">
-          {c.heading}
+        <Subheading className="mb-6 opacity-60">{label}</Subheading>
+        <Heading className="mb-8 text-5xl md:text-6xl tracking-tight leading-[1.1]">
+          {heading}
         </Heading>
-        <Link href={`/${lang}/contact`} className="mt-4 block">
+        {description && (
+          <p className="font-body text-on-surface-variant text-lg lg:text-xl font-light italic mb-12 max-w-2xl mx-auto">
+            {description}
+          </p>
+        )}
+        <Link href={`/${lang}/contact`} className="contents">
           <Button size="lg" className="px-16">
-            {c.button}
+            {dict.cta.button}
           </Button>
         </Link>
       </div>

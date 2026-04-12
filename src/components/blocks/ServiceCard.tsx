@@ -36,9 +36,9 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
 
         {/* CTA arrow */}
         <div className="md:w-2/12 flex justify-start md:justify-end items-center mt-2 md:mt-0">
-          <span className="font-label uppercase text-[10px] tracking-[0.3em] font-semibold text-on-surface-variant group-hover:text-primary transition-all duration-500 flex items-center gap-4">
-            Explore
-            <span className="transform translate-x-0 group-hover:translate-x-3 transition-transform duration-700 ease-out text-sm">
+          <span className="font-label uppercase text-[9px] tracking-[0.4em] font-bold text-on-surface-variant group-hover:text-primary transition-all duration-700 flex items-center gap-6">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-700">Explore</span>
+            <span className="transform translate-x-0 group-hover:translate-x-4 transition-transform duration-700 cubic-bezier(0.16, 1, 0.3, 1) text-xl font-light">
               →
             </span>
           </span>

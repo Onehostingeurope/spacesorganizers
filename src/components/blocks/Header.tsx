@@ -50,54 +50,62 @@ export function Header({ dict, lang }: HeaderProps) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out",
         isScrolled
-          ? "bg-surface/90 backdrop-blur-2xl shadow-[0_4px_32px_rgba(56,56,49,0.06)] py-4"
-          : "bg-surface/10 backdrop-blur-sm py-6 md:py-8"
+          ? "glass-premium py-3 translate-y-2 mx-6 rounded-full w-[calc(100%-3rem)]"
+          : "bg-transparent py-8 md:py-12"
       )}
     >
-      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between max-w-[1920px]">
+      <div className="container mx-auto px-10 md:px-16 flex items-center justify-between max-w-[1920px]">
         {/* LOGO */}
         <Link
           href={`/${lang}`}
-          className="font-headline italic text-2xl font-light tracking-tight text-on-surface"
+          className="group flex flex-col font-headline text-2xl font-light tracking-[-0.03em] text-on-surface"
         >
-          Space Organizers
+          <span className="flex items-baseline gap-1">
+             <span className="italic">Space</span> Organizers
+          </span>
+          <span className="font-label text-[7px] tracking-[0.4em] uppercase text-primary -mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+             L'Atelier de la Riviera
+          </span>
         </Link>
 
         {/* DESKTOP NAV */}
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-12">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-xs lg:text-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all duration-300 font-normal"
+              className="group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/80 hover:text-on-surface transition-all duration-300"
             >
-              {link.label}
+              <span className="animate-underline">{link.label}</span>
             </Link>
           ))}
         </nav>
 
         {/* ACTIONS */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-10">
           {/* LANGUAGE SWITCHER */}
-          <div className="hidden lg:flex items-center gap-1 font-label text-[10px] tracking-[0.2em] uppercase">
+          <div className="hidden lg:flex items-center gap-3 font-label text-[9px] tracking-[0.2em] uppercase">
             {LOCALES.map((l, i) => (
               <React.Fragment key={l}>
-                {i > 0 && (
-                  <span className="text-outline-variant/40 select-none">|</span>
-                )}
                 <button
                   onClick={() => switchLanguage(l)}
                   disabled={isPending}
                   className={cn(
-                    "px-1 py-0.5 transition-all duration-200 rounded-sm",
+                    "px-1 py-0.5 transition-all duration-500 rounded-sm relative group",
                     l === lang
-                      ? "text-primary font-semibold"
-                      : "text-on-surface-variant/50 hover:text-on-surface-variant"
+                      ? "text-primary font-bold"
+                      : "text-on-surface-variant/40 hover:text-on-surface"
                   )}
                 >
                   {l.toUpperCase()}
+                  {l === lang && (
+                    <motion.div 
+                      layoutId="activeLang"
+                      className="absolute -bottom-1 left-0 right-0 h-[1px] bg-primary" 
+                    />
+                  )}
                 </button>
               </React.Fragment>
             ))}
@@ -106,19 +114,19 @@ export function Header({ dict, lang }: HeaderProps) {
           {/* BOOK BUTTON */}
           <div className="hidden md:block">
             <Link href={`/${lang}/contact`}>
-              <Button className="scale-[0.99] active:scale-100 transition-transform bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary-dim shadow-sm">
+              <button className="bg-primary text-on-primary px-8 py-3.5 text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-on-surface hover:text-surface transition-all duration-500 shadow-premium">
                 {dict.nav.cta}
-              </Button>
+              </button>
             </Link>
           </div>
 
           {/* MOBILE TOGGLE */}
           <button
-            className="md:hidden text-on-surface focus:outline-none"
+            className="md:hidden text-on-surface focus:outline-none p-2 hover:bg-primary/5 rounded-full transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
           </button>
         </div>
       </div>

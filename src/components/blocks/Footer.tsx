@@ -7,6 +7,10 @@ const SERVING = ["Monaco", "Cannes", "Nice", "Antibes", "Menton"];
 interface FooterProps {
   dict: Dictionary;
   lang: string;
+  contact?: {
+    email: string;
+    phone: string;
+  };
 }
 
 const FOOTER_LINKS = (lang: string) => [
@@ -17,8 +21,11 @@ const FOOTER_LINKS = (lang: string) => [
   { label: "Contact", href: `/${lang}/contact` },
 ];
 
-export function Footer({ dict, lang }: FooterProps) {
+export function Footer({ dict, lang, contact }: FooterProps) {
   const f = dict.footer;
+  const email = contact?.email || "hello@spaceorganizing.com";
+  const phone = contact?.phone || "+33 (0) 6 40 60 81 20";
+  const safePhone = phone.replace(/[^0-9+]/g, "");
 
   return (
     <footer className="w-full bg-surface-container border-t border-outline-variant/10">
@@ -60,10 +67,10 @@ export function Footer({ dict, lang }: FooterProps) {
               {f.contact_label}
             </p>
             <div className="space-y-3 font-body text-sm text-on-surface-variant font-light">
-              <p>hello@spaceorganizing.com</p>
-              <p>+33 (0) 6 40 60 81 20</p>
+              <p>{email}</p>
+              <p>{phone}</p>
               <a
-                href="https://wa.me/33640608120"
+                href={`https://wa.me/${safePhone}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 hover:text-primary transition-colors"

@@ -6,11 +6,17 @@ interface PortfolioHighlightsProps {
   items: any[];
   lang: string;
   dict: any;
+  data?: {
+    label: string;
+    heading: string;
+  };
 }
 
-export function PortfolioHighlights({ items, lang, dict }: PortfolioHighlightsProps) {
+export function PortfolioHighlights({ items, lang, dict, data }: PortfolioHighlightsProps) {
   // Show 4 latest projects
   const highlights = items.slice(0, 4);
+  const label = data?.label || dict.nav.portfolio;
+  const heading = data?.heading || "Selected transformations";
 
   return (
     <section className="bg-surface py-40 px-6 md:px-24 border-t border-outline-variant/10">
@@ -18,11 +24,10 @@ export function PortfolioHighlights({ items, lang, dict }: PortfolioHighlightsPr
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
           <div>
             <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-4 block">
-              {dict.nav.portfolio}
+              {label}
             </span>
             <h3 className="font-headline text-5xl md:text-7xl text-on-surface leading-tight font-light">
-              Featured <br />
-              <span className="italic text-primary">Case Studies</span>
+              {heading}
             </h3>
           </div>
           <Link

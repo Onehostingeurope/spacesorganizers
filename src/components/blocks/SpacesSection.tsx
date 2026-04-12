@@ -6,11 +6,17 @@ interface SpacesSectionProps {
   spaces: any[];
   lang: string;
   dict: any;
+  data?: {
+    label: string;
+    heading: string;
+  };
 }
 
-export function SpacesSection({ spaces, lang, dict }: SpacesSectionProps) {
+export function SpacesSection({ spaces, lang, dict, data }: SpacesSectionProps) {
   // Only show first 3 for homepage impact
   const displaySpaces = spaces.slice(0, 3);
+  const label = data?.label || dict.nav.riviera;
+  const heading = data?.heading || "Tailored to your lifestyle";
 
   return (
     <section className="bg-surface-container py-32 px-6 md:px-24">
@@ -18,11 +24,10 @@ export function SpacesSection({ spaces, lang, dict }: SpacesSectionProps) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
           <div className="max-w-2xl">
             <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-4 block">
-              {dict.nav.riviera}
+              {label}
             </span>
             <h3 className="font-headline text-5xl md:text-7xl text-on-surface leading-tight font-light">
-              Transforming <br />
-              <span className="italic">Every Environment</span>
+              {heading}
             </h3>
           </div>
           <p className="font-body text-on-surface-variant max-w-sm italic text-lg opacity-70">

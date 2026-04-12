@@ -6,19 +6,28 @@ interface ServicesSectionProps {
   services: any[];
   lang: string;
   dict: any;
+  data?: {
+    label: string;
+    heading: string;
+    heading_accent: string;
+  };
 }
 
-export function ServicesSection({ services, lang, dict }: ServicesSectionProps) {
+export function ServicesSection({ services, lang, dict, data }: ServicesSectionProps) {
+  const label = data?.label || dict.nav.services;
+  const heading = data?.heading || "Luxury Solutions for";
+  const accent = data?.heading_accent || "Every Requirement";
+
   return (
     <section className="bg-surface py-32 px-6 md:px-24">
       <div className="max-w-[1920px] mx-auto">
         <div className="mb-20">
           <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-4 block">
-            {dict.nav.services}
+            {label}
           </span>
           <h3 className="font-headline text-5xl md:text-7xl text-on-surface leading-tight font-light">
-            Luxury Solutions for <br />
-            <span className="italic">Every Requirement</span>
+            {heading} <br />
+            <span className="italic">{accent}</span>
           </h3>
         </div>
 

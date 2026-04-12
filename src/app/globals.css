@@ -96,19 +96,60 @@
   .editorial-gradient {
     background: linear-gradient(
       to right,
-      rgba(255, 252, 247, 0.92) 0%,
-      rgba(255, 252, 247, 0.72) 45%,
+      rgba(255, 252, 247, 0.98) 0%,
+      rgba(255, 252, 247, 0.85) 30%,
+      rgba(255, 252, 247, 0.4) 60%,
       rgba(255, 252, 247, 0) 100%
     );
   }
 
-  /* Frosted glass — sticky header & overlays */
-  .frosted-bg {
-    @apply backdrop-blur-2xl bg-surface-bright/90;
+  /* Frosted glass — multi-tier precision */
+  .glass-premium {
+    @apply backdrop-blur-2xl bg-surface/80 border border-outline-variant/10;
+    box-shadow: 0 4px 30px rgba(56, 56, 49, 0.03);
   }
 
-  /* Ghost border — barely visible 15% outline-variant for accessibility fallback */
+  .glass-floating {
+    @apply backdrop-blur-3xl bg-surface-bright/70 border border-outline-variant/20 shadow-lg;
+  }
+
+  /* Typography Reveal Mask */
+  .reveal-mask {
+    mask-image: linear-gradient(to right, black 50%, transparent 100%);
+    mask-size: 200% 100%;
+    mask-position: right bottom;
+    transition: mask-position 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-mask:hover, .reveal-active {
+    mask-position: left bottom;
+  }
+
+  /* Ghost border — barely visible 15% outline-variant */
   .ghost-border {
     border: 1px solid rgba(186, 186, 176, 0.15);
+  }
+
+  /* Premium Underline */
+  .animate-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .animate-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--color-primary);
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .animate-underline:hover::after {
+    width: 100%;
+  }
+
+  /* High-end ambient shadows */
+  .shadow-premium {
+     box-shadow: 0 10px 50px -10px rgba(56, 56, 49, 0.12);
   }
 }
