@@ -141,7 +141,7 @@ export default function ServicesAdmin() {
   const [lang, setLang] = useState("en");
 
   const fetch_ = () => fetch(`/api/services?lang=${lang}`).then((r) => r.json()).then(setServices);
-  useEffect(() => { fetch_(); }, [lang]);
+  useEffect(() => { fetch_(); }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleAdd = async (data: Partial<Service>) => {
     setSaving(true);
