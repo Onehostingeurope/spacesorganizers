@@ -254,5 +254,3 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     </section>
   );
 }
-  );
-}

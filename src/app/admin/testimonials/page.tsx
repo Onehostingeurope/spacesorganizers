@@ -114,7 +114,7 @@ export default function TestimonialsAdmin() {
                 </div>
                 <div className="flex gap-3">
                   <Button type="submit">Update Testimonial</Button>
-                  <Button type="button" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
+                  <Button type="button" variant="secondary" onClick={() => setEditingId(null)}>Cancel</Button>
                 </div>
               </form>
             ) : (

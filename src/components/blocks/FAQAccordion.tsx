@@ -29,14 +29,14 @@ export function FAQAccordion({ dict, data }: FAQAccordionProps) {
     <Section className="bg-surface-container/30" id="faq">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-24">
-          <Subheading className="mb-4 opacity-70">{f.label}</Subheading>
+          <Subheading className="mb-4 opacity-70">{label}</Subheading>
           <Heading className="text-5xl md:text-6xl tracking-tight font-light italic">
-            {f.heading}
+            {heading}
           </Heading>
         </div>
 
         <div className="space-y-4">
-          {f.items.map((faq: { q: string; a: string }, index: number) => {
+          {items.map((faq: { q: string; a: string }, index: number) => {
             const isOpen = openIndex === index;
             return (
               <div

@@ -11,14 +11,14 @@ interface CTASectionProps {
   data?: {
     label: string;
     heading: string;
-    description: string;
+    description?: string;
   };
 }
 
 export function CTASection({ dict, lang, data }: CTASectionProps) {
   const label = data?.label || dict.cta.label;
   const heading = data?.heading || dict.cta.heading;
-  const description = data?.description || dict.cta.description;
+  const description = data?.description || "";
 
   return (
     <Section className="bg-surface-container-high pt-32 pb-48 text-center">

@@ -15,16 +15,20 @@ export function UploadZone({
   onUploaded,
   accept = "image/*,video/mp4,video/webm",
   label = "Upload File",
+  value,
+  h,
 }: {
   onUploaded: (url: string, type: UploadedType) => void;
   accept?: string;
   label?: string;
+  value?: string;
+  h?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [uploaded, setUploaded] = useState<string | null>(null);
+  const [uploaded, setUploaded] = useState<string | null>(value || null);
 
   const upload = useCallback(
     async (file: File) => {
@@ -105,6 +109,7 @@ export function UploadZone({
         className={`
           relative cursor-pointer border-2 border-dashed rounded-DEFAULT transition-all
           flex flex-col items-center justify-center gap-3 py-10 px-6 text-center
+          ${h || ""}
           ${
             dragging
               ? "border-primary bg-primary/5 scale-[1.01]"
@@ -121,7 +126,7 @@ export function UploadZone({
         />
 
         {progress !== null ? (
-          <div className="w-full max-w-xs">
+          <div className="w-full max-w-xs px-10">
             <p className="font-label text-xs text-on-surface-variant mb-3">
               {progress < 100 ? `Uploading… ${progress}%` : "Processing…"}
             </p>
@@ -133,11 +138,18 @@ export function UploadZone({
             </div>
           </div>
         ) : uploaded ? (
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-primary text-2xl">✓</span>
-            <p className="font-label text-xs text-primary tracking-[0.15em] uppercase">
-              Uploaded successfully
-            </p>
+          <div className="flex flex-col items-center gap-4 w-full h-full relative group">
+            <img 
+              src={uploaded} 
+              alt="Preview" 
+              className="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40 transition-opacity" 
+            />
+            <div className="z-10 bg-surface/80 p-4 rounded-full shadow-lg flex flex-col items-center gap-1">
+              <span className="text-primary text-xl">✓</span>
+              <p className="font-label text-[9px] text-primary tracking-[0.2em] uppercase font-bold">
+                Replace File
+              </p>
+            </div>
             <button
               type="button"
               onClick={(e) => {
@@ -145,9 +157,9 @@ export function UploadZone({
                 setUploaded(null);
                 setProgress(null);
               }}
-              className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant/50 hover:text-on-surface-variant underline"
+              className="z-10 absolute bottom-4 font-label text-[10px] uppercase tracking-widest text-on-surface-variant/50 hover:text-red-400 underline transition-colors"
             >
-              Upload another
+              Remove
             </button>
           </div>
         ) : (

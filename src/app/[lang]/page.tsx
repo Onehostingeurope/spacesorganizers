@@ -97,7 +97,6 @@ export default async function Home({
     cta: {
       label: homepageSettings?.cta_label || dict.cta.label,
       heading: homepageSettings?.cta_heading || dict.cta.heading,
-      description: homepageSettings?.cta_desc || dict.cta.description,
     },
     contact: {
       heading: homepageSettings?.contact_heading || dict.contact.heading,
@@ -262,9 +261,6 @@ export default async function Home({
         </Section>
       </main>
       <Footer dict={dict} lang={lang} contact={content.contact} />
-    </>
-  );
-}
     </>
   );
 }
