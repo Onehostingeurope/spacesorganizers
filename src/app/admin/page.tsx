@@ -45,6 +45,24 @@ export default function AdminDashboard() {
           <span className="font-serif text-5xl text-charcoal">{stats.portfolio}</span>
         </div>
       </div>
+
+      <div className="mt-12 bg-softwhite border border-charcoal/10 overflow-hidden shadow-sm rounded-DEFAULT">
+        <div className="bg-charcoal/5 px-6 py-4 border-b border-charcoal/10 flex items-center justify-between">
+          <span className="text-xs uppercase tracking-widest font-semibold text-charcoal/60">Operational Calendar</span>
+          <span className="text-[10px] text-charcoal/40 italic">Syncing with calendar.bedokurova@gmail.com</span>
+        </div>
+        <div className="p-0">
+          <iframe 
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FParis&showPrint=0&showCalendars=0&showTz=0&mode=WEEK&src=Y2FsZW5kYXIuYmVkb2t1cm92YUBnbWFpbC5jb20" 
+            style={{ border: 0 }} 
+            width="100%" 
+            height="600" 
+            frameBorder="0" 
+            scrolling="no"
+            title="Admin Calendar Overview"
+          ></iframe>
+        </div>
+      </div>
     </div>
   );
 }
