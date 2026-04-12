@@ -18,7 +18,7 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
         {/* Index + Title */}
         <div className="md:w-5/12 flex items-start gap-6">
           {index !== undefined && (
-            <span className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant/40 pt-2 flex-shrink-0">
+            <span className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant pt-2 flex-shrink-0">
               0{index + 1}
             </span>
           )}
@@ -29,7 +29,7 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
 
         {/* Description */}
         <div className="md:w-5/12">
-          <p className="font-body text-on-surface-variant text-base lg:text-lg leading-relaxed font-light italic opacity-75 group-hover:opacity-100 transition-opacity duration-500">
+          <p className="font-body text-on-surface-variant text-base lg:text-lg leading-relaxed font-light italic">
             {description}
           </p>
         </div>

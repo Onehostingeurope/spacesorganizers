@@ -236,13 +236,14 @@ function HeroSettingsEditor() {
     try {
       const res = await fetch(`/api/hero-settings?lang=${l}`);
       const data = await res.json();
+      const rawSpeed = data.autoplay_speed || 15;
       setSettings({
         region: data.region || "",
         title: data.title || "",
         subtitle: data.subtitle || "",
         description: data.description || "",
-        autoplay_speed: data.autoplay_speed || 15,
-        overlay_opacity: data.overlay_opacity ?? 40,
+        autoplay_speed: Math.min(30, Math.max(5, rawSpeed)),
+        overlay_opacity: Math.min(100, Math.max(0, data.overlay_opacity ?? 40)),
         overlay_style: data.overlay_style || "dark",
       });
     } catch (err) {
@@ -417,13 +418,23 @@ function HeroSettingsEditor() {
 function ReorderSlideItem({ 
   slide, 
   onEdit, 
-  onDelete, 
-  isEditing 
+  onDelete,
+  onConfirmDelete,
+  onCancelDelete,
+  isEditing,
+  isSelected,
+  onToggle,
+  isConfirming,
 }: { 
   slide: Slide; 
   onEdit: () => void; 
   onDelete: () => void;
+  onConfirmDelete: () => void;
+  onCancelDelete: () => void;
   isEditing: boolean;
+  isSelected: boolean;
+  onToggle: () => void;
+  isConfirming: boolean;
 }) {
   const controls = useDragControls();
 
@@ -432,9 +443,19 @@ function ReorderSlideItem({
       value={slide}
       dragListener={false}
       dragControls={controls}
-      className={`bg-surface ghost-border rounded-DEFAULT overflow-hidden transition-shadow ${isEditing ? "mb-8 ring-1 ring-primary/20" : ""}`}
+      className={`bg-surface ghost-border rounded-DEFAULT overflow-hidden transition-shadow ${isEditing ? "mb-8 ring-1 ring-primary/20" : ""} ${isSelected ? "ring-1 ring-primary" : ""}`}
     >
       <div className="flex gap-5 items-center p-4">
+        {/* Checkbox */}
+        <div className="flex-shrink-0 pl-1">
+          <input 
+            type="checkbox" 
+            checked={isSelected}
+            onChange={onToggle}
+            className="w-4 h-4 rounded border-outline-variant/30 text-primary focus:ring-primary bg-transparent cursor-pointer"
+          />
+        </div>
+
         {/* Handle */}
         <div 
           className="cursor-grab active:cursor-grabbing p-2 text-on-surface-variant/30 hover:text-primary transition-colors"
@@ -474,12 +495,19 @@ function ReorderSlideItem({
           >
             Edit
           </button>
-          <button
-            onClick={onDelete}
-            className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors"
-          >
-            Delete
-          </button>
+          {isConfirming ? (
+            <span className="flex flex-col gap-1 items-end">
+              <button onClick={onConfirmDelete} className="text-xs uppercase tracking-widest font-semibold text-white bg-red-500 px-3 py-1 hover:bg-red-600 transition-colors">Confirm?</button>
+              <button onClick={onCancelDelete} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-on-surface transition-colors">Cancel</button>
+            </span>
+          ) : (
+            <button
+              onClick={onDelete}
+              className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </Reorder.Item>
@@ -492,6 +520,8 @@ export default function HeroAdmin() {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [confirmingId, setConfirmingId] = useState<string | null>(null);
 
   const fetchSlides = () =>
     fetch("/api/hero")
@@ -525,7 +555,11 @@ export default function HeroAdmin() {
 
   const handleAdd = async (data: Partial<Slide>) => {
     setSaving(true);
-    await fetch("/api/hero", { method: "POST", body: JSON.stringify(data) });
+    await fetch("/api/hero", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
     setIsAdding(false);
     await fetchSlides();
     setSaving(false);
@@ -535,6 +569,7 @@ export default function HeroAdmin() {
     setSaving(true);
     await fetch(`/api/hero/${id}`, {
       method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...data, order: Number(data.order ?? 1) }),
     });
     setEditingId(null);
@@ -543,9 +578,33 @@ export default function HeroAdmin() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this slide?")) return;
     await fetch(`/api/hero/${id}`, { method: "DELETE" });
+    setConfirmingId(null);
     fetchSlides();
+  };
+
+  const handleBulkDelete = async () => {
+    setSaving(true);
+    await fetch("/api/hero", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids: selectedIds }),
+    });
+    setSelectedIds([]);
+    await fetchSlides();
+    setSaving(false);
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === slides.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(slides.map(s => s.id));
+    }
   };
 
   const nextOrder = slides.length + 1;
@@ -560,16 +619,39 @@ export default function HeroAdmin() {
             Drag slides to reorder, or upload new imagery and video for the homepage.
           </p>
         </div>
-        <button
-          onClick={() => {
-            setIsAdding(!isAdding);
-            setEditingId(null);
-          }}
-          className="bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all"
-        >
-          {isAdding ? "Cancel" : "+ Add Slide"}
-        </button>
+        <div className="flex gap-4">
+          <button 
+            onClick={handleSelectAll} 
+            className="text-[10px] uppercase tracking-[0.2em] font-semibold font-label py-3 px-4 rounded-sm border border-outline-variant/30 hover:border-on-surface-variant transition-all"
+          >
+            {selectedIds.length === slides.length && slides.length > 0 ? "Deselect All" : "Select All"}
+          </button>
+          <button
+            onClick={() => {
+              setIsAdding(!isAdding);
+              setEditingId(null);
+            }}
+            className="bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all"
+          >
+            {isAdding ? "Cancel" : "+ Add Slide"}
+          </button>
+        </div>
       </div>
+
+      {selectedIds.length > 0 && (
+        <div className="bg-red-500/10 border border-red-500/20 p-4 mb-8 flex items-center justify-between rounded-DEFAULT">
+          <span className="text-sm font-medium text-red-400">
+            {selectedIds.length} slides selected
+          </span>
+          <button 
+            onClick={handleBulkDelete}
+            disabled={saving}
+            className="bg-red-500 text-white px-4 py-2 text-[10px] uppercase tracking-widest font-bold hover:bg-red-600 transition-all disabled:opacity-50"
+          >
+            Delete Selected
+          </button>
+        </div>
+      )}
 
       {/* Settings Editor */}
       <HeroSettingsEditor />
@@ -613,9 +695,14 @@ export default function HeroAdmin() {
             ) : (
               <ReorderSlideItem 
                 slide={slide} 
-                onEdit={() => { setEditingId(slide.id); setIsAdding(false); }}
-                onDelete={() => handleDelete(slide.id)}
+                onEdit={() => { setEditingId(slide.id); setIsAdding(false); setConfirmingId(null); }}
+                onDelete={() => setConfirmingId(slide.id)}
+                onConfirmDelete={() => handleDelete(slide.id)}
+                onCancelDelete={() => setConfirmingId(null)}
                 isEditing={editingId === slide.id}
+                isSelected={selectedIds.includes(slide.id)}
+                onToggle={() => toggleSelect(slide.id)}
+                isConfirming={confirmingId === slide.id}
               />
             )}
           </React.Fragment>

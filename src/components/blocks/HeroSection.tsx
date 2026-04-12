@@ -109,16 +109,12 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             <motion.div
               key={slide?.id ?? "default"}
               initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ 
-                opacity: 1, 
-                scale: [1.05, 1.15],
-                transition: { 
-                  duration: (settings?.autoplay_speed || 15) + 2, 
-                  ease: "linear" 
-                }
+              animate={{ opacity: 1, scale: 1.15 }}
+              exit={{ opacity: 0, scale: 1.2 }}
+              transition={{
+                opacity: { duration: 1.5, ease: "easeOut" },
+                scale: { duration: (settings?.autoplay_speed || 15) + 2, ease: "linear" },
               }}
-              exit={{ opacity: 0, scale: 1.25 }}
-              transition={{ duration: 2 }}
               className="absolute inset-0"
             >
               {slide?.url ? (
@@ -126,6 +122,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                 <img
                   src={slide.url}
                   alt={slide.alt ?? "Space Organizers"}
+                  sizes="100vw"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (
@@ -135,6 +132,19 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           )}
         </AnimatePresence>
 
+        {/* Dynamic overlay — controlled by admin hero settings */}
+        <div
+          className="absolute inset-0 z-[1] transition-all duration-700"
+          style={{
+            background:
+              content.overlayStyle === "light"
+                ? `rgba(255,252,247,${content.overlayOpacity / 100})`
+                : `rgba(20,18,14,${content.overlayOpacity / 100})`,
+          }}
+        />
+
+        {/* Left-side text backing — ensures dark text is readable over any photo */}
+        <div className="absolute inset-0 z-[2] bg-gradient-to-r from-surface/85 via-surface/50 to-transparent pointer-events-none" />
       </div>
       
       {/* Hero Content — Editorial Layout */}
@@ -149,7 +159,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             className="flex items-center gap-6"
           >
             <div className="w-8 h-[1px] bg-primary/30" />
-            <span className="font-label text-[10px] tracking-[0.5em] uppercase text-primary/60 font-medium">
+            <span className="font-label text-[10px] tracking-[0.5em] uppercase text-primary font-medium">
               {content.region}
             </span>
             <div className="w-8 h-[1px] bg-primary/30" />
@@ -180,14 +190,14 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               <h2 className="font-headline text-xl md:text-3xl text-primary italic font-light leading-relaxed mb-4 drop-shadow-sm">
                 {content.subtitle}
               </h2>
-              <div className="w-16 h-[2px] bg-outline-variant/30" />
+              <div className="w-16 h-[2px] bg-outline-variant" />
             </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.9 }}
-              className="font-body text-sm md:text-lg text-on-surface-variant/80 leading-loose max-w-sm font-light drop-shadow-sm"
+              className="font-body text-sm md:text-lg text-on-surface leading-loose max-w-sm font-light drop-shadow-sm"
             >
               {content.description}
             </motion.p>
@@ -211,9 +221,9 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               href="https://wa.me/33640608120"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 py-4 text-xs tracking-[0.2em] font-bold uppercase text-on-surface-variant hover:text-primary transition-all duration-300"
+              className="group flex items-center gap-4 py-4 text-xs tracking-[0.2em] font-bold uppercase text-on-surface hover:text-primary transition-all duration-300"
             >
-              <span className="w-10 h-[10px] flex items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
+              <span className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
                 <span className="material-symbols-outlined text-[14px]">chat</span>
               </span>
               {h.cta_whatsapp}
@@ -231,13 +241,13 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                   key={s.id}
                   onClick={() => setCurrent(i)}
                   className={`w-1 transition-all duration-700 ${
-                    i === current ? "h-12 bg-primary" : "h-4 bg-outline-variant/30 hover:bg-primary/40"
+                    i === current ? "h-12 bg-primary" : "h-4 bg-outline-variant hover:bg-primary"
                   }`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
            </div>
-           <p className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant/40 vertical-text pb-2 uppercase drop-shadow-sm">
+           <p className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant vertical-text pb-2 uppercase drop-shadow-sm">
               0{current + 1} / 0{sorted.length}
            </p>
         </div>
@@ -250,7 +260,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
         transition={{ duration: 1.5, delay: 2.2 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10"
       >
-        <div className="w-[18px] h-[30px] border-2 border-primary/40 rounded-full flex justify-center p-1 shadow-sm">
+        <div className="w-[18px] h-[30px] border-2 border-primary rounded-full flex justify-center p-1 shadow-sm">
           <motion.div 
             animate={{ 
               y: [0, 8, 0],
@@ -264,7 +274,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             className="w-1 h-2 bg-primary rounded-full"
           />
         </div>
-        <span className="font-label text-[8px] tracking-[0.5em] uppercase text-primary/60 vertical-text whitespace-nowrap drop-shadow-sm">
+        <span className="font-label text-[8px] tracking-[0.5em] uppercase text-primary vertical-text whitespace-nowrap drop-shadow-sm">
            Scroll
         </span>
       </motion.div>

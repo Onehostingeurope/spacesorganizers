@@ -78,7 +78,7 @@ export function Header({ dict, lang }: HeaderProps) {
               key={link.href}
               href={link.href}
               className={cn(
-                "group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/80 hover:text-on-surface transition-all duration-300",
+                "group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant hover:text-on-surface transition-all duration-300",
                 !isScrolled && "drop-shadow-sm"
               )}
             >
@@ -100,7 +100,7 @@ export function Header({ dict, lang }: HeaderProps) {
                     "px-1 py-0.5 transition-all duration-500 rounded-sm relative group",
                     l === lang
                       ? "text-primary font-bold"
-                      : "text-on-surface-variant/40 hover:text-on-surface"
+                      : "text-on-surface-variant hover:text-on-surface"
                   )}
                 >
                   {l.toUpperCase()}
@@ -160,7 +160,7 @@ export function Header({ dict, lang }: HeaderProps) {
                 }}
                 className={cn(
                   "font-label text-xs tracking-[0.2em] uppercase transition-colors",
-                  l === lang ? "text-primary font-semibold" : "text-on-surface-variant/60"
+                  l === lang ? "text-primary font-semibold" : "text-on-surface-variant hover:text-on-surface"
                 )}
               >
                 {l.toUpperCase()}

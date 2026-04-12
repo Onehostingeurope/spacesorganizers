@@ -18,7 +18,7 @@ export default async function Blog({
   if (!hasLocale(lang)) notFound();
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
-  const articles = await getCollection<any>("blog");
+  const articles = await getCollection<any>("blog", lang);
 
   return (
     <>
@@ -26,7 +26,7 @@ export default async function Blog({
       <main className="flex-1 pt-24">
         <Section className="bg-surface text-center pb-20 border-b border-outline-variant/10">
           <div className="max-w-3xl mx-auto px-6">
-            <Subheading className="mb-4 opacity-70">The Journal</Subheading>
+            <Subheading className="mb-4">The Journal</Subheading>
             <Heading as="h1" className="mb-6 font-light">
               Insights &amp; Inspiration
             </Heading>
@@ -48,7 +48,7 @@ export default async function Blog({
                     {article.category}
                   </span>
                   {article.date && (
-                    <span className="font-label text-xs text-on-surface-variant/60">
+                    <span className="font-label text-xs text-on-surface-variant">
                       {article.date}
                     </span>
                   )}

@@ -30,7 +30,7 @@ export function SpacesSection({ spaces, lang, dict, data }: SpacesSectionProps) 
               {heading}
             </h3>
           </div>
-          <p className="font-body text-on-surface-variant max-w-sm italic text-lg opacity-70">
+          <p className="font-body text-on-surface-variant max-w-sm italic text-lg">
             From professional kitchens to personalized walk-in closets, we craft order in every corner.
           </p>
         </div>
@@ -44,6 +44,7 @@ export function SpacesSection({ spaces, lang, dict, data }: SpacesSectionProps) 
                     src={space.image}
                     alt={space.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-[2s] group-hover:scale-110"
                   />
                 )}
@@ -54,7 +55,7 @@ export function SpacesSection({ spaces, lang, dict, data }: SpacesSectionProps) 
                 <h4 className="font-headline text-3xl mb-4 font-light text-on-surface group-hover:text-primary transition-colors">
                   {space.title}
                 </h4>
-                <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-6 opacity-80 group-hover:opacity-100 transition-opacity">
+                <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-6">
                    {space.description}
                 </p>
                 <Link

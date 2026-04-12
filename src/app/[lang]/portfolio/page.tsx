@@ -18,7 +18,7 @@ export default async function Portfolio({
   if (!hasLocale(lang)) notFound();
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
-  const items = await getCollection<any>("portfolio");
+  const items = await getCollection<any>("portfolio", lang);
 
   return (
     <>

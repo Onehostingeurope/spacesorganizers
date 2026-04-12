@@ -29,7 +29,7 @@ export function FAQAccordion({ dict, data }: FAQAccordionProps) {
     <Section className="bg-surface-container/30" id="faq">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-24">
-          <Subheading className="mb-4 opacity-70">{label}</Subheading>
+          <Subheading className="mb-4">{label}</Subheading>
           <Heading className="text-5xl md:text-6xl tracking-tight font-light italic">
             {heading}
           </Heading>

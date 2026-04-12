@@ -42,7 +42,7 @@ export function Footer({ dict, lang, contact }: FooterProps) {
             <p className="font-label text-[10px] tracking-[0.25em] uppercase text-on-surface-variant mb-6">
               {f.tagline}
             </p>
-            <p className="font-body text-sm text-on-surface-variant leading-relaxed font-light">
+            <p className="font-body text-sm text-on-surface leading-relaxed font-light">
               {f.description}
             </p>
           </div>
@@ -89,7 +89,7 @@ export function Footer({ dict, lang, contact }: FooterProps) {
 
         {/* Bottom row */}
         <div className="border-t border-outline-variant/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant opacity-60">
+          <p className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant">
             © {new Date().getFullYear()} Space Organizers. {f.copyright} Design by{" "}
             <a href="https://onehostingeurope.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity underline-offset-2">
               OneHostingEurope
@@ -100,7 +100,7 @@ export function Footer({ dict, lang, contact }: FooterProps) {
               <Link
                 key={link.label}
                 href={link.href}
-                className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant hover:text-on-surface transition-colors duration-300 opacity-70 hover:opacity-100"
+                className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant hover:text-on-surface transition-colors duration-300"
               >
                 {link.label}
               </Link>

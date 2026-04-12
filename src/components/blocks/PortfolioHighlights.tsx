@@ -51,6 +51,7 @@ export function PortfolioHighlights({ items, lang, dict, data }: PortfolioHighli
                     src={item.image}
                     alt={item.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-[3s] group-hover:scale-110"
                   />
                 )}
@@ -69,7 +70,7 @@ export function PortfolioHighlights({ items, lang, dict, data }: PortfolioHighli
                    <h4 className="font-headline text-3xl font-light text-on-surface mb-3 group-hover:text-primary transition-colors">
                       {item.title}
                    </h4>
-                   <p className="font-body text-sm text-on-surface-variant opacity-70 group-hover:opacity-100 transition-opacity italic">
+                   <p className="font-body text-sm text-on-surface-variant italic">
                       {item.description}
                    </p>
                 </div>

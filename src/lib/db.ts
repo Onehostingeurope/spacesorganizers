@@ -24,15 +24,30 @@ function getClient(): SupabaseClient | null {
   return _client;
 }
 
-export async function getCollection<T>(model: Model): Promise<T[]> {
+export async function getCollection<T>(model: Model, lang?: string): Promise<T[]> {
   try {
     const client = getClient();
     if (!client) return [];
 
-    const { data, error } = await client
+    let query = client
       .from(model)
       .select("*")
-      .order(model === "hero" ? "order" : "createdAt", { ascending: true });
+      .order(
+        model === "hero"
+          ? "order"
+          : (model === "hero_settings" || model === "homepage_settings")
+            ? "updated_at"
+            : "createdAt",
+        { ascending: true }
+      );
+
+    // Filter by language for collection models that support it
+    const langModels: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq"];
+    if (lang && langModels.includes(model)) {
+      query = query.eq("lang", lang);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error(`[db] getCollection(${model}):`, error.message);
@@ -95,6 +110,22 @@ export async function deleteRecord(model: Model, id: string): Promise<boolean> {
 
   if (error) {
     console.error(`[db] deleteRecord(${model}):`, error.message);
+    return false;
+  }
+  return true;
+}
+
+export async function deleteRecords(model: Model, ids: string[]): Promise<boolean> {
+  const client = getClient();
+  if (!client || ids.length === 0) return false;
+
+  const { error } = await client
+    .from(model)
+    .delete()
+    .in("id", ids);
+
+  if (error) {
+    console.error(`[db] deleteRecords(${model}):`, error.message);
     return false;
   }
   return true;

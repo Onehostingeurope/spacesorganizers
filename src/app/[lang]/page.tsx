@@ -31,9 +31,9 @@ export default async function Home({
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
   const heroSlides = await getCollection<any>("hero");
-  const services = await getCollection<any>("services");
-  const spaces = await getCollection<any>("spaces");
-  const portfolio = await getCollection<any>("portfolio");
+  const services = await getCollection<any>("services", lang);
+  const spaces = await getCollection<any>("spaces", lang);
+  const portfolio = await getCollection<any>("portfolio", lang);
   
   // Fetch dynamic settings directly for reliability (avoiding internal API fetch in RSC)
   const [heroSettingsData, homepageSettingsData] = await Promise.all([
@@ -128,7 +128,7 @@ export default async function Home({
                 </h3>
               </div>
               <div className="md:col-span-12 lg:col-span-4 lg:col-start-8">
-                <p className="font-body text-on-surface-variant leading-relaxed italic text-lg opacity-70">
+                <p className="font-body text-on-surface-variant leading-relaxed italic text-lg">
                   {content.phi.quote}
                 </p>
               </div>
@@ -143,6 +143,7 @@ export default async function Home({
                     alt={content.phi.pantry_title}
                     width={600}
                     height={750}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full aspect-[4/5] object-cover transition-transform duration-[3s] group-hover:scale-110"
                   />
                 </div>
@@ -159,6 +160,7 @@ export default async function Home({
                     alt={content.phi.living_title}
                     width={600}
                     height={600}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full aspect-square object-cover transition-transform duration-[3s] group-hover:scale-110"
                   />
                 </div>
@@ -175,6 +177,7 @@ export default async function Home({
                     alt={content.phi.wardrobe_title}
                     width={600}
                     height={750}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full aspect-[4/5] object-cover transition-transform duration-[3s] group-hover:scale-110"
                   />
                 </div>
@@ -231,7 +234,7 @@ export default async function Home({
                 <br />
                 <span className="italic text-primary">{content.contact.heading_accent}</span>
               </h3>
-              <p className="font-body text-xl lg:text-3xl text-on-surface-variant leading-relaxed font-light mb-14 italic opacity-80">
+              <p className="font-body text-xl lg:text-3xl text-on-surface-variant leading-relaxed font-light mb-14 italic">
                 {content.contact.description}
               </p>
               <div className="space-y-8 text-on-surface-variant font-sans tracking-wide text-sm leading-relaxed border-t border-outline-variant/30 pt-14">

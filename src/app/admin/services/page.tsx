@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { UploadZone } from "@/components/ui/UploadZone";
+import { LangTabs } from "@/components/ui/LangTabs";
 
 interface Service {
   id: string;
@@ -135,13 +136,16 @@ export default function ServicesAdmin() {
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [confirmingId, setConfirmingId] = useState<string | null>(null);
+  const [lang, setLang] = useState("en");
 
-  const fetch_ = () => fetch("/api/services").then((r) => r.json()).then(setServices);
-  useEffect(() => { fetch_(); }, []);
+  const fetch_ = () => fetch(`/api/services?lang=${lang}`).then((r) => r.json()).then(setServices);
+  useEffect(() => { fetch_(); }, [lang]);
 
   const handleAdd = async (data: Partial<Service>) => {
     setSaving(true);
-    await fetch("/api/services", { method: "POST", body: JSON.stringify(data) });
+    await fetch("/api/services", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, lang }) });
     setIsAdding(false);
     await fetch_();
     setSaving(false);
@@ -149,16 +153,39 @@ export default function ServicesAdmin() {
 
   const handleEdit = async (id: string, data: Partial<Service>) => {
     setSaving(true);
-    await fetch(`/api/services/${id}`, { method: "PUT", body: JSON.stringify(data) });
+    await fetch(`/api/services/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, lang }) });
     setEditingId(null);
     await fetch_();
     setSaving(false);
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this service?")) return;
     await fetch(`/api/services/${id}`, { method: "DELETE" });
+    setConfirmingId(null);
     fetch_();
+  };
+
+  const handleBulkDelete = async () => {
+    setSaving(true);
+    await fetch("/api/services", {
+      method: "DELETE",
+      body: JSON.stringify({ ids: selectedIds }),
+    });
+    setSelectedIds([]);
+    await fetch_();
+    setSaving(false);
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === services.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(services.map(s => s.id));
+    }
   };
 
   return (
@@ -168,10 +195,34 @@ export default function ServicesAdmin() {
           <h1 className="font-headline text-4xl text-on-surface mb-2 font-light">Services</h1>
           <p className="font-body text-on-surface-variant text-sm">Manage the services offered on the website.</p>
         </div>
-        <button onClick={() => { setIsAdding(!isAdding); setEditingId(null); }} className="bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all">
-          {isAdding ? "Cancel" : "+ Add Service"}
-        </button>
+        <div className="flex gap-4 items-center">
+          <LangTabs value={lang} onChange={(l) => { setLang(l); setSelectedIds([]); setEditingId(null); setIsAdding(false); }} />
+          <button 
+            onClick={handleSelectAll} 
+            className="text-[10px] uppercase tracking-[0.2em] font-semibold font-label py-3 px-4 rounded-sm border border-outline-variant/30 hover:border-on-surface-variant transition-all"
+          >
+            {selectedIds.length === services.length && services.length > 0 ? "Deselect All" : "Select All"}
+          </button>
+          <button onClick={() => { setIsAdding(!isAdding); setEditingId(null); }} className="bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all">
+            {isAdding ? "Cancel" : "+ Add Service"}
+          </button>
+        </div>
       </div>
+
+      {selectedIds.length > 0 && (
+        <div className="bg-red-500/10 border border-red-500/20 p-4 mb-8 flex items-center justify-between rounded-DEFAULT">
+          <span className="text-sm font-medium text-red-400">
+            {selectedIds.length} services selected
+          </span>
+          <button 
+            onClick={handleBulkDelete}
+            disabled={saving}
+            className="bg-red-500 text-white px-4 py-2 text-[10px] uppercase tracking-widest font-bold hover:bg-red-600 transition-all disabled:opacity-50"
+          >
+            Delete Selected
+          </button>
+        </div>
+      )}
 
       {isAdding && (
         <ServiceForm
@@ -195,6 +246,12 @@ export default function ServicesAdmin() {
               />
             ) : (
               <div className="flex gap-4 items-center p-5">
+                <input 
+                  type="checkbox" 
+                  checked={selectedIds.includes(service.id)}
+                  onChange={() => toggleSelect(service.id)}
+                  className="w-4 h-4 rounded border-outline-variant/30 text-primary focus:ring-primary bg-transparent cursor-pointer"
+                />
                 {service.image && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={service.image} alt="" className="w-20 h-16 object-cover rounded flex-shrink-0" />
@@ -205,8 +262,15 @@ export default function ServicesAdmin() {
                   <p className="font-body text-sm text-on-surface-variant truncate mt-1">{service.description}</p>
                 </div>
                 <div className="flex gap-4 flex-shrink-0">
-                  <button onClick={() => { setEditingId(service.id); setIsAdding(false); }} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-primary transition-colors">Edit</button>
-                  <button onClick={() => handleDelete(service.id)} className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors">Delete</button>
+                  <button onClick={() => { setEditingId(service.id); setIsAdding(false); setConfirmingId(null); }} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-primary transition-colors">Edit</button>
+                  {confirmingId === service.id ? (
+                    <span className="flex items-center gap-2">
+                      <button onClick={() => handleDelete(service.id)} className="text-xs uppercase tracking-widest font-semibold text-white bg-red-500 px-3 py-1 hover:bg-red-600 transition-colors">Confirm?</button>
+                      <button onClick={() => setConfirmingId(null)} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-on-surface transition-colors">Cancel</button>
+                    </span>
+                  ) : (
+                    <button onClick={() => setConfirmingId(service.id)} className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors">Delete</button>
+                  )}
                 </div>
               </div>
             )}

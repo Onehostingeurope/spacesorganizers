@@ -2,18 +2,45 @@
 import React, { useEffect, useState } from "react";
 import { Heading, Body } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/Button";
+import { LangTabs } from "@/components/ui/LangTabs";
 
 export default function BlogAdmin() {
   const [posts, setPosts] = useState<any[]>([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [confirmingId, setConfirmingId] = useState<string | null>(null);
+  const [lang, setLang] = useState("en");
 
-  const fetchPosts = () => fetch("/api/blog").then(res => res.json()).then(setPosts);
-  useEffect(() => { fetchPosts() }, []);
+  const fetchPosts = () => fetch(`/api/blog?lang=${lang}`).then(res => res.json()).then(setPosts);
+  useEffect(() => { fetchPosts() }, [lang]);
 
   const deletePost = async (id: string) => {
-    if(confirm("Are you sure?")) {
-      await fetch(`/api/blog/${id}`, { method: "DELETE" });
-      fetchPosts();
+    await fetch(`/api/blog/${id}`, { method: "DELETE" });
+    setConfirmingId(null);
+    fetchPosts();
+  };
+
+  const handleBulkDelete = async () => {
+    setSaving(true);
+    await fetch("/api/blog", {
+      method: "DELETE",
+      body: JSON.stringify({ ids: selectedIds }),
+    });
+    setSelectedIds([]);
+    await fetchPosts();
+    setSaving(false);
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === posts.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(posts.map(p => p.id));
     }
   };
 
@@ -29,7 +56,7 @@ export default function BlogAdmin() {
       content: formData.get("content")
     };
 
-    await fetch("/api/blog", { method: "POST", body: JSON.stringify(newPost) });
+    await fetch("/api/blog", { method: "POST", body: JSON.stringify({ ...newPost, lang }) });
     setIsAdding(false);
     fetchPosts();
   };
@@ -41,10 +68,34 @@ export default function BlogAdmin() {
            <Heading as="h1" className="text-4xl mb-2">Blog</Heading>
            <Body className="text-charcoal/60 text-base">Manage aesthetic tips and industry articles.</Body>
          </div>
-         <Button onClick={() => setIsAdding(!isAdding)} variant="primary" size="sm">
-            {isAdding ? "Cancel" : "Add Post"}
-         </Button>
+         <div className="flex gap-4 items-center">
+            <LangTabs value={lang} onChange={(l) => { setLang(l); setSelectedIds([]); setIsAdding(false); }} />
+            <button 
+              onClick={handleSelectAll} 
+              className="text-[10px] uppercase tracking-[0.2em] font-semibold font-label py-3 px-4 rounded-sm border border-outline-variant/30 hover:border-on-surface-variant transition-all text-on-surface"
+            >
+              {selectedIds.length === posts.length && posts.length > 0 ? "Deselect All" : "Select All"}
+            </button>
+            <Button onClick={() => setIsAdding(!isAdding)} variant="primary" size="sm">
+               {isAdding ? "Cancel" : "Add Post"}
+            </Button>
+          </div>
       </div>
+
+      {selectedIds.length > 0 && (
+        <div className="bg-red-500/10 border border-red-500/20 p-4 mb-8 flex items-center justify-between rounded-DEFAULT">
+          <span className="text-sm font-medium text-red-400">
+            {selectedIds.length} posts selected
+          </span>
+          <button 
+            onClick={handleBulkDelete}
+            disabled={saving}
+            className="bg-red-500 text-white px-4 py-2 text-[10px] uppercase tracking-widest font-bold hover:bg-red-600 transition-all disabled:opacity-50"
+          >
+            Delete Selected
+          </button>
+        </div>
+      )}
 
       {isAdding && (
         <form onSubmit={handleAdd} className="bg-charcoal/5 p-8 mb-12 space-y-6">
@@ -61,12 +112,25 @@ export default function BlogAdmin() {
 
       <div className="space-y-4">
         {posts.map((post: any) => (
-          <div key={post.id} className="bg-softwhite p-6 border border-charcoal/10 flex justify-between items-center group">
-            <div>
-              <h3 className="font-serif text-2xl text-charcoal mb-1">{post.title}</h3>
-              <p className="font-sans text-sm text-charcoal/50">{post.date}</p>
+          <div key={post.id} className="bg-surface p-6 border border-outline-variant/10 flex items-center gap-4 group rounded-DEFAULT shadow-sm">
+            <input 
+              type="checkbox" 
+              checked={selectedIds.includes(post.id)}
+              onChange={() => toggleSelect(post.id)}
+              className="w-4 h-4 rounded border-outline-variant/30 text-primary focus:ring-primary bg-transparent cursor-pointer"
+            />
+            <div className="flex-1 min-w-0">
+              <h3 className="font-headline text-2xl text-on-surface mb-1 font-light">{post.title}</h3>
+              <p className="font-body text-sm text-on-surface-variant/50">{post.date}</p>
             </div>
-            <button onClick={() => deletePost(post.id)} className="text-red-500/50 hover:text-red-500 text-xs uppercase tracking-widest font-semibold transition-colors opacity-0 group-hover:opacity-100">Remove</button>
+            {confirmingId === post.id ? (
+              <span className="flex items-center gap-2 flex-shrink-0">
+                <button onClick={() => deletePost(post.id)} className="text-xs uppercase tracking-widest font-semibold text-white bg-red-500 px-3 py-1 hover:bg-red-600 transition-colors">Confirm?</button>
+                <button onClick={() => setConfirmingId(null)} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-on-surface transition-colors">Cancel</button>
+              </span>
+            ) : (
+              <button onClick={() => setConfirmingId(post.id)} className="text-red-400 hover:text-red-600 text-xs uppercase tracking-widest font-semibold transition-colors flex-shrink-0">Delete</button>
+            )}
           </div>
         ))}
         {posts.length === 0 && <p className="text-charcoal/40 font-light italic">No blog posts configured yet.</p>}

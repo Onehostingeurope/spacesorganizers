@@ -83,7 +83,7 @@ export function ProcessSteps({ dict, data }: ProcessStepsProps) {
                 <div className="w-full md:w-1/3 space-y-8">
                   <ScrollReveal delay={0.3}>
                     <div className="flex items-center gap-6 mb-8">
-                      <span className="font-headline text-3xl md:text-4xl text-primary/30 italic">
+                      <span className="font-headline text-3xl md:text-4xl text-primary italic">
                         {stepNum}
                       </span>
                       <div className="flex-1 h-[1px] bg-outline-variant/20" />
@@ -93,7 +93,7 @@ export function ProcessSteps({ dict, data }: ProcessStepsProps) {
                       {step.title}
                     </h3>
                     
-                    <p className="font-body text-lg md:text-xl text-on-surface-variant/80 leading-relaxed font-light italic">
+                    <p className="font-body text-lg md:text-xl text-on-surface-variant leading-relaxed font-light italic">
                       {step.description}
                     </p>
 

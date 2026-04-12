@@ -19,7 +19,7 @@ export default async function Spaces({
   if (!hasLocale(lang)) notFound();
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
-  const spaces = await getCollection<any>("spaces");
+  const spaces = await getCollection<any>("spaces", lang);
 
   return (
     <>

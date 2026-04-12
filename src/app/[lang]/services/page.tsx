@@ -18,7 +18,7 @@ export default async function ServicesPage({
   if (!hasLocale(lang)) notFound();
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
-  const services = await getCollection<any>("services");
+  const services = await getCollection<any>("services", lang);
 
   return (
     <>
