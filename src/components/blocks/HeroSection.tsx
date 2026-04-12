@@ -135,15 +135,19 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           )}
         </AnimatePresence>
 
-        {/* Dynamic Admin-Controlled Overlay */}
-        <div 
-          className="absolute inset-0 z-[1] transition-all duration-1000"
-          style={{ 
-            backgroundColor: content.overlayStyle === "dark" ? "black" : "white",
-            opacity: content.overlayOpacity / 100
-          }} 
-        />
-        <div className="absolute inset-0 editorial-gradient z-[2]" />
+        {/* Dynamic Admin-Controlled Overlays */}
+        {content.overlayOpacity > 0 && (
+          <>
+            <div 
+              className="absolute inset-0 z-[1] transition-all duration-1000"
+              style={{ 
+                backgroundColor: content.overlayStyle === "dark" ? "black" : "white",
+                opacity: content.overlayOpacity / 100
+              }} 
+            />
+            <div className="absolute inset-0 editorial-gradient z-[2]" />
+          </>
+        )}
       </div>
 
       {/* Hero Content — Editorial Layout */}
