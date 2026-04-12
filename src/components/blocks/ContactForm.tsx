@@ -53,8 +53,8 @@ export function ContactForm() {
 
       <div className="space-y-2">
         <label htmlFor="service" className="block text-sm font-medium text-charcoal tracking-wide">Project Type</label>
-        <select id="service" className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none focus:border-charcoal transition-colors px-0 appearance-none rounded-none text-charcoal/80">
-          <option value="" disabled selected>Select an option</option>
+        <select id="service" defaultValue="" className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none focus:border-charcoal transition-colors px-0 appearance-none rounded-none text-charcoal/80">
+          <option value="" disabled>Select an option</option>
           <option value="room">Single Room Organization</option>
           <option value="full-home">Full Home Organization</option>
           <option value="move-in">Move-in Unpacking</option>
