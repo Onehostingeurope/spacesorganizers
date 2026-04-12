@@ -8,6 +8,9 @@ const SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
 
+const slugify = (str) =>
+  str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 const models = ["services", "spaces", "portfolio", "testimonials", "blog", "faq"];
 
 for (const model of models) {
@@ -19,14 +22,31 @@ for (const model of models) {
     continue;
   }
 
-  // Remove old numeric/string IDs so Supabase generates UUIDs
-  const cleaned = records.map(({ id, createdAt, updatedAt, ...rest }) => rest);
+  // Remove old ids/timestamps then ensure slug exists
+  const cleaned = records.map(({ id, createdAt, updatedAt, ...rest }) => {
+    // Auto-generate slug if missing
+    if (!rest.slug && rest.title) {
+      rest.slug = slugify(rest.title);
+    }
+    return rest;
+  });
 
-  const { error } = await supabase.from(model).insert(cleaned);
+  // Upsert by slug (or insert) — avoids duplicate key errors on re-runs
+  const { error } = await supabase.from(model).upsert(cleaned, {
+    onConflict: "slug",
+    ignoreDuplicates: true,
+  });
+
   if (error) {
-    console.error(`[${model}] ❌ seed error:`, error.message);
+    // Tables without slug (testimonials, faq, leads) — just insert, ignore dupes
+    const { error: insertErr } = await supabase.from(model).insert(cleaned);
+    if (insertErr) {
+      console.error(`[${model}] ❌ error:`, insertErr.message);
+    } else {
+      console.log(`[${model}] ✓ inserted ${cleaned.length} record(s)`);
+    }
   } else {
-    console.log(`[${model}] ✓ seeded ${cleaned.length} record(s)`);
+    console.log(`[${model}] ✓ upserted ${cleaned.length} record(s)`);
   }
 }
 
