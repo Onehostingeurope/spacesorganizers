@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { UploadZone } from "@/components/ui/UploadZone";
 
 interface Service {
   id: string;
@@ -27,6 +28,7 @@ function ServiceForm({
   saving: boolean;
 }) {
   const [data, setData] = useState<Partial<Service>>({ ...initial });
+  const [inputMode, setInputMode] = useState<"upload" | "url">("upload");
   const set = (key: keyof Service, val: any) => setData((d) => ({ ...d, [key]: val }));
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -75,14 +77,47 @@ function ServiceForm({
           <input value={data.idealClient ?? ""} onChange={(e) => set("idealClient", e.target.value)} placeholder="Who is this for?" className={INPUT_CLS} />
         </div>
       </div>
-      <div>
-        <label className={LABEL_CLS}>Image URL</label>
-        <input value={data.image ?? ""} onChange={(e) => set("image", e.target.value)} placeholder="https://... or /images/example.jpg" className={INPUT_CLS} />
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-1 bg-surface-container rounded-sm p-1 w-fit">
+          {(["upload", "url"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setInputMode(m)}
+              className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] font-semibold font-label rounded-sm transition-all ${
+                inputMode === m
+                  ? "bg-primary text-on-primary"
+                  : "text-on-surface-variant hover:text-on-surface"
+              }`}
+            >
+              {m === "upload" ? "↑ Upload File" : "🔗 Paste URL"}
+            </button>
+          ))}
+        </div>
+
+        {inputMode === "upload" ? (
+          <UploadZone
+            onUploaded={(url) => set("image", url)}
+            accept="image/jpeg,image/png,image/webp,image/gif"
+          />
+        ) : (
+          <div>
+            <label className={LABEL_CLS}>Image URL</label>
+            <input
+              value={data.image ?? ""}
+              onChange={(e) => set("image", e.target.value)}
+              placeholder="https://example.com/image.jpg"
+              className={INPUT_CLS}
+            />
+          </div>
+        )}
+
         {data.image && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={data.image} alt="" className="mt-3 h-24 w-auto rounded object-cover" />
+          <img src={data.image} alt="Preview" className="mt-3 h-24 w-auto rounded object-cover" />
         )}
       </div>
+
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={saving} className="bg-primary text-on-primary px-8 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all disabled:opacity-50">
           {saving ? "Saving..." : "Save Service"}
