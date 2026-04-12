@@ -64,7 +64,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     title: settings?.title || h.title,
     subtitle: settings?.subtitle || h.subtitle,
     description: settings?.description || h.description,
-    overlayOpacity: (settings?.overlay_opacity ?? 40) / 100,
+    overlayOpacity: settings?.overlay_opacity ?? 40,
     overlayStyle: settings?.overlay_style || "dark",
   };
 
