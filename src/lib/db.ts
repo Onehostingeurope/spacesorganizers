@@ -1,62 +1,64 @@
-import fs from "fs/promises";
-import path from "path";
+import { createClient } from "@supabase/supabase-js";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 export type Model = "services" | "spaces" | "portfolio" | "testimonials" | "blog" | "faq" | "leads";
 
-/** Ensure directory exists and read data */
 export async function getCollection<T>(model: Model): Promise<T[]> {
-  try {
-    const filePath = path.join(DATA_DIR, `${model}.json`);
-    const file = await fs.readFile(filePath, "utf-8");
-    return JSON.parse(file) as T[];
-  } catch (error: any) {
-    // If file doesn't exist, return empty array
-    if (error.code === "ENOENT") {
-      return [];
-    }
-    throw error;
+  const { data, error } = await supabase
+    .from(model)
+    .select("*")
+    .order("createdAt", { ascending: true });
+
+  if (error) {
+    console.error(`[db] getCollection(${model}) error:`, error.message);
+    return [];
   }
+  return (data ?? []) as T[];
 }
 
-/** Save collection array to file */
-export async function saveCollection<T>(model: Model, data: T[]): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  const filePath = path.join(DATA_DIR, `${model}.json`);
-  await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
+export async function insertRecord<T extends Record<string, unknown>>(model: Model, record: T): Promise<T> {
+  const { data, error } = await supabase
+    .from(model)
+    .insert([record])
+    .select()
+    .single();
+
+  if (error) throw new Error(`[db] insertRecord(${model}): ${error.message}`);
+  return data as T;
 }
 
-/** Insert single record */
-export async function insertRecord<T extends { id?: string }>(model: Model, record: T): Promise<T> {
-  const collection = await getCollection<T>(model);
-  const newRecord = {
-    ...record,
-    id: record.id || crypto.randomUUID(),
-    createdAt: new Date().toISOString()
-  };
-  collection.push(newRecord);
-  await saveCollection(model, collection);
-  return newRecord;
+export async function updateRecord<T extends Record<string, unknown>>(
+  model: Model,
+  id: string,
+  payload: Partial<T>
+): Promise<T | null> {
+  const { data, error } = await supabase
+    .from(model)
+    .update({ ...payload, updatedAt: new Date().toISOString() })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(`[db] updateRecord(${model}) error:`, error.message);
+    return null;
+  }
+  return data as T;
 }
 
-/** Update single record */
-export async function updateRecord<T extends { id?: string }>(model: Model, id: string, payload: Partial<T>): Promise<T | null> {
-  const collection = await getCollection<T>(model);
-  const index = collection.findIndex(item => item.id === id);
-  if (index === -1) return null;
-
-  collection[index] = { ...collection[index], ...payload, updatedAt: new Date().toISOString() };
-  await saveCollection(model, collection);
-  return collection[index];
-}
-
-/** Delete single record */
 export async function deleteRecord(model: Model, id: string): Promise<boolean> {
-  const collection = await getCollection<{ id?: string }>(model);
-  const filtered = collection.filter(item => item.id !== id);
-  if (collection.length === filtered.length) return false;
-  
-  await saveCollection(model, filtered);
+  const { error } = await supabase
+    .from(model)
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error(`[db] deleteRecord(${model}) error:`, error.message);
+    return false;
+  }
   return true;
 }
