@@ -140,7 +140,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           className="absolute inset-0 z-[1] transition-all duration-1000"
           style={{ 
             backgroundColor: content.overlayStyle === "dark" ? "black" : "white",
-            opacity: content.overlayOpacity
+            opacity: content.overlayOpacity / 100
           }} 
         />
         <div className="absolute inset-0 editorial-gradient z-[2]" />
