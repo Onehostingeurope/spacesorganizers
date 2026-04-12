@@ -1,10 +1,15 @@
 import React from "react";
-import { Section } from "@/components/ui/Section";
-import { Heading, Subheading } from "@/components/ui/Typography";
-import { Coffee, ClipboardList, PenTool, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import type { Dictionary } from "@/lib/dictionaries";
+import { cn } from "@/lib/utils";
 
-const STEP_ICONS = [Coffee, ClipboardList, PenTool, Sparkles];
+const PROCESS_IMAGES = [
+  "/images/process-consultation.png",
+  "/images/process-planning.png",
+  "/images/process-organizing.png",
+  "/images/consultation-lifestyle.png", // Existing premium pantry image for Styling
+];
 
 interface ProcessStepsProps {
   dict: Dictionary;
@@ -19,31 +24,89 @@ export function ProcessSteps({ dict, data }: ProcessStepsProps) {
   const p = data || dict.process;
 
   return (
-    <Section className="bg-surface pt-32 pb-48">
-      <div className="text-center mb-24">
-        <Subheading className="mb-4 opacity-70 px-1">{p.label}</Subheading>
-        <Heading className="text-5xl md:text-6xl tracking-tight font-light">
-          {p.heading}
-        </Heading>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
-        {p.steps.map((step: { title: string; description: string }, index: number) => {
-          const Icon = STEP_ICONS[index] || Sparkles;
-          return (
-            <div key={index} className="flex flex-col items-center text-center px-4">
-              <div className="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-10 text-primary shadow-sm border border-outline-variant/10">
-                <Icon size={32} strokeWidth={1} />
+    <section className="bg-surface overflow-hidden py-32 md:py-56">
+      <div className="container mx-auto px-6 md:px-24 max-w-[1920px]">
+        {/* Section Header */}
+        <div className="max-w-4xl mb-32 md:mb-48">
+          <ScrollReveal>
+             <span className="font-label text-xs tracking-[0.4em] uppercase text-primary mb-6 block font-medium">
+               {p.label}
+             </span>
+             <h2 className="font-headline text-5xl md:text-8xl text-on-surface leading-[0.9] font-light tracking-tighter">
+               {p.heading}
+             </h2>
+          </ScrollReveal>
+        </div>
+
+        {/* Steps — Cinematic Staggered Path */}
+        <div className="space-y-40 md:space-y-64">
+          {p.steps.map((step: { title: string; description: string }, index: number) => {
+            const isEven = index % 2 === 0;
+            const stepNum = (index + 1).toString().padStart(2, "0");
+            
+            return (
+              <div 
+                key={index} 
+                className={cn(
+                  "flex flex-col md:flex-row items-center gap-16 md:gap-32 lg:gap-40",
+                  !isEven && "md:flex-row-reverse"
+                )}
+              >
+                {/* Image Side */}
+                <div className="w-full md:w-1/2 relative">
+                  <ScrollReveal 
+                    variant={isEven ? "slide-right" : "slide-left"}
+                    className="aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] relative overflow-hidden group shadow-ambient rounded-DEFAULT"
+                  >
+                    <Image
+                      src={PROCESS_IMAGES[index] || PROCESS_IMAGES[0]}
+                      alt={step.title}
+                      fill
+                      className="object-cover transition-transform duration-[4s] group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-700" />
+                  </ScrollReveal>
+                  
+                  {/* Backdrop Number — Large, subtle serif */}
+                  <span 
+                    className={cn(
+                      "absolute -top-12 md:-top-20 z-0 font-headline text-[12rem] md:text-[20rem] text-primary/5 select-none pointer-events-none transition-all duration-1000",
+                      isEven ? "-left-8 md:-left-16" : "-right-8 md:-right-16"
+                    )}
+                  >
+                    {stepNum}
+                  </span>
+                </div>
+
+                {/* Content Side */}
+                <div className="w-full md:w-1/3 space-y-8">
+                  <ScrollReveal delay={0.3}>
+                    <div className="flex items-center gap-6 mb-8">
+                      <span className="font-headline text-3xl md:text-4xl text-primary/30 italic">
+                        {stepNum}
+                      </span>
+                      <div className="flex-1 h-[1px] bg-outline-variant/20" />
+                    </div>
+                    
+                    <h3 className="font-headline text-3xl md:text-5xl text-on-surface font-light tracking-tight leading-tight">
+                      {step.title}
+                    </h3>
+                    
+                    <p className="font-body text-lg md:text-xl text-on-surface-variant/80 leading-relaxed font-light italic">
+                      {step.description}
+                    </p>
+
+                    <div className="pt-8">
+                       <div className="w-12 h-[1px] bg-primary animate-pulse" />
+                    </div>
+                  </ScrollReveal>
+                </div>
               </div>
-              <h3 className="font-headline text-2xl lg:text-3xl tracking-tight text-on-surface mb-6 font-light">
-                {index + 1}. {step.title}
-              </h3>
-              <p className="font-body text-on-surface-variant leading-loose text-base lg:text-lg opacity-80 font-light italic">
-                {step.description}
-              </p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
