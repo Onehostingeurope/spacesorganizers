@@ -2,9 +2,12 @@
 import React, { useRef, useState, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
 
 export type UploadedType = "image" | "video";
 
@@ -66,6 +69,9 @@ export function UploadZone({
         setProgress(90);
 
         // 3. Get the public URL for the newly uploaded file
+        const supabase = getSupabase();
+        if (!supabase) throw new Error("Client-side storage configuration is missing");
+
         const { data: { publicUrl } } = supabase.storage
           .from("hero-media")
           .getPublicUrl(path);

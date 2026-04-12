@@ -5,16 +5,19 @@ export type Model = "services" | "spaces" | "portfolio" | "testimonials" | "blog
 // Lazy singleton — only created when first used (not at module eval time)
 let _client: SupabaseClient | null = null;
 
-function getClient(): SupabaseClient {
+function getClient(): SupabaseClient | null {
   if (_client) return _client;
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url || !key) {
-    throw new Error(
-      "Missing Supabase env vars. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY."
-    );
+    if (process.env.NODE_ENV === "production") {
+      console.warn(
+        "[db] Warning: Missing Supabase env vars. Database features may be disabled."
+      );
+    }
+    return null;
   }
 
   _client = createClient(url, key);
@@ -23,7 +26,10 @@ function getClient(): SupabaseClient {
 
 export async function getCollection<T>(model: Model): Promise<T[]> {
   try {
-    const { data, error } = await getClient()
+    const client = getClient();
+    if (!client) return [];
+
+    const { data, error } = await client
       .from(model)
       .select("*")
       .order(model === "hero" ? "order" : "createdAt", { ascending: true });
@@ -43,7 +49,10 @@ export async function insertRecord<T extends Record<string, unknown>>(
   model: Model,
   record: T
 ): Promise<T> {
-  const { data, error } = await getClient()
+  const client = getClient();
+  if (!client) throw new Error("[db] Missing client for insertRecord");
+
+  const { data, error } = await client
     .from(model)
     .insert([record])
     .select()
@@ -58,7 +67,10 @@ export async function updateRecord<T extends Record<string, unknown>>(
   id: string,
   payload: Partial<T>
 ): Promise<T | null> {
-  const { data, error } = await getClient()
+  const client = getClient();
+  if (!client) return null;
+
+  const { data, error } = await client
     .from(model)
     .update({ ...payload, updatedAt: new Date().toISOString() })
     .eq("id", id)
@@ -73,7 +85,10 @@ export async function updateRecord<T extends Record<string, unknown>>(
 }
 
 export async function deleteRecord(model: Model, id: string): Promise<boolean> {
-  const { error } = await getClient()
+  const client = getClient();
+  if (!client) return false;
+
+  const { error } = await client
     .from(model)
     .delete()
     .eq("id", id);
