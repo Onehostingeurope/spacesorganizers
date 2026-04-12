@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "node scripts/seed-supabase.mjs",
+    "deploy": "powershell -ExecutionPolicy Bypass -File .\\deploy.ps1",
+    "deploy:msg": "powershell -ExecutionPolicy Bypass -File .\\deploy.ps1 -Message"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.103.0",
