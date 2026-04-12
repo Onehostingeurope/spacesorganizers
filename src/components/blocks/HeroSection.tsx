@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Dictionary } from "@/lib/dictionaries";
@@ -93,16 +92,17 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               transition={{ duration: 1.5 }}
               className="absolute inset-0"
             >
-              <Image
-                src={
-                  slide?.url ??
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuCxbyLt8Hv-3Fd56k4BYlXt5-e3GvaqIoOP4rmukFbJ6r32O77jPlMkmLorTMpLudhhzoZB4qg2u1Wke5HEugEXvej7hwSCcIx4kzDRdnLG5xHNEqfREli8ecmMOh_sKpk6v0bUyYl2NgePiLlYZKXXZybAbdB-uBZBSmT6N6ORuiRj_y9gOjHj5vkCXyrbY9fUG69rShB-xN5AC8phqkYZachKYw7mihfe21awBLSi12Depk1OKBeyQub5NdtkQS_U6ceK1mC-ns4"
-                }
-                alt={slide?.alt ?? "Space Organizers"}
-                fill
-                className="object-cover"
-                priority
-              />
+              {slide?.url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={slide.url}
+                  alt={slide.alt ?? "Space Organizers"}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                // Fallback: gradient background when no slides are configured
+                <div className="absolute inset-0 bg-gradient-to-br from-surface-container via-surface to-surface-container" />
+              )}
             </motion.div>
           )}
         </AnimatePresence>
