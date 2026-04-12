@@ -24,22 +24,22 @@ export function ProcessSteps({ dict, data }: ProcessStepsProps) {
   const p = data || dict.process;
 
   return (
-    <section className="bg-surface overflow-hidden py-32 md:py-56">
+    <section className="bg-surface overflow-hidden py-24 md:py-40">
       <div className="container mx-auto px-6 md:px-24 max-w-[1920px]">
         {/* Section Header */}
-        <div className="max-w-4xl mb-32 md:mb-48">
+        <div className="max-w-4xl mb-24 md:mb-32">
           <ScrollReveal>
              <span className="font-label text-xs tracking-[0.4em] uppercase text-primary mb-6 block font-medium">
                {p.label}
              </span>
-             <h2 className="font-headline text-5xl md:text-8xl text-on-surface leading-[0.9] font-light tracking-tighter">
+             <h2 className="font-headline text-5xl md:text-7xl text-on-surface leading-tight font-light tracking-tight">
                {p.heading}
              </h2>
           </ScrollReveal>
         </div>
 
         {/* Steps — Cinematic Staggered Path */}
-        <div className="space-y-40 md:space-y-64">
+        <div className="space-y-32 md:space-y-40">
           {p.steps.map((step: { title: string; description: string }, index: number) => {
             const isEven = index % 2 === 0;
             const stepNum = (index + 1).toString().padStart(2, "0");

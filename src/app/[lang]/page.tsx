@@ -123,7 +123,7 @@ export default async function Home({
                 <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-4 block">
                   {content.phi.label}
                 </span>
-                <h3 className="font-headline text-5xl md:text-7xl text-on-surface leading-[0.9] font-light tracking-tighter">
+                <h3 className="font-headline text-5xl md:text-6xl text-on-surface leading-tight font-light tracking-tight">
                   {content.phi.heading}
                 </h3>
               </div>
@@ -229,7 +229,7 @@ export default async function Home({
               <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-8 block">
                 {dict.contact.label}
               </span>
-              <h3 className="font-headline text-5xl md:text-8xl leading-[0.9] mb-10 tracking-tighter">
+              <h3 className="font-headline text-5xl md:text-7xl leading-tight mb-8 tracking-tight">
                 {content.contact.heading}{" "}
                 <br />
                 <span className="italic text-primary">{content.contact.heading_accent}</span>

@@ -154,12 +154,12 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
 
         <div className="max-w-4xl">
           {/* H1 — Cinematic Reveal with Fluid Typography */}
-          <div className="overflow-hidden mb-6">
+          <div className="overflow-hidden pb-6 -mb-6">
             <motion.h1
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-headline text-5xl md:text-[clamp(5rem,10vw,9.5rem)] text-on-surface leading-[0.85] font-light tracking-tighter drop-shadow-sm"
+              className="font-headline text-5xl md:text-[clamp(3.5rem,7vw,7rem)] text-on-surface leading-[1] font-light tracking-tight drop-shadow-sm"
             >
               {content.title}
             </motion.h1>
