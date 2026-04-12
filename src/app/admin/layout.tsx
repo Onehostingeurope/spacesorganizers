@@ -21,6 +21,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Bookings", path: "/admin/bookings" },
     { name: "Leads", path: "/admin/leads" },
     { name: "Hero Carousel", path: "/admin/hero" },
+    { name: "Homepage Content", path: "/admin/homepage" },
     { name: "Services", path: "/admin/services" },
     { name: "Spaces", path: "/admin/spaces" },
     { name: "Portfolio", path: "/admin/portfolio" },
