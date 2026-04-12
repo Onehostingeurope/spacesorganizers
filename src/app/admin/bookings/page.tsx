@@ -13,7 +13,7 @@ export default function AdminBookings() {
 
       <div className="flex-1 bg-softwhite border border-charcoal/10 overflow-hidden shadow-sm rounded-DEFAULT ghost-border">
         <iframe 
-          src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Europe%2FParis&showPrint=0&showCalendars=0&showTz=0&mode=WEEK&src=Y2FsZW5kYXIuYmVkb2t1cm92YUBnbWFpbC5jb20" 
+          src="https://calendar.google.com/calendar/embed?height=800&wkst=2&ctz=Europe%2FParis&showPrint=0&showCalendars=0&showTz=0&mode=WEEK&src=YmVkb2t1cm92YUBnbWFpbC5jb20" 
           style={{ border: 0 }} 
           width="100%" 
           height="100%" 
