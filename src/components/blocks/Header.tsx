@@ -12,6 +12,13 @@ import type { Dictionary } from "@/lib/dictionaries";
 const LOCALES = ["en", "fr", "ru", "de"] as const;
 type Locale = (typeof LOCALES)[number];
 
+const FLAGS: Record<Locale, string> = {
+  en: "🇬🇧",
+  fr: "🇫🇷",
+  ru: "🇷🇺",
+  de: "🇩🇪",
+};
+
 interface HeaderProps {
   dict: Dictionary;
   lang: Locale;
@@ -103,7 +110,10 @@ export function Header({ dict, lang }: HeaderProps) {
                       : "text-on-surface-variant hover:text-primary"
                   )}
                 >
-                  {l.toUpperCase()}
+                  <span className="flex items-center gap-1.5 relative z-10">
+                    <span className="text-base leading-none translate-y-[-1px]">{FLAGS[l]}</span> 
+                    <span>{l.toUpperCase()}</span>
+                  </span>
                   {l === lang && (
                     <motion.div 
                       layoutId="activeLang"
@@ -159,11 +169,11 @@ export function Header({ dict, lang }: HeaderProps) {
                   setIsMobileMenuOpen(false);
                 }}
                 className={cn(
-                  "font-label text-xs tracking-[0.2em] uppercase transition-colors",
+                  "flex items-center gap-2 font-label text-xs tracking-[0.2em] uppercase transition-colors",
                   l === lang ? "text-primary font-semibold" : "text-on-surface-variant hover:text-on-surface"
                 )}
               >
-                {l.toUpperCase()}
+                <span className="text-lg">{FLAGS[l]}</span> {l.toUpperCase()}
               </button>
             ))}
           </div>
