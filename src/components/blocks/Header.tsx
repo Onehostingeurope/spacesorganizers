@@ -78,7 +78,7 @@ export function Header({ dict, lang }: HeaderProps) {
               key={link.href}
               href={link.href}
               className={cn(
-                "group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant hover:text-on-surface transition-all duration-300",
+                "group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant hover:text-primary transition-all duration-300 hover:-translate-y-0.5",
                 !isScrolled && "drop-shadow-sm"
               )}
             >
@@ -97,17 +97,17 @@ export function Header({ dict, lang }: HeaderProps) {
                   onClick={() => switchLanguage(l)}
                   disabled={isPending}
                   className={cn(
-                    "px-1 py-0.5 transition-all duration-500 rounded-sm relative group",
+                    "px-1 py-0.5 transition-all duration-300 rounded-sm relative group hover:-translate-y-0.5",
                     l === lang
                       ? "text-primary font-bold"
-                      : "text-on-surface-variant hover:text-on-surface"
+                      : "text-on-surface-variant hover:text-primary"
                   )}
                 >
                   {l.toUpperCase()}
                   {l === lang && (
                     <motion.div 
                       layoutId="activeLang"
-                      className="absolute -bottom-1 left-0 right-0 h-[1px] bg-primary" 
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary" 
                     />
                   )}
                 </button>

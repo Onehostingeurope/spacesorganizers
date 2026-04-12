@@ -138,12 +138,14 @@
     content: '';
     position: absolute;
     width: 0;
-    height: 1px;
+    height: 2px;
     bottom: -4px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--color-primary);
-    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .group:hover .animate-underline::after,
   .animate-underline:hover::after {
     width: 100%;
   }
