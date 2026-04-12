@@ -42,7 +42,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
   useEffect(() => {
     setIsLoaded(true);
     if (sorted.length <= 1) return;
-    const timer = setInterval(next, 6000);
+    const timer = setInterval(next, 15000);
     return () => clearInterval(timer);
   }, [sorted.length, next]);
 
