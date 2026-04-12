@@ -15,7 +15,7 @@ export function Heading({
   return (
     <Component
       className={cn(
-        "font-serif text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-charcoal",
+        "font-serif text-5xl md:text-7xl font-normal tracking-tight text-charcoal",
         className
       )}
       {...props}
@@ -34,7 +34,7 @@ export function Subheading({
   return (
     <Component
       className={cn(
-        "font-sans text-xl md:text-2xl font-light text-charcoal/80",
+        "font-sans text-xl md:text-3xl font-light text-charcoal/70 tracking-wide",
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ export function Body({
   return (
     <Component
       className={cn(
-        "font-sans text-base md:text-lg text-charcoal/70 leading-relaxed",
+        "font-sans text-lg md:text-xl text-charcoal/80 leading-relaxed font-light",
         className
       )}
       {...props}

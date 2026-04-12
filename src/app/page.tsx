@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +13,7 @@ import { CTASection } from "@/components/blocks/CTASection";
 import { ContactForm } from "@/components/blocks/ContactForm";
 import { ServiceCard } from "@/components/blocks/ServiceCard";
 import { Section } from "@/components/ui/Section";
-import { Heading, Subheading, Body } from "@/components/ui/Typography";
+import { Heading, Body } from "@/components/ui/Typography";
 
 export default function Home() {
   return (
@@ -21,12 +23,13 @@ export default function Home() {
         <HeroSection />
 
         {/* INTRO / BRAND STATEMENT */}
-        <Section className="bg-softwhite py-24 md:py-40">
-          <div className="max-w-4xl mx-auto text-center px-6">
-            <Heading className="mb-8">
+        <Section className="bg-softwhite py-32 md:py-48">
+          <div className="max-w-5xl mx-auto text-center px-6">
+            <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-8 block">The Spaces Philosophy</span>
+            <Heading className="mb-12 max-w-4xl mx-auto leading-[1.1]">
               A meticulously organized home is the foundation of a calmer life.
             </Heading>
-            <Body className="text-xl max-w-2xl mx-auto font-light leading-relaxed">
+            <Body className="text-xl md:text-2xl max-w-3xl mx-auto font-light leading-loose text-charcoal/60">
               We believe that an organized space creates room for what truly matters. 
               By designing beautiful, tailored systems, we help you simplify your 
               daily routines and transform your environment into a sanctuary of ease.
@@ -36,90 +39,92 @@ export default function Home() {
 
         {/* SERVICES PREVIEW */}
         <Section className="bg-sand border-y border-charcoal/5">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-            <div className="lg:col-span-5">
-              <span className="font-sans uppercase tracking-widest text-sm font-medium text-charcoal/60 mb-4 block">Our Expertise</span>
-              <Heading className="mb-6">Tailored Organization Services</Heading>
-              <Body className="mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+            <div className="lg:col-span-5 lg:sticky lg:top-40 self-start">
+              <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-6 block">Our Expertise</span>
+              <Heading className="mb-8">Tailored Solutions</Heading>
+              <Body className="mb-12">
                 From single-room resets to full-home transformations, we provide end-to-end solutions that blend aesthetic refinement with flawless functionality.
               </Body>
+              <Link href="/services" className="font-sans uppercase tracking-[0.2em] text-xs font-semibold border-b border-charcoal/20 pb-2 hover:border-charcoal transition-colors">
+                 View All Services
+              </Link>
             </div>
             <div className="lg:col-span-7 flex flex-col justify-center">
               <ServiceCard 
                 title="Home Organization" 
-                description="Comprehensive system design and implementation for any space in your home." 
+                description="Comprehensive system design and implementation for any space in your home, curated to your aesthetic." 
                 href="/services" 
               />
               <ServiceCard 
                 title="Closet Design" 
-                description="Boutique-style closet curation, sorting, and styling for an effortless morning routine." 
+                description="Boutique-style closet curation, sorting, and styling for an effortless and luxurious morning routine." 
                 href="/services" 
               />
               <ServiceCard 
                 title="Move-In Unpacking" 
-                description="We handle the boxes and set up your new home so you can simply start living." 
+                description="We handle the boxes and set up your new home down to the last detail so you can simply start living." 
                 href="/services" 
-              />
-              <ServiceCard 
-                 title="Decluttering" 
-                 description="Compassionate editing sessions to help you part with items that no longer serve you." 
-                 href="/services" 
               />
             </div>
           </div>
         </Section>
 
-        {/* ROOMS / SPACES SECTION */}
-        <Section className="bg-softwhite">
-           <div className="text-center mb-16 px-6">
-            <span className="font-sans uppercase tracking-widest text-sm font-medium text-charcoal/60 mb-4 block">Spaces We Transform</span>
+        {/* ROOMS / SPACES SECTION (Asymmetrical) */}
+        <Section className="bg-softwhite py-32 md:py-48 overflow-hidden">
+           <div className="text-center mb-24 px-6">
+            <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-6 block">Spaces We Transform</span>
             <Heading>Systems for Every Room</Heading>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Kitchen & Pantry */}
-            <div className="group relative aspect-[4/5] bg-sand overflow-hidden">
-              <Image 
-                 src="/images/consultation-lifestyle.png" 
-                 alt="Kitchen & Pantry" 
-                 fill 
-                 className="object-cover transition-transform duration-700 group-hover:scale-105" 
-              />
-              <div className="absolute inset-0 bg-charcoal/20 transition-opacity duration-300 group-hover:bg-charcoal/40" />
-              <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                <h3 className="font-serif text-3xl text-softwhite mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Kitchen & Pantry</h3>
-                <Link href="/spaces" className="text-softwhite/90 text-sm tracking-widest uppercase font-medium mt-4 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                  Explore Space &rarr;
-                </Link>
-              </div>
-            </div>
-
-            {/* Closet */}
-            <div className="group relative aspect-[4/5] bg-sand overflow-hidden">
-              <Image 
-                 src="/images/hero-home-organization.png" 
-                 alt="Closets & Wardrobes" 
-                 fill 
-                 className="object-cover transition-transform duration-700 group-hover:scale-105" 
-              />
-              <div className="absolute inset-0 bg-charcoal/20 transition-opacity duration-300 group-hover:bg-charcoal/40" />
-              <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                <h3 className="font-serif text-3xl text-softwhite mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">Master Closets</h3>
-                <Link href="/spaces" className="text-softwhite/90 text-sm tracking-widest uppercase font-medium mt-4 flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                  Explore Space &rarr;
-                </Link>
-              </div>
-            </div>
-
-            {/* Office */}
-            <div className="group relative aspect-[4/5] bg-darktaupe overflow-hidden">
-               <div className="absolute inset-0 p-8 flex flex-col items-center justify-center text-center">
-                  <h3 className="font-serif text-3xl text-softwhite mb-4">Home Office<br/>& Playrooms</h3>
-                  <Link href="/spaces" className="text-softwhite/90 text-sm tracking-widest uppercase font-medium border-b border-softwhite/30 pb-1 hover:border-softwhite transition-colors">
-                    View All Spaces
+          <div className="container mx-auto px-6 lg:px-12 relative max-w-7xl">
+            {/* First Image Block (Left Offset) */}
+            <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-24 mb-32 md:mb-48">
+               <div className="w-full md:w-7/12 relative aspect-[3/4] overflow-hidden group">
+                  <Image 
+                     src="/images/consultation-lifestyle.png" 
+                     alt="Kitchen & Pantry" 
+                     fill 
+                     className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" 
+                  />
+               </div>
+               <div className="w-full md:w-5/12 flex flex-col justify-center">
+                  <span className="font-sans uppercase tracking-[0.2em] text-xs text-charcoal/40 mb-4 block">01</span>
+                  <Heading as="h3" className="text-4xl md:text-5xl mb-6">Kitchen & Pantry</Heading>
+                  <Body className="mb-8 font-light leading-loose text-charcoal/70">
+                    We implement intuitive zones, bespoke decanting, and accessible storage, turning the heart of your home into an inspiring place to cook and gather.
+                  </Body>
+                  <Link href="/spaces" className="font-sans uppercase tracking-[0.2em] text-xs font-semibold hover:text-charcoal/60 transition-colors flex items-center">
+                    Explore Space <span className="ml-4">&rarr;</span>
                   </Link>
-              </div>
+               </div>
             </div>
+
+            {/* Second Image Block (Right Offset with Parallax effect illusion via margin) */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-12 lg:gap-24 mb-12 relative md:-mt-24">
+               <div className="w-full md:w-6/12 relative aspect-square overflow-hidden group">
+                  <Image 
+                     src="/images/hero-home-organization.png" 
+                     alt="Master Closets" 
+                     fill 
+                     className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" 
+                  />
+               </div>
+               <div className="w-full md:w-5/12 flex flex-col justify-center">
+                  <span className="font-sans uppercase tracking-[0.2em] text-xs text-charcoal/40 mb-4 block">02</span>
+                  <Heading as="h3" className="text-4xl md:text-5xl mb-6">Master Closets</Heading>
+                  <Body className="mb-8 font-light leading-loose text-charcoal/70">
+                    We curate boutique-style layouts that honor your wardrobe, streamline your morning routine, and present your clothing beautifully.
+                  </Body>
+                  <Link href="/spaces" className="font-sans uppercase tracking-[0.2em] text-xs font-semibold hover:text-charcoal/60 transition-colors flex items-center">
+                    Explore Space <span className="ml-4">&rarr;</span>
+                  </Link>
+               </div>
+            </div>
+            
+            {/* Background Accent */}
+            <div className="hidden lg:block absolute top-1/4 right-0 w-1/3 aspect-square bg-sand -z-10 mix-blend-multiply opacity-50" />
+            <div className="hidden lg:block absolute bottom-0 left-10 w-1/4 aspect-square bg-darktaupe/5 -z-10" />
           </div>
         </Section>
 
@@ -132,24 +137,27 @@ export default function Home() {
         {/* CTA BANNER */}
         <CTASection />
 
-        {/* FAQ */}
-        <FAQAccordion />
+        {/* FAQ - wrapped for tighter focus */}
+        <div className="py-24 bg-softwhite">
+          <FAQAccordion />
+        </div>
 
         {/* FINAL CONTACT SECTION */}
-        <Section className="bg-sand" id="contact">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start border-t border-charcoal/10 pt-20">
-            <div>
-              <Heading className="mb-6">Let's craft your tailored system.</Heading>
-              <Body className="mb-8">
+        <Section className="bg-sand py-32" id="contact">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-start">
+            <div className="pt-8">
+              <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-6 block">Get In Touch</span>
+              <Heading className="mb-8 text-5xl md:text-6xl">Let's craft your tailored system.</Heading>
+              <Body className="mb-12 font-light text-xl text-charcoal/70">
                 Take the first step toward a more organized, peaceful home. Fill out the inquiry form, and we'll reach out within 24 hours to schedule your complimentary discovery call.
               </Body>
-              <div className="space-y-4 text-charcoal/70">
-                <p><strong>Serving:</strong> Los Angeles, Beverly Hills, Santa Monica</p>
-                <p><strong>Email:</strong> bookings@spacesorganizers.com</p>
-                <p><strong>Phone:</strong> (310) 555-0198</p>
+              <div className="space-y-6 text-charcoal/80 font-sans tracking-wide text-sm leading-relaxed border-t border-charcoal/10 pt-12">
+                <p><strong className="font-semibold uppercase tracking-widest text-xs mr-4">Serving</strong> Los Angeles, Beverly Hills, Santa Monica</p>
+                <p><strong className="font-semibold uppercase tracking-widest text-xs mr-4">Email</strong> bookings@spacesorganizers.com</p>
+                <p><strong className="font-semibold uppercase tracking-widest text-xs mr-4">Phone</strong> (310) 555-0198</p>
               </div>
             </div>
-            <div className="bg-softwhite p-8 md:p-12 shadow-sm border border-charcoal/5">
+            <div className="bg-softwhite p-10 md:p-16 shadow-2xl shadow-charcoal/5">
               <ContactForm />
             </div>
           </div>

@@ -13,7 +13,7 @@ export function Section({
   ...props
 }: SectionProps) {
   return (
-    <section className={cn("py-20 md:py-32", className)} {...props}>
+    <section className={cn("py-24 md:py-40 lg:py-48", className)} {...props}>
       <div className={cn("container mx-auto px-6 md:px-12", containerClass)}>
         {children}
       </div>
