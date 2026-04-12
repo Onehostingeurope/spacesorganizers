@@ -15,7 +15,7 @@ export function Heading({
   return (
     <Component
       className={cn(
-        "font-serif text-5xl md:text-7xl font-normal tracking-tight text-charcoal",
+        "font-headline text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-on-surface leading-[1.15]",
         className
       )}
       {...props}
@@ -28,13 +28,13 @@ export function Heading({
 export function Subheading({
   children,
   className,
-  as: Component = "h3",
+  as: Component = "p",
   ...props
 }: TypographyProps) {
   return (
     <Component
       className={cn(
-        "font-sans text-xl md:text-3xl font-light text-charcoal/70 tracking-wide",
+        "font-label text-[10px] md:text-xs font-semibold text-on-surface-variant uppercase tracking-[0.3em] mb-4",
         className
       )}
       {...props}
@@ -53,7 +53,7 @@ export function Body({
   return (
     <Component
       className={cn(
-        "font-sans text-lg md:text-xl text-charcoal/80 leading-relaxed font-light",
+        "font-body text-base md:text-lg text-on-surface-variant leading-relaxed font-light",
         className
       )}
       {...props}

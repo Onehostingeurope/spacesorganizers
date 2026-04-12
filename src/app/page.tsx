@@ -19,145 +19,107 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 bg-surface">
         <HeroSection />
 
-        {/* INTRO / BRAND STATEMENT */}
-        <Section className="bg-softwhite py-32 md:py-48">
-          <div className="max-w-5xl mx-auto text-center px-6">
-            <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-8 block">The Spaces Philosophy</span>
-            <Heading className="mb-12 max-w-4xl mx-auto leading-[1.1]">
-              A meticulously organized home is the foundation of a calmer life.
-            </Heading>
-            <Body className="text-xl md:text-2xl max-w-3xl mx-auto font-light leading-loose text-charcoal/60">
-              We believe that an organized space creates room for what truly matters. 
-              By designing beautiful, tailored systems, we help you simplify your 
-              daily routines and transform your environment into a sanctuary of ease.
-            </Body>
-          </div>
-        </Section>
-
-        {/* SERVICES PREVIEW */}
-        <Section className="bg-sand border-y border-charcoal/5">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-            <div className="lg:col-span-5 lg:sticky lg:top-40 self-start">
-              <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-6 block">Our Expertise</span>
-              <Heading className="mb-8">Tailored Solutions</Heading>
-              <Body className="mb-12">
-                From single-room resets to full-home transformations, we provide end-to-end solutions that blend aesthetic refinement with flawless functionality.
-              </Body>
-              <Link href="/services" className="font-sans uppercase tracking-[0.2em] text-xs font-semibold border-b border-charcoal/20 pb-2 hover:border-charcoal transition-colors">
-                 View All Services
-              </Link>
-            </div>
-            <div className="lg:col-span-7 flex flex-col justify-center">
-              <ServiceCard 
-                title="Home Organization" 
-                description="Comprehensive system design and implementation for any space in your home, curated to your aesthetic." 
-                href="/services" 
-              />
-              <ServiceCard 
-                title="Closet Design" 
-                description="Boutique-style closet curation, sorting, and styling for an effortless and luxurious morning routine." 
-                href="/services" 
-              />
-              <ServiceCard 
-                title="Move-In Unpacking" 
-                description="We handle the boxes and set up your new home down to the last detail so you can simply start living." 
-                href="/services" 
-              />
-            </div>
-          </div>
-        </Section>
-
-        {/* ROOMS / SPACES SECTION (Asymmetrical) */}
-        <Section className="bg-softwhite py-32 md:py-48 overflow-hidden">
-           <div className="text-center mb-24 px-6">
-            <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-6 block">Spaces We Transform</span>
-            <Heading>Systems for Every Room</Heading>
-          </div>
-          
-          <div className="container mx-auto px-6 lg:px-12 relative max-w-7xl">
-            {/* First Image Block (Left Offset) */}
-            <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-24 mb-32 md:mb-48">
-               <div className="w-full md:w-7/12 relative aspect-[3/4] overflow-hidden group">
-                  <Image 
-                     src="/images/consultation-lifestyle.png" 
-                     alt="Kitchen & Pantry" 
-                     fill 
-                     className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" 
-                  />
-               </div>
-               <div className="w-full md:w-5/12 flex flex-col justify-center">
-                  <span className="font-sans uppercase tracking-[0.2em] text-xs text-charcoal/40 mb-4 block">01</span>
-                  <Heading as="h3" className="text-4xl md:text-5xl mb-6">Kitchen & Pantry</Heading>
-                  <Body className="mb-8 font-light leading-loose text-charcoal/70">
-                    We implement intuitive zones, bespoke decanting, and accessible storage, turning the heart of your home into an inspiring place to cook and gather.
-                  </Body>
-                  <Link href="/spaces" className="font-sans uppercase tracking-[0.2em] text-xs font-semibold hover:text-charcoal/60 transition-colors flex items-center">
-                    Explore Space <span className="ml-4">&rarr;</span>
-                  </Link>
-               </div>
-            </div>
-
-            {/* Second Image Block (Right Offset with Parallax effect illusion via margin) */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-12 lg:gap-24 mb-12 relative md:-mt-24">
-               <div className="w-full md:w-6/12 relative aspect-square overflow-hidden group">
-                  <Image 
-                     src="/images/hero-home-organization.png" 
-                     alt="Master Closets" 
-                     fill 
-                     className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" 
-                  />
-               </div>
-               <div className="w-full md:w-5/12 flex flex-col justify-center">
-                  <span className="font-sans uppercase tracking-[0.2em] text-xs text-charcoal/40 mb-4 block">02</span>
-                  <Heading as="h3" className="text-4xl md:text-5xl mb-6">Master Closets</Heading>
-                  <Body className="mb-8 font-light leading-loose text-charcoal/70">
-                    We curate boutique-style layouts that honor your wardrobe, streamline your morning routine, and present your clothing beautifully.
-                  </Body>
-                  <Link href="/spaces" className="font-sans uppercase tracking-[0.2em] text-xs font-semibold hover:text-charcoal/60 transition-colors flex items-center">
-                    Explore Space <span className="ml-4">&rarr;</span>
-                  </Link>
-               </div>
-            </div>
-            
-            {/* Background Accent */}
-            <div className="hidden lg:block absolute top-1/4 right-0 w-1/3 aspect-square bg-sand -z-10 mix-blend-multiply opacity-50" />
-            <div className="hidden lg:block absolute bottom-0 left-10 w-1/4 aspect-square bg-darktaupe/5 -z-10" />
-          </div>
-        </Section>
-
-        {/* PROCESS SECTION */}
-        <ProcessSteps />
-
-        {/* TESTIMONIALS */}
-        <Testimonials />
-
-        {/* CTA BANNER */}
-        <CTASection />
-
-        {/* FAQ - wrapped for tighter focus */}
-        <div className="py-24 bg-softwhite">
-          <FAQAccordion />
-        </div>
-
-        {/* FINAL CONTACT SECTION */}
-        <Section className="bg-sand py-32" id="contact">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-start">
-            <div className="pt-8">
-              <span className="font-sans uppercase text-xs tracking-[0.3em] font-medium text-charcoal/40 mb-6 block">Get In Touch</span>
-              <Heading className="mb-8 text-5xl md:text-6xl">Let's craft your tailored system.</Heading>
-              <Body className="mb-12 font-light text-xl text-charcoal/70">
-                Take the first step toward a more organized, peaceful home. Fill out the inquiry form, and we'll reach out within 24 hours to schedule your complimentary discovery call.
-              </Body>
-              <div className="space-y-6 text-charcoal/80 font-sans tracking-wide text-sm leading-relaxed border-t border-charcoal/10 pt-12">
-                <p><strong className="font-semibold uppercase tracking-widest text-xs mr-4">Serving</strong> Los Angeles, Beverly Hills, Santa Monica</p>
-                <p><strong className="font-semibold uppercase tracking-widest text-xs mr-4">Email</strong> bookings@spacesorganizers.com</p>
-                <p><strong className="font-semibold uppercase tracking-widest text-xs mr-4">Phone</strong> (310) 555-0198</p>
+        {/* SIGNATURE SECTION: THE ATELIER GRID PREVIEW */}
+        <section className="bg-surface-container py-32 px-6 md:px-24">
+          <div className="max-w-[1920px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-end mb-24">
+              <div className="md:col-span-12 lg:col-span-5">
+                <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-4 block">The Philosophy</span>
+                <h3 className="font-headline text-4xl md:text-5xl text-on-surface leading-tight font-light">
+                  Curating tranquility through intentional order.
+                </h3>
+              </div>
+              <div className="md:col-span-12 lg:col-span-4 lg:col-start-8">
+                <p className="font-body text-on-surface-variant leading-relaxed italic">
+                  "Luxury is not about having more, but about finding the space for what truly matters. We design sanctuaries that breathe."
+                </p>
               </div>
             </div>
-            <div className="bg-softwhite p-10 md:p-16 shadow-2xl shadow-charcoal/5">
+
+            {/* Asymmetric Bento-style Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="space-y-8">
+                <div className="bg-surface p-1 shadow-sm overflow-hidden group">
+                  <Image 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwIpP4aH2BvLhuNJiRyx4peAXNLZX_orDABAiUaRLoQb0YdXKMufmLiM1L4yfqrxEMAyi_hJIEqApiAgWx6ocSNce08fv88AMIyh-eLDzBuudDcG0sNGueOygNc0lL3SyO0HbJoxRKKt4Fbqab5HdmJPKeyE7cmJEnMR1atpZlbRSySyp5HD1kcyXw5kcs_X920wMrxSJkrcLdtO2-NvK9XQmwvMWDld6jelvJwjG0QNm9k2VWuIbfnr_M8XI4R0V2E_hsmXbhpF4" 
+                    alt="Organized kitchen" 
+                    width={600} 
+                    height={750} 
+                    className="w-full aspect-[4/5] object-cover transition-transform duration-[2s] group-hover:scale-105" 
+                  />
+                </div>
+                <div className="pt-4 px-2">
+                  <h4 className="font-headline text-xl mb-2">Pantry Systems</h4>
+                  <p className="text-sm text-on-surface-variant font-light tracking-wide">Functional aesthetics for the heart of the home.</p>
+                </div>
+              </div>
+              
+              <div className="space-y-8 md:translate-y-16">
+                <div className="bg-surface p-1 shadow-sm overflow-hidden group">
+                  <Image 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDygYhpmBudxxNndS055nDEXCZqC8utNwLG7kd7_3JkEZFyjpuxub7t2HpLoEfAV3qN8_S1cDL0PgusYWWHrCBMc3xhe4pnu3h-wAzV6wCGStgS6mV19TYVlFp9qvEnJaPeoWnNhouBghvlWTfxOc8cOrNlt_eXfflhz2wS_yylRAkOte7jSi4onDNlt2QLtgeN6vWSGeSww_z2ZVNq8-pWG3CMaQtTYvuug5JvthZCXlzoiqfz2cnnrq09du2WZFifocEZmob8Cy8" 
+                    alt="Living space" 
+                    width={600} 
+                    height={600} 
+                    className="w-full aspect-square object-cover transition-transform duration-[2s] group-hover:scale-105" 
+                  />
+                </div>
+                <div className="pt-4 px-2">
+                  <h4 className="font-headline text-xl mb-2">Living Sanctuaries</h4>
+                  <p className="text-sm text-on-surface-variant font-light tracking-wide">Decluttering shared spaces for family harmony.</p>
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="bg-surface p-1 shadow-sm overflow-hidden group">
+                  <Image 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_8ZD6ZPHfMDjNVX2A1le_J7enIzDaXGHPiDgyug0nT9OIeLijtE13WJtxuUtZRAcX9x-1NgissjY_S6wo4d6xe2eCON4yXPc-0I03V_glpiw20wr4w0eKPsdNPlRaN8c1by7PK1OLBBPZRMYCC6a9p-jrUq4qEVtiAqYhxZP0YAzSyf1-aX4ATq8C-ZkNxj8hAPDLd83NCW8WpMJoDkGtYcxliSkXRUzjD62oXqoshRrYQkw9W6qcZBR2PZUt4SbXWLC6A5w38ag" 
+                    alt="Wardrobe" 
+                    width={600} 
+                    height={750} 
+                    className="w-full aspect-[4/5] object-cover transition-transform duration-[2s] group-hover:scale-105" 
+                  />
+                </div>
+                <div className="pt-4 px-2">
+                  <h4 className="font-headline text-xl mb-2">Wardrobe Curation</h4>
+                  <p className="text-sm text-on-surface-variant font-light tracking-wide">Elevating your daily ritual of dressing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PROCESS AND SERVICES CAN CONTINUE BELOW OR ON THEIR OWN PAGES */}
+        <section className="bg-surface py-48 md:py-64">
+           {/* Integrating previous sections but restyled for French Riviera theme */}
+           <ProcessSteps />
+        </section>
+
+        <Testimonials />
+
+        <section className="bg-surface-container py-40">
+           <FAQAccordion />
+        </section>
+
+        {/* FINAL CONTACT SECTION */}
+        <Section className="bg-surface pt-40 pb-56" id="contact">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-40 items-start px-6">
+            <div className="pt-8">
+              <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-8 block">Get In Touch</span>
+              <h3 className="font-headline text-5xl md:text-7xl leading-[1.1] mb-10">Let's craft your <br /> <span className="italic text-primary">sanctuary.</span></h3>
+              <p className="font-body text-xl lg:text-2xl text-on-surface-variant leading-relaxed font-light mb-14">
+                Take the first step toward a more organized, peaceful home. Fill out the inquiry form, and we'll reach out within 24 hours to schedule your complimentary call.
+              </p>
+              <div className="space-y-8 text-on-surface-variant font-sans tracking-wide text-sm leading-relaxed border-t border-outline-variant/30 pt-14">
+                <p className="flex items-center"><strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-24">Serving</strong> French Riviera • Monaco • Cannes • Nice</p>
+                <p className="flex items-center"><strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-24">Email</strong> hello@spaceorganizing.com</p>
+                <p className="flex items-center"><strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-24">Phone</strong> +33 (0) 6 40 60 81 20</p>
+              </div>
+            </div>
+            <div className="bg-surface p-12 md:p-20 shadow-lg rounded-DEFAULT border border-outline-variant/10">
               <ContactForm />
             </div>
           </div>
@@ -167,3 +129,5 @@ export default function Home() {
     </>
   );
 }
+
+

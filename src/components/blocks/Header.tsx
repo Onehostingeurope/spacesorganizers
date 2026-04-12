@@ -7,12 +7,10 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Spaces", href: "/spaces" },
   { label: "Portfolio", href: "/portfolio" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Riviera", href: "/riviera" },
+  { label: "About", href: "/about" },
 ];
 
 export function Header() {
@@ -30,66 +28,74 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-softwhite/95 backdrop-blur-md shadow-sm py-4"
-          : "bg-transparent py-6"
+          ? "bg-surface/90 backdrop-blur-2xl shadow-[0_40px_60px_-15px_rgba(56,56,49,0.05)] py-4"
+          : "bg-surface/10 backdrop-blur-sm py-6 md:py-8"
       )}
     >
-      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between max-w-[1920px]">
         {/* LOGO */}
         <Link
           href="/"
-          className="font-serif text-2xl tracking-wide text-charcoal"
+          className="font-serif text-2xl font-light tracking-tighter text-on-surface"
         >
-          Spaces
+          Space Organizing
         </Link>
 
         {/* DESKTOP NAV */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center gap-10">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-sm uppercase tracking-widest text-charcoal/80 hover:text-charcoal transition-colors font-medium"
+              className="text-xs lg:text-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all duration-300 font-normal"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        {/* CTA */}
-        <div className="hidden md:block">
-          <Link href="/contact">
-            <Button variant="primary">Book a Consultation</Button>
-          </Link>
-        </div>
+        {/* ACTIONS */}
+        <div className="flex items-center gap-8">
+           <div className="hidden lg:block text-on-surface-variant font-sans text-[10px] tracking-[0.2em] uppercase">
+              EN | <span className="opacity-40">FR</span> | <span className="opacity-40">RU</span> | <span className="opacity-40">DE</span>
+           </div>
+           
+           <div className="hidden md:block">
+              <Link href="/contact">
+                <Button className="scale-[0.99] active:scale-100 transition-transform bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary-dim shadow-sm">
+                  Book a Consultation
+                </Button>
+              </Link>
+           </div>
 
-        {/* MOBILE TOGGLE */}
-        <button
-          className="md:hidden text-charcoal focus:outline-none"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+           {/* MOBILE TOGGLE */}
+           <button
+             className="md:hidden text-on-surface focus:outline-none"
+             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+           >
+             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+           </button>
+        </div>
       </div>
 
       {/* MOBILE MENU */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-softwhite border-t border-charcoal/10 shadow-lg md:hidden flex flex-col px-6 py-8 space-y-6">
+        <div className="absolute top-full left-0 right-0 bg-surface border-t border-outline-variant/10 shadow-lg md:hidden flex flex-col px-6 py-8 space-y-6">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-xl font-serif text-charcoal hover:opacity-70 transition-opacity"
+              className="text-2xl font-serif text-on-surface hover:opacity-70 transition-opacity"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-4 border-t border-charcoal/10">
+          <div className="pt-4 border-t border-outline-variant/10">
             <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button variant="primary" className="w-full">
+              <Button className="w-full bg-primary text-on-primary text-xs tracking-widest uppercase py-4">
                 Book a Consultation
               </Button>
             </Link>
@@ -99,3 +105,5 @@ export function Header() {
     </header>
   );
 }
+
+

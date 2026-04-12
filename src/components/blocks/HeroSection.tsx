@@ -8,74 +8,99 @@ import { motion } from "framer-motion";
 
 export function HeroSection() {
   return (
-    <section className="relative h-screen min-h-[700px] flex items-center justify-center pt-20 overflow-hidden bg-charcoal">
-      {/* Background Image Placeholder */}
-      <motion.div 
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 3, ease: "easeOut" }}
-        className="absolute inset-0 z-0"
-      >
-        <div className="absolute inset-0 bg-charcoal/40 z-10" />
+    <section className="relative h-screen w-full flex items-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero-home-organization.png"
-          alt="Luxury Home Organization"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxbyLt8Hv-3Fd56k4BYlXt5-e3GvaqIoOP4rmukFbJ6r32O77jPlMkmLorTMpLudhhzoZB4qg2u1Wke5HEugEXvej7hwSCcIx4kzDRdnLG5xHNEqfREli8ecmMOh_sKpk6v0bUyYl2NgePiLlYZKXXZybAbdB-uBZBSmT6N6ORuiRj_y9gOjHj5vkCXyrbY9fUG69rShB-xN5AC8phqkYZachKYw7mihfe21awBLSi12Depk1OKBeyQub5NdtkQS_U6ceK1mC-ns4"
+          alt="Luxury closet organization"
           fill
           className="object-cover"
           priority
         />
-      </motion.div>
-
-      <div className="container relative z-10 mx-auto px-6 md:px-12 text-center max-w-5xl pt-10">
-        <motion.div
-           initial={{ opacity: 0, y: 30 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-        >
-          <Heading as="h1" className="text-softwhite mb-8 text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.1] drop-shadow-sm font-light tracking-tighter">
-            Luxury Home Organization <br className="hidden md:block"/>
-            <span className="italic font-normal font-serif text-softwhite/90">Designed Around You</span>
-          </Heading>
-        </motion.div>
-        
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-        >
-          <Body className="text-softwhite/80 text-lg md:text-xl md:leading-loose max-w-2xl mx-auto mb-12 drop-shadow-sm font-light">
-            We transform cluttered spaces into calm, functional, elegant environments meticulously curated to support your daily routines.
-          </Body>
-        </motion.div>
-        
-        <motion.div 
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           transition={{ duration: 1, delay: 1, ease: "easeOut" }}
-           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4"
-        >
-          <Link href="/contact" className="w-full sm:w-auto">
-            <Button variant="primary" size="lg" className="w-full bg-softwhite text-charcoal hover:bg-transparent hover:text-softwhite hover:border-softwhite border border-transparent transition-all">
-              Book Consultation
-            </Button>
-          </Link>
-          <Link href="/portfolio" className="w-full sm:w-auto mt-4 sm:mt-0">
-             <Button variant="ghost" size="lg" className="w-full text-softwhite border border-softwhite hover:bg-softwhite hover:text-charcoal transition-all">
-              View Projects
-            </Button>
-          </Link>
-        </motion.div>
+        {/* Subtle Dark/Tonal Overlay for Editorial Feel */}
+        <div className="absolute inset-0 editorial-gradient md:block hidden"></div>
+        <div className="absolute inset-0 bg-surface/40 md:hidden"></div>
       </div>
 
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-20">
+        <div className="max-w-2xl">
+          {/* Trust Indicator */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <span className="w-8 h-[1px] bg-primary"></span>
+            <p className="font-label text-xs tracking-[0.3em] uppercase text-on-surface-variant font-semibold">
+              French Riviera • Monaco • Cannes • Nice
+            </p>
+          </motion.div>
+
+          {/* Headline (H1) */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
+            className="font-headline text-5xl md:text-8xl text-on-surface leading-[1.1] mb-6 font-light tracking-tight"
+          >
+            Space Organizing
+          </motion.h1>
+
+          {/* Subtitle (H2) */}
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.5 }}
+            className="font-headline text-xl md:text-2xl text-primary mb-8 italic font-light leading-relaxed"
+          >
+            Home organization, decluttering & wardrobe services on the French Riviera
+          </motion.h2>
+
+          {/* Description */}
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.8 }}
+            className="font-body text-base md:text-lg text-on-surface-variant leading-relaxed mb-12 max-w-lg"
+          >
+            Practical help with decluttering, home organization, wardrobes, moving, unpacking and storage solutions — so your home feels lighter, clearer and easier to maintain.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.1 }}
+            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+          >
+            <Link href="/contact" className="contents">
+              <button className="bg-primary text-on-primary px-10 py-5 rounded-DEFAULT font-medium text-sm tracking-widest uppercase hover:bg-primary-dim transition-all duration-300 shadow-lg shadow-primary/10 flex items-center justify-center gap-2">
+                Book a Consultation
+              </button>
+            </Link>
+            <a href="https://wa.me/3105550198" target="_blank" rel="noopener noreferrer" className="bg-transparent border-b-2 border-outline-variant/30 hover:border-primary px-6 py-5 font-medium text-sm tracking-widest uppercase text-on-surface flex items-center justify-center gap-3 transition-all">
+              <span className="material-symbols-outlined text-green-700" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
+              WhatsApp
+            </a>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
       <motion.div 
-         initial={{ opacity: 0 }}
-         animate={{ opacity: 1 }}
-         transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
-         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-softwhite/60"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.8 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] mb-4 font-sans">Scroll to Explore</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-softwhite/60 to-transparent" />
+        <span className="font-label text-[10px] tracking-[0.4em] uppercase text-on-surface-variant/60">Discover the Atelier</span>
+        <div className="w-[1px] h-16 bg-gradient-to-b from-primary/40 to-transparent"></div>
       </motion.div>
     </section>
   );
 }
+
+

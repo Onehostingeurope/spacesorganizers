@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Noto_Serif, Manrope } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const notoSerif = Noto_Serif({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-serif",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Spaces Organizers | Luxury Home Organization",
-  description: "We transform cluttered spaces into calm, functional, elegant environments tailored to your daily routine.",
+  title: "Space Organizing | Luxury Home Organization French Riviera",
+  description: "Home organization, decluttering & wardrobe services on the French Riviera - Practical help with decluttering, storage solutions, and Atelier curation.",
 };
 
 export default function RootLayout({
@@ -25,8 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased text-charcoal bg-softwhite min-h-screen flex flex-col">{children}</body>
+    <html lang="en" className={`${notoSerif.variable} ${manrope.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+      </head>
+      <body className="bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col">{children}</body>
     </html>
   );
 }
+

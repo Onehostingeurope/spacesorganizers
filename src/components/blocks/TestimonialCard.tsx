@@ -1,6 +1,6 @@
 import React from "react";
 import { Section } from "@/components/ui/Section";
-import { Heading } from "@/components/ui/Typography";
+import { Heading, Subheading } from "@/components/ui/Typography";
 import { Quote } from "lucide-react";
 
 const REVIEWS = [
@@ -23,20 +23,21 @@ const REVIEWS = [
 
 export function Testimonials() {
   return (
-    <Section className="bg-sand lg:py-40">
-      <div className="text-center mb-16">
-        <Heading>Client Experiences</Heading>
+    <Section className="bg-surface-container lg:py-48">
+      <div className="text-center mb-24">
+        <Subheading className="mb-4 opacity-70">Sanctuary Stories</Subheading>
+        <Heading className="text-5xl md:text-6xl font-light">Client Experiences</Heading>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
         {REVIEWS.map((review, index) => (
-          <div key={index} className="bg-softwhite p-8 md:p-10 shadow-sm relative rounded-sm border border-charcoal/5">
-            <Quote className="text-taupe mb-6 opacity-50" size={32} />
-            <p className="font-serif italic text-lg leading-relaxed text-charcoal/80 mb-8">
+          <div key={index} className="bg-surface p-12 md:p-14 shadow-lg relative rounded-DEFAULT border border-outline-variant/10">
+            <Quote className="text-primary mb-8 opacity-40" size={36} strokeWidth={1} />
+            <p className="font-headline italic text-xl leading-relaxed text-on-surface/90 mb-10 font-light">
               "{review.text}"
             </p>
-            <div>
-              <p className="font-sans font-medium text-sm tracking-widest uppercase text-charcoal">{review.author}</p>
-              <p className="font-sans text-xs text-charcoal/60 mt-1">{review.area}</p>
+            <div className="pt-8 border-t border-outline-variant/20">
+              <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface">{review.author}</p>
+              <p className="font-label text-[11px] font-semibold text-primary mt-2 uppercase tracking-widest">{review.area}</p>
             </div>
           </div>
         ))}
@@ -44,3 +45,5 @@ export function Testimonials() {
     </Section>
   );
 }
+
+
