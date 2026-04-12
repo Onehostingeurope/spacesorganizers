@@ -2,7 +2,7 @@
   "nav": {
     "services": "Services",
     "portfolio": "Portfolio",
-    "riviera": "Riviera",
+    "riviera": "Spaces",
     "about": "About",
     "cta": "Book a Consultation"
   },
@@ -13,7 +13,7 @@
     "description": "Practical help with decluttering, home organization, wardrobes, moving, unpacking and storage solutions — so your home feels lighter, clearer and easier to maintain.",
     "cta_primary": "Book a Consultation",
     "cta_whatsapp": "WhatsApp",
-    "scroll_hint": "Discover the Atelier"
+    "scroll_hint": "Explore the Sanctuary"
   },
   "philosophy": {
     "label": "The Philosophy",
@@ -63,7 +63,7 @@
     "heading_accent": "sanctuary.",
     "description": "Take the first step toward a more organized, peaceful home. Fill out the inquiry form, and we'll reach out within 24 hours to schedule your complimentary call.",
     "serving_label": "Serving",
-    "serving": "French Riviera â€¢ Monaco â€¢ Cannes â€¢ Nice",
+    "serving": "French Riviera • Monaco • Cannes • Nice",
     "email_label": "Email",
     "phone_label": "Phone",
     "form": {

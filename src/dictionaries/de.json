@@ -2,7 +2,7 @@
   "nav": {
     "services": "Leistungen",
     "portfolio": "Portfolio",
-    "riviera": "Riviera",
+    "riviera": "Spaces",
     "about": "Über uns",
     "cta": "Beratung buchen"
   },
@@ -13,7 +13,7 @@
     "description": "Praktische Hilfe beim Entrümpeln, der Heimorganisation, Garderoben, Umzug, Auspacken und Aufbewahrungslösungen — damit sich Ihr Zuhause leichter, klarer und einfacher anfühlt.",
     "cta_primary": "Beratung buchen",
     "cta_whatsapp": "WhatsApp",
-    "scroll_hint": "Das Atelier entdecken"
+    "scroll_hint": "Das Sanctuary entdecken"
   },
   "philosophy": {
     "label": "Die Philosophie",
@@ -96,7 +96,7 @@
     "philosophy_body1": "Wir betrachten Organisation nicht nur als Aufgabe, Dinge wegzuräumen, sondern als Gelegenheit, Ihr Leben zu kuratieren. Ein gut organisierter Raum sollte intuitiv sein und genauso schön aussehen, wie er funktioniert.",
     "philosophy_body2": "Durch die Verbindung ästhetischer Prinzipien mit praktischen Systemen schaffen wir Räume, die nicht nur Ihre Gegenstände aufbewahren — sie unterstützen Ihren Lebensstil, reduzieren tägliche Reibung und laden zu einem Gefühl tiefer Ruhe ein.",
     "systems_title": "Warum Maßgeschneiderte Systeme Wichtig Sind",
-    "systems_body1": "Generische Behälter und beliebige Etiketten scheitern oft, weil sie nicht für die Art und Weise konzipiert sind, wie Sie tatsächlich leben.",
+    "systems_body1": "Generische Behälter und beliebige Etiketten scheitern oft, weil sie nicht für die Arbeit konzipiert sind, wie Sie tatsächlich leben.",
     "systems_body2": "Wir nehmen uns die Zeit, Ihre Gewohnheiten zu verstehen. Diese Mikro-Entscheidungen bilden die Grundlage von Systemen, die lange nach unserem Weggang einfach zu pflegen sind."
   }
 }

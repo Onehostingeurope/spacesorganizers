@@ -2,7 +2,7 @@
   "nav": {
     "services": "Services",
     "portfolio": "Portfolio",
-    "riviera": "Riviera",
+    "riviera": "Espaces",
     "about": "À propos",
     "cta": "Réserver une consultation"
   },
@@ -13,7 +13,7 @@
     "description": "Aide pratique pour désencombrer, organiser votre intérieur, vos armoires, votre déménagement et vos solutions de rangement — pour que votre maison se sente plus légère, plus claire et plus facile à entretenir.",
     "cta_primary": "Réserver une consultation",
     "cta_whatsapp": "WhatsApp",
-    "scroll_hint": "Découvrir l'Atelier"
+    "scroll_hint": "Explorer le Sanctuaire"
   },
   "philosophy": {
     "label": "La Philosophie",
@@ -49,7 +49,7 @@
     "label": "Questions Fréquentes",
     "heading": "Foire Aux Questions",
     "items": [
-      { "q": "Que se passe-t-il lors d'une consultation ?", "a": "Nous visitons votre espace pour évaluer les systèmes existants, discuter de votre quotidien et identifier vos objectifs. Cela nous permet de créer un plan personnalisé parfaitement adapté à votre style de vie." },
+      { "q": "Que se passe-t-1 lors d'une consultation ?", "a": "Nous visitons votre espace pour évaluer les systèmes existants, discuter de votre quotidien et identifier vos objectifs. Cela nous permet de créer un plan personnalisé parfaitement adapté à votre style de vie." },
       { "q": "Travaillez-vous pièce par pièce ou sur maison entière ?", "a": "Nous proposons les deux options. Que vous ayez besoin d'un simple rafraîchissement de placard ou d'un système d'organisation complet, nous adaptons nos services à vos besoins." },
       { "q": "Proposez-vous un service de déballage lors d'un emménagement ?", "a": "Oui, notre service d'emménagement est conçu pour alléger le stress du déménagement. Nous déballons, organisons et mettons en valeur vos affaires pour que vous puissiez vous installer immédiatement." },
       { "q": "Pouvez-vous aider à désencombrer avant d'organiser ?", "a": "Absolument. Nous vous guidons dans le processus de tri avec empathie et des méthodes de décision claires, en veillant à n'organiser que ce que vous aimez vraiment et utilisez." },

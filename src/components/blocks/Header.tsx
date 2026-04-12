@@ -66,9 +66,6 @@ export function Header({ dict, lang }: HeaderProps) {
           <span className="flex items-baseline gap-1">
              <span className="italic">Space</span> Organizers
           </span>
-          <span className="font-label text-[7px] tracking-[0.4em] uppercase text-primary -mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-             L'Atelier de la Riviera
-          </span>
         </Link>
 
         {/* DESKTOP NAV */}

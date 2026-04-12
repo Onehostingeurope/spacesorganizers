@@ -16,7 +16,7 @@ interface FooterProps {
 const FOOTER_LINKS = (lang: string) => [
   { label: "Privacy", href: `/${lang}/privacy` },
   { label: "Terms", href: `/${lang}/terms` },
-  { label: "Atelier", href: `/${lang}/spaces` },
+  { label: "Spaces", href: `/${lang}/spaces` },
   { label: "Press", href: `/${lang}/about` },
   { label: "Contact", href: `/${lang}/contact` },
 ];
