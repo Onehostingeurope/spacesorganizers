@@ -135,12 +135,8 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           )}
         </AnimatePresence>
 
-        {/* Dynamic Admin-Controlled Overlays */}
-        {content.overlayOpacity > 0 && (
-          <>
-        {/* Overlays Removed as requested */}
       </div>
-
+      
       {/* Hero Content — Editorial Layout */}
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-32 md:pt-40 lg:pt-0">
         
@@ -152,11 +148,11 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             transition={{ duration: 1.2, delay: 0.5 }}
             className="flex items-center gap-6"
           >
-            <div className={`w-8 h-[1px] ${isDark ? "bg-white/20" : "bg-primary/30"}`} />
-            <span className={`font-label text-[10px] tracking-[0.5em] uppercase ${isDark ? "text-white/60" : "text-primary/60"} font-medium`}>
+            <div className="w-8 h-[1px] bg-primary/30" />
+            <span className="font-label text-[10px] tracking-[0.5em] uppercase text-primary/60 font-medium">
               {content.region}
             </span>
-            <div className={`w-8 h-[1px] ${isDark ? "bg-white/20" : "bg-primary/30"}`} />
+            <div className="w-8 h-[1px] bg-primary/30" />
           </motion.div>
         </div>
 
@@ -235,15 +231,13 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                   key={s.id}
                   onClick={() => setCurrent(i)}
                   className={`w-1 transition-all duration-700 ${
-                    i === current 
-                      ? (isDark ? "h-12 bg-white" : "h-12 bg-primary") 
-                      : (isDark ? "h-4 bg-white/20 hover:bg-white/40" : "h-4 bg-outline-variant/30 hover:bg-primary/40")
+                    i === current ? "h-12 bg-primary" : "h-4 bg-outline-variant/30 hover:bg-primary/40"
                   }`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
            </div>
-           <p className={`font-label text-[10px] tracking-[0.3em] ${isDark ? "text-white/40" : "text-on-surface-variant/40"} vertical-text pb-2 uppercase`}>
+           <p className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant/40 vertical-text pb-2 uppercase drop-shadow-sm">
               0{current + 1} / 0{sorted.length}
            </p>
         </div>
@@ -256,7 +250,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
         transition={{ duration: 1.5, delay: 2.2 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10"
       >
-        <div className={`w-[18px] h-[30px] border-2 ${isDark ? "border-white/20" : "border-primary/40"} rounded-full flex justify-center p-1`}>
+        <div className="w-[18px] h-[30px] border-2 border-primary/40 rounded-full flex justify-center p-1 shadow-sm">
           <motion.div 
             animate={{ 
               y: [0, 8, 0],
@@ -267,10 +261,10 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className={`w-1 h-2 ${isDark ? "bg-white" : "bg-primary"} rounded-full`}
+            className="w-1 h-2 bg-primary rounded-full"
           />
         </div>
-        <span className={`font-label text-[8px] tracking-[0.5em] uppercase ${isDark ? "text-white/60" : "text-primary/60"} vertical-text whitespace-nowrap`}>
+        <span className="font-label text-[8px] tracking-[0.5em] uppercase text-primary/60 vertical-text whitespace-nowrap drop-shadow-sm">
            Scroll
         </span>
       </motion.div>
