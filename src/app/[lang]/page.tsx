@@ -44,7 +44,7 @@ export default async function Home({
   const heroSettings = heroSettingsData.find(s => s.lang === lang) || heroSettingsData[0];
   const homepageSettings = homepageSettingsData.find(s => s.lang === lang) || homepageSettingsData[0];
 
-  const isDarkHero = heroSettings?.overlay_style === "dark" && (heroSettings?.overlay_opacity ?? 40) > 0;
+  const isDarkHero = false; // Overlays removed
 
   const p = dict.philosophy;
   const c = dict.contact;

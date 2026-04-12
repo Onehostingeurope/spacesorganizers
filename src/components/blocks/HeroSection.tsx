@@ -68,11 +68,6 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     overlayStyle: settings?.overlay_style || "dark",
   };
 
-  const isDark = content.overlayStyle === "dark" && content.overlayOpacity > 30;
-  const textColor = isDark ? "text-surface-bright" : "text-on-surface";
-  const mutedTextColor = isDark ? "text-surface-bright/70" : "text-on-surface-variant/80";
-  const accentColor = isDark ? "text-white" : "text-primary";
-
   const slide = hasSlides ? sorted[current] : null;
 
   return (
@@ -143,27 +138,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
         {/* Dynamic Admin-Controlled Overlays */}
         {content.overlayOpacity > 0 && (
           <>
-            <div 
-              className="absolute inset-0 z-[1] transition-all duration-1000"
-              style={{ 
-                backgroundColor: content.overlayStyle === "dark" ? "black" : "white",
-                opacity: content.overlayOpacity / 100
-              }} 
-            />
-            {/* Soft, smart-contrast protection gradient */}
-            <div 
-              className="absolute inset-0 z-[2] transition-opacity duration-1000"
-              style={{
-                opacity: content.overlayOpacity / 100,
-                background: `linear-gradient(to right, ${
-                  isDark 
-                    ? "rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%" 
-                    : "rgba(255, 252, 247, 0.95) 0%, rgba(255, 252, 247, 0.6) 40%, rgba(255, 252, 247, 0) 100%"
-                })`
-              }}
-            />
-          </>
-        )}
+        {/* Overlays Removed as requested */}
       </div>
 
       {/* Hero Content — Editorial Layout */}
@@ -192,7 +167,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className={`font-headline text-5xl md:text-[clamp(5rem,10vw,9.5rem)] ${textColor} leading-[0.85] font-light tracking-tighter`}
+              className="font-headline text-5xl md:text-[clamp(5rem,10vw,9.5rem)] text-on-surface leading-[0.85] font-light tracking-tighter drop-shadow-sm"
             >
               {content.title}
             </motion.h1>
@@ -206,17 +181,17 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               transition={{ duration: 1.2, delay: 0.6 }}
               className="flex-1"
             >
-              <h2 className={`font-headline text-xl md:text-3xl ${accentColor} italic font-light leading-relaxed mb-4`}>
+              <h2 className="font-headline text-xl md:text-3xl text-primary italic font-light leading-relaxed mb-4 drop-shadow-sm">
                 {content.subtitle}
               </h2>
-              <div className={`w-16 h-[2px] ${isDark ? "bg-surface-bright/20" : "bg-outline-variant/30"}`} />
+              <div className="w-16 h-[2px] bg-outline-variant/30" />
             </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.9 }}
-              className={`font-body text-sm md:text-lg ${mutedTextColor} leading-loose max-w-sm font-light`}
+              className="font-body text-sm md:text-lg text-on-surface-variant/80 leading-loose max-w-sm font-light drop-shadow-sm"
             >
               {content.description}
             </motion.p>
