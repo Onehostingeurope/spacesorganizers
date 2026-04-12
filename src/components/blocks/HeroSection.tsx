@@ -145,16 +145,6 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                 opacity: content.overlayOpacity / 100
               }} 
             />
-            <div 
-              className="absolute inset-0 z-[2] transition-opacity duration-1000"
-              style={{
-                background: `linear-gradient(to right, ${
-                  content.overlayStyle === "dark" 
-                    ? "rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%" 
-                    : "rgba(255, 252, 247, 0.98) 0%, rgba(255, 252, 247, 0.85) 30%, rgba(255, 252, 247, 0.4) 60%, rgba(255, 252, 247, 0) 100%"
-                })`
-              }}
-            />
           </>
         )}
       </div>
