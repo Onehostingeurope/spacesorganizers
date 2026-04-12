@@ -68,6 +68,11 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     overlayStyle: settings?.overlay_style || "dark",
   };
 
+  const isDark = content.overlayStyle === "dark" && content.overlayOpacity > 30;
+  const textColor = isDark ? "text-surface-bright" : "text-on-surface";
+  const mutedTextColor = isDark ? "text-surface-bright/70" : "text-on-surface-variant/80";
+  const accentColor = isDark ? "text-white" : "text-primary";
+
   const slide = hasSlides ? sorted[current] : null;
 
   return (
@@ -145,6 +150,17 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                 opacity: content.overlayOpacity / 100
               }} 
             />
+            {/* Soft, smart-contrast protection gradient */}
+            <div 
+              className="absolute inset-0 z-[2] transition-opacity duration-1000"
+              style={{
+                background: `linear-gradient(to right, ${
+                  isDark 
+                    ? "rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0) 100%" 
+                    : "rgba(255, 252, 247, 0.6) 0%, rgba(255, 252, 247, 0.3) 40%, rgba(255, 252, 247, 0) 100%"
+                })`
+              }}
+            />
           </>
         )}
       </div>
@@ -160,11 +176,11 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             transition={{ duration: 1.2, delay: 0.5 }}
             className="flex items-center gap-6"
           >
-            <div className="w-8 h-[1px] bg-primary/30" />
-            <span className="font-label text-[10px] tracking-[0.5em] uppercase text-primary/60 font-medium">
+            <div className={`w-8 h-[1px] ${isDark ? "bg-white/20" : "bg-primary/30"}`} />
+            <span className={`font-label text-[10px] tracking-[0.5em] uppercase ${isDark ? "text-white/60" : "text-primary/60"} font-medium`}>
               {content.region}
             </span>
-            <div className="w-8 h-[1px] bg-primary/30" />
+            <div className={`w-8 h-[1px] ${isDark ? "bg-white/20" : "bg-primary/30"}`} />
           </motion.div>
         </div>
 
@@ -175,7 +191,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-headline text-5xl md:text-[clamp(5rem,10vw,9.5rem)] text-on-surface leading-[0.85] font-light tracking-tighter"
+              className={`font-headline text-5xl md:text-[clamp(5rem,10vw,9.5rem)] ${textColor} leading-[0.85] font-light tracking-tighter`}
             >
               {content.title}
             </motion.h1>
@@ -189,17 +205,17 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               transition={{ duration: 1.2, delay: 0.6 }}
               className="flex-1"
             >
-              <h2 className="font-headline text-xl md:text-3xl text-primary italic font-light leading-relaxed mb-4">
+              <h2 className={`font-headline text-xl md:text-3xl ${accentColor} italic font-light leading-relaxed mb-4`}>
                 {content.subtitle}
               </h2>
-              <div className="w-16 h-[2px] bg-outline-variant/30" />
+              <div className={`w-16 h-[2px] ${isDark ? "bg-surface-bright/20" : "bg-outline-variant/30"}`} />
             </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.9 }}
-              className="font-body text-sm md:text-lg text-on-surface-variant/80 leading-loose max-w-sm font-light"
+              className={`font-body text-sm md:text-lg ${mutedTextColor} leading-loose max-w-sm font-light`}
             >
               {content.description}
             </motion.p>
@@ -243,13 +259,15 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                   key={s.id}
                   onClick={() => setCurrent(i)}
                   className={`w-1 transition-all duration-700 ${
-                    i === current ? "h-12 bg-primary" : "h-4 bg-outline-variant/30 hover:bg-primary/40"
+                    i === current 
+                      ? (isDark ? "h-12 bg-white" : "h-12 bg-primary") 
+                      : (isDark ? "h-4 bg-white/20 hover:bg-white/40" : "h-4 bg-outline-variant/30 hover:bg-primary/40")
                   }`}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               ))}
            </div>
-           <p className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant/40 vertical-text pb-2 uppercase">
+           <p className={`font-label text-[10px] tracking-[0.3em] ${isDark ? "text-white/40" : "text-on-surface-variant/40"} vertical-text pb-2 uppercase`}>
               0{current + 1} / 0{sorted.length}
            </p>
         </div>
@@ -262,7 +280,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
         transition={{ duration: 1.5, delay: 2.2 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10"
       >
-        <div className="w-[18px] h-[30px] border-2 border-primary/40 rounded-full flex justify-center p-1">
+        <div className={`w-[18px] h-[30px] border-2 ${isDark ? "border-white/20" : "border-primary/40"} rounded-full flex justify-center p-1`}>
           <motion.div 
             animate={{ 
               y: [0, 8, 0],
@@ -273,10 +291,10 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               repeat: Infinity,
               ease: "easeInOut"
             }}
-            className="w-1 h-2 bg-primary rounded-full"
+            className={`w-1 h-2 ${isDark ? "bg-white" : "bg-primary"} rounded-full`}
           />
         </div>
-        <span className="font-label text-[8px] tracking-[0.5em] uppercase text-primary/60 vertical-text whitespace-nowrap">
+        <span className={`font-label text-[8px] tracking-[0.5em] uppercase ${isDark ? "text-white/60" : "text-primary/60"} vertical-text whitespace-nowrap`}>
            Scroll
         </span>
       </motion.div>
