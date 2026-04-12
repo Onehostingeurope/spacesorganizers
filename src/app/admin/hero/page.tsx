@@ -213,6 +213,162 @@ function SlideForm({
   );
 }
 
+// ─── Settings Editor ───────────────────────────────────────────────────────
+function HeroSettingsEditor() {
+  const [lang, setLang] = useState("en");
+  const [settings, setSettings] = useState<any>({
+    region: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    autoplay_speed: 15,
+  });
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const fetchSettings = async (l: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/hero-settings?lang=${l}`);
+      const data = await res.json();
+      setSettings({
+        region: data.region || "",
+        title: data.title || "",
+        subtitle: data.subtitle || "",
+        description: data.description || "",
+        autoplay_speed: data.autoplay_speed || 15,
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSettings(lang);
+  }, [lang]);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    setMessage("");
+    try {
+      const res = await fetch("/api/hero-settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...settings, lang }),
+      });
+      if (res.ok) {
+        setMessage("Settings saved successfully!");
+        setTimeout(() => setMessage(""), 3000);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("Failed to save settings.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="bg-surface-container p-8 mb-12 rounded-DEFAULT ghost-border">
+      <div className="flex justify-between items-center mb-8">
+        <h3 className="font-headline text-2xl text-on-surface font-light">Hero Content & Speed</h3>
+        
+        {/* Lang switcher */}
+        <div className="flex gap-1 bg-surface-variant/20 rounded-sm p-1">
+          {["en", "fr", "ru", "de"].map((l) => (
+            <button
+              key={l}
+              onClick={() => setLang(l)}
+              className={`px-4 py-1.5 text-[10px] uppercase tracking-widest font-semibold rounded-sm transition-all ${
+                lang === l ? "bg-primary text-on-primary" : "text-on-surface-variant hover:text-on-surface"
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <form onSubmit={handleSave} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-6">
+            <div>
+              <label className={LABEL_CLS}>Region (Top Label)</label>
+              <input
+                value={settings.region}
+                onChange={(e) => setSettings({ ...settings, region: e.target.value })}
+                placeholder="FRENCH RIVIERA • MONACO • CANNES • NICE"
+                className={INPUT_CLS}
+              />
+            </div>
+            <div>
+              <label className={LABEL_CLS}>Main Title (H1)</label>
+              <input
+                value={settings.title}
+                onChange={(e) => setSettings({ ...settings, title: e.target.value })}
+                placeholder="Space Organizers"
+                className={INPUT_CLS}
+              />
+            </div>
+            <div>
+              <label className={LABEL_CLS}>Subtitle (Italicized)</label>
+              <input
+                value={settings.subtitle}
+                onChange={(e) => setSettings({ ...settings, subtitle: e.target.value })}
+                placeholder="Home organization, decluttering..."
+                className={INPUT_CLS}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <label className={LABEL_CLS}>Description Paragraph</label>
+              <textarea
+                value={settings.description}
+                onChange={(e) => setSettings({ ...settings, description: e.target.value })}
+                placeholder="Describe your services..."
+                className={`${INPUT_CLS} h-32 resize-none`}
+              />
+            </div>
+            <div>
+              <label className={LABEL_CLS}>Carousel Speed (Seconds: {settings.autoplay_speed}s)</label>
+              <input
+                type="range"
+                min={5}
+                max={30}
+                step={1}
+                value={settings.autoplay_speed}
+                onChange={(e) => setSettings({ ...settings, autoplay_speed: Number(e.target.value) })}
+                className="w-full accent-primary mt-2"
+              />
+              <div className="flex justify-between text-[8px] tracking-widest uppercase text-on-surface-variant mt-2">
+                <span>Fast (5s)</span>
+                <span>Slow (30s)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 pt-4 border-t border-outline-variant/10">
+          <button
+            type="submit"
+            disabled={saving || loading}
+            className="bg-primary text-on-primary px-10 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all disabled:opacity-40"
+          >
+            {saving ? "Saving..." : `Save ${lang.toUpperCase()} Content`}
+          </button>
+          {message && <span className="text-xs text-primary italic">{message}</span>}
+        </div>
+      </form>
+    </div>
+  );
+}
+
 // ─── Page ──────────────────────────────────────────────────────────────────
 export default function HeroAdmin() {
   const [slides, setSlides] = useState<Slide[]>([]);
@@ -278,6 +434,9 @@ export default function HeroAdmin() {
           {isAdding ? "Cancel" : "+ Add Slide"}
         </button>
       </div>
+
+      {/* Settings Editor */}
+      <HeroSettingsEditor />
 
       {/* Add form */}
       {isAdding && (

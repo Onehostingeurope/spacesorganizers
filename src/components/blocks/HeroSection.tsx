@@ -29,6 +29,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
   const h = dict.hero;
   const [current, setCurrent] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [settings, setSettings] = useState<any>(null);
 
   // Sort slides by order
   const sorted = [...slides].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -38,13 +39,32 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     if (hasSlides) setCurrent((c) => (c + 1) % sorted.length);
   }, [hasSlides, sorted.length]);
 
-  // Auto-advance every 6 seconds
+  // Fetch dynamic settings (text + speed)
+  useEffect(() => {
+    fetch(`/api/hero-settings?lang=${lang}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.lang) setSettings(data);
+      })
+      .catch((err) => console.error("Hero settings fetch error:", err));
+  }, [lang]);
+
+  // Auto-advance
   useEffect(() => {
     setIsLoaded(true);
     if (sorted.length <= 1) return;
-    const timer = setInterval(next, 15000);
+    const delay = (settings?.autoplay_speed || 15) * 1000;
+    const timer = setInterval(next, delay);
     return () => clearInterval(timer);
-  }, [sorted.length, next]);
+  }, [sorted.length, next, settings?.autoplay_speed]);
+
+  // Content Fallbacks
+  const content = {
+    region: settings?.region || h.region,
+    title: settings?.title || h.title,
+    subtitle: settings?.subtitle || h.subtitle,
+    description: settings?.description || h.description,
+  };
 
   const slide = hasSlides ? sorted[current] : null;
 
@@ -124,7 +144,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           >
             <span className="w-8 h-[1px] bg-primary" />
             <p className="font-label text-xs tracking-[0.3em] uppercase text-on-surface-variant font-semibold">
-              {h.region}
+              {content.region}
             </p>
           </motion.div>
 
@@ -135,7 +155,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             transition={{ duration: 1.2, delay: 0.2 }}
             className="font-headline text-5xl md:text-8xl text-on-surface leading-[1.1] mb-6 font-light tracking-tight"
           >
-            {h.title}
+            {content.title}
           </motion.h1>
 
           {/* Subtitle */}
@@ -145,7 +165,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             transition={{ duration: 1.2, delay: 0.5 }}
             className="font-headline text-xl md:text-2xl text-primary mb-8 italic font-light leading-relaxed"
           >
-            {h.subtitle}
+            {content.subtitle}
           </motion.h2>
 
           {/* Description */}
@@ -155,7 +175,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             transition={{ duration: 1.2, delay: 0.8 }}
             className="font-body text-base md:text-lg text-on-surface-variant leading-relaxed mb-12 max-w-lg"
           >
-            {h.description}
+            {content.description}
           </motion.p>
 
           {/* CTAs */}
