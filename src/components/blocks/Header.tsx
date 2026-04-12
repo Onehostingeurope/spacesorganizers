@@ -15,9 +15,10 @@ type Locale = (typeof LOCALES)[number];
 interface HeaderProps {
   dict: Dictionary;
   lang: Locale;
+  isDarkHero?: boolean;
 }
 
-export function Header({ dict, lang }: HeaderProps) {
+export function Header({ dict, lang, isDarkHero }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -61,7 +62,10 @@ export function Header({ dict, lang }: HeaderProps) {
         {/* LOGO */}
         <Link
           href={`/${lang}`}
-          className="group flex flex-col font-headline text-2xl font-light tracking-[-0.03em] text-on-surface"
+          className={cn(
+            "group flex flex-col font-headline text-2xl font-light tracking-[-0.03em] transition-colors duration-500",
+            (isDarkHero && !isScrolled) ? "text-white" : "text-on-surface"
+          )}
         >
           <span className="flex items-baseline gap-1">
              <span className="italic">Space</span> Organizers
@@ -74,7 +78,12 @@ export function Header({ dict, lang }: HeaderProps) {
             <Link
               key={link.href}
               href={link.href}
-              className="group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/80 hover:text-on-surface transition-all duration-300"
+              className={cn(
+                "group relative font-label text-[10px] uppercase tracking-[0.3em] transition-all duration-300",
+                (isDarkHero && !isScrolled) 
+                  ? "text-white/70 hover:text-white" 
+                  : "text-on-surface-variant/80 hover:text-on-surface"
+              )}
             >
               <span className="animate-underline">{link.label}</span>
             </Link>
@@ -93,15 +102,18 @@ export function Header({ dict, lang }: HeaderProps) {
                   className={cn(
                     "px-1 py-0.5 transition-all duration-500 rounded-sm relative group",
                     l === lang
-                      ? "text-primary font-bold"
-                      : "text-on-surface-variant/40 hover:text-on-surface"
+                      ? (isDarkHero && !isScrolled ? "text-white font-bold" : "text-primary font-bold")
+                      : (isDarkHero && !isScrolled ? "text-white/30 hover:text-white" : "text-on-surface-variant/40 hover:text-on-surface")
                   )}
                 >
                   {l.toUpperCase()}
                   {l === lang && (
                     <motion.div 
                       layoutId="activeLang"
-                      className="absolute -bottom-1 left-0 right-0 h-[1px] bg-primary" 
+                      className={cn(
+                        "absolute -bottom-1 left-0 right-0 h-[1px]",
+                        isDarkHero && !isScrolled ? "bg-white" : "bg-primary"
+                      )} 
                     />
                   )}
                 </button>
@@ -120,7 +132,10 @@ export function Header({ dict, lang }: HeaderProps) {
 
           {/* MOBILE TOGGLE */}
           <button
-            className="md:hidden text-on-surface focus:outline-none p-2 hover:bg-primary/5 rounded-full transition-colors"
+            className={cn(
+              "md:hidden focus:outline-none p-2 rounded-full transition-colors",
+              isDarkHero && !isScrolled ? "text-white hover:bg-white/10" : "text-on-surface hover:bg-primary/5"
+            )}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >

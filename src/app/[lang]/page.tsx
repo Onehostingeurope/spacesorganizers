@@ -46,6 +46,18 @@ export default async function Home({
     console.error("Homepage settings fetch error:", err);
   }
 
+  // Fetch Hero settings to sync Header contrast
+  let heroSettings: any = null;
+  try {
+    const res = await fetch(`${baseUrl}/api/hero-settings?lang=${lang}`, { cache: "no-store" });
+    const data = await res.json();
+    if (data && data.lang) heroSettings = data;
+  } catch (err) {
+    console.error("Hero settings fetch error:", err);
+  }
+
+  const isDarkHero = heroSettings?.overlay_style === "dark" && (heroSettings?.overlay_opacity ?? 40) > 30;
+
   const p = dict.philosophy;
   const c = dict.contact;
 
@@ -111,7 +123,7 @@ export default async function Home({
 
   return (
     <>
-      <Header dict={dict} lang={locale} />
+      <Header dict={dict} lang={locale} isDarkHero={isDarkHero} />
       <main className="flex-1 bg-surface font-light overflow-x-hidden">
         <HeroSection dict={dict} lang={lang} slides={heroSlides} />
 
