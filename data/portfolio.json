@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "category": "Pantry",
+    "title": "Minimalist Kitchen Pantry",
+    "slug": "minimalist-kitchen-pantry",
+    "description": "A complete overhaul featuring bespoke woven baskets and aesthetic decanting.",
+    "image": "/images/consultation-lifestyle.png"
+  },
+  {
+    "id": "2",
+    "category": "Closet",
+    "title": "Boutique Walk-In Wardrobe",
+    "slug": "boutique-walk-in-wardrobe",
+    "description": "A luxurious master closet designed for seamless morning routines.",
+    "image": "/images/hero-home-organization.png"
+  }
+]

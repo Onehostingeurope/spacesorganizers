@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1",
+    "title": "Home Organization",
+    "slug": "home-organization",
+    "intro": "Comprehensive system design and implementation for any space in your home.",
+    "description": "A comprehensive transformation of your entire living space. We evaluate how you actually live, designing bespoke systems that reduce daily friction and bring profound aesthetic calm.",
+    "included": ["Complete home assessment", "Custom system design", "Product sourcing", "Implementation & styling"],
+    "idealClient": "Homeowners looking for a complete reset or moving into a new property.",
+    "outcome": "A cohesive, intuitively organized sanctuary.",
+    "image": "/images/consultation-lifestyle.png"
+  },
+  {
+    "id": "2",
+    "title": "Closet Design",
+    "slug": "closet-design",
+    "intro": "Boutique-style closet curation, sorting, and styling for an effortless morning routine.",
+    "description": "Curating a boutique-style wardrobe experience to elevate your morning routine. We swap hangers, color-code, and display accessories so getting ready feels luxurious.",
+    "included": ["Seasonal rotation setup", "Matching hanger swap", "Accessory display", "Shoe and handbag organization"],
+    "idealClient": "Professionals and fashion enthusiasts.",
+    "outcome": "A serene space that makes getting dressed a luxury experience.",
+    "image": "/images/hero-home-organization.png"
+  },
+  {
+    "id": "3",
+    "title": "Move-In Unpacking",
+    "slug": "move-in-unpacking",
+    "intro": "We handle the boxes and set up your new home so you can simply start living.",
+    "description": "Turning your new house into a functioning home from day one. Say goodbye to living out of boxes for months.",
+    "included": ["Box unpacking", "Immediate system set-up", "Trash removal coordination", "Space planning"],
+    "idealClient": "Families and professionals relocating to a new space.",
+    "outcome": "Skipping the chaos and walking into a fully settled, organized home.",
+    "image": "/images/hero-home-organization.png"
+  }
+]

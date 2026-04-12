@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "Kitchen & Pantry",
+    "slug": "kitchen-pantry",
+    "pain": "Cluttered countertops, expired food hidden in the back, and disorganized appliances making cooking stressful.",
+    "solution": "We implement intuitive zones, bespoke decanting, and accessible storage, turning the heart of your home into an inspiring place to cook and gather.",
+    "image": "/images/consultation-lifestyle.png"
+  },
+  {
+    "id": "2",
+    "title": "Master Closets",
+    "slug": "master-closets",
+    "pain": "Overstuffed racks, hidden items, and decision fatigue every morning.",
+    "solution": "We curate boutique-style layouts that honor your wardrobe, streamline your morning routine, and present your clothing beautifully.",
+    "image": "/images/hero-home-organization.png"
+  }
+]
