@@ -25,6 +25,8 @@ export async function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: {

@@ -92,3 +92,15 @@ alter table testimonials disable row level security;
 alter table blog disable row level security;
 alter table faq disable row level security;
 alter table leads disable row level security;
+
+-- HERO
+create table if not exists hero (
+  id uuid primary key default gen_random_uuid(),
+  type text not null,
+  url text not null,
+  alt text,
+  "order" integer default 1,
+  "createdAt" timestamptz default now(),
+  "updatedAt" timestamptz default now()
+);
+alter table hero disable row level security;
