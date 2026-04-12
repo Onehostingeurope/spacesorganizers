@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-export type Model = "services" | "spaces" | "portfolio" | "testimonials" | "blog" | "faq" | "leads" | "hero";
+export type Model = "services" | "spaces" | "portfolio" | "testimonials" | "blog" | "faq" | "leads" | "hero" | "hero_settings" | "homepage_settings";
 
 // Lazy singleton — only created when first used (not at module eval time)
 let _client: SupabaseClient | null = null;

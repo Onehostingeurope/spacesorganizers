@@ -35,28 +35,16 @@ export default async function Home({
   const spaces = await getCollection<any>("spaces");
   const portfolio = await getCollection<any>("portfolio");
   
-  // Fetch dynamic homepage settings
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  let homepageSettings: any = null;
-  try {
-    const res = await fetch(`${baseUrl}/api/homepage-settings?lang=${lang}`, { cache: "no-store" });
-    const data = await res.json();
-    if (data && data.lang) homepageSettings = data;
-  } catch (err) {
-    console.error("Homepage settings fetch error:", err);
-  }
+  // Fetch dynamic settings directly for reliability (avoiding internal API fetch in RSC)
+  const [heroSettingsData, homepageSettingsData] = await Promise.all([
+    getCollection<any>("hero_settings"),
+    getCollection<any>("homepage_settings")
+  ]);
 
-  // Fetch Hero settings to sync Header contrast
-  let heroSettings: any = null;
-  try {
-    const res = await fetch(`${baseUrl}/api/hero-settings?lang=${lang}`, { cache: "no-store" });
-    const data = await res.json();
-    if (data && data.lang) heroSettings = data;
-  } catch (err) {
-    console.error("Hero settings fetch error:", err);
-  }
+  const heroSettings = heroSettingsData.find(s => s.lang === lang) || heroSettingsData[0];
+  const homepageSettings = homepageSettingsData.find(s => s.lang === lang) || homepageSettingsData[0];
 
-  const isDarkHero = heroSettings?.overlay_style === "dark" && (heroSettings?.overlay_opacity ?? 40) > 30;
+  const isDarkHero = heroSettings?.overlay_style === "dark" && (heroSettings?.overlay_opacity ?? 40) > 0;
 
   const p = dict.philosophy;
   const c = dict.contact;
