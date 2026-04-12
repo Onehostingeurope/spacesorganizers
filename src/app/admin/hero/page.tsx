@@ -303,16 +303,7 @@ function HeroSettingsEditor() {
       <form onSubmit={handleSave} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <div>
-              <label className={LABEL_CLS}>Region (Top Label)</label>
-              <input
-                value={settings.region}
-                onChange={(e) => setSettings({ ...settings, region: e.target.value })}
-                placeholder="FRENCH RIVIERA • MONACO • CANNES • NICE"
-                className={INPUT_CLS}
-              />
-            </div>
-            <div>
+
               <label className={LABEL_CLS}>Main Title (H1)</label>
               <input
                 value={settings.title}

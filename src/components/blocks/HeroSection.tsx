@@ -150,21 +150,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
       {/* Hero Content — Editorial Layout */}
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-32 md:pt-40 lg:pt-0">
         
-        {/* Centered Top Region Tag */}
-        <div className="w-full flex justify-center mb-16 lg:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-            className="flex items-center gap-6"
-          >
-            <div className="w-8 h-[1px] bg-primary/30" />
-            <span className="font-label text-[10px] tracking-[0.5em] uppercase text-primary font-medium">
-              {content.region}
-            </span>
-            <div className="w-8 h-[1px] bg-primary/30" />
-          </motion.div>
-        </div>
+
 
         <div className="max-w-4xl">
           {/* H1 — Cinematic Reveal with Fluid Typography */}

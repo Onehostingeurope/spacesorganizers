@@ -116,7 +116,7 @@ export default async function Home({
         <HeroSection dict={dict} lang={lang} slides={heroSlides} />
 
         {/* PHILOSOPHY / ATELIER GRID */}
-        <section className="bg-surface-container py-32 px-6 md:px-24">
+        <section className="bg-surface-container py-20 md:py-32 px-6 md:px-24">
           <div className="max-w-[1920px] mx-auto">
             <ScrollReveal className="grid grid-cols-1 md:grid-cols-12 gap-12 items-end mb-24">
               <div className="md:col-span-12 lg:col-span-5">
@@ -201,7 +201,7 @@ export default async function Home({
         </ScrollReveal>
 
         {/* PROCESS */}
-        <ScrollReveal className="bg-surface py-48 md:py-64 border-y border-outline-variant/10">
+        <ScrollReveal className="bg-surface py-24 md:py-40 border-y border-outline-variant/10">
           <ProcessSteps dict={dict} data={content.process} />
         </ScrollReveal>
 
@@ -214,7 +214,7 @@ export default async function Home({
            <Testimonials dict={dict} data={content.testimonials} />
         </ScrollReveal>
 
-        <ScrollReveal variant="slide-up" className="bg-surface-container py-40">
+        <ScrollReveal variant="slide-up" className="bg-surface-container py-24 md:py-32">
           <FAQAccordion dict={dict} data={content.faq} />
         </ScrollReveal>
 
@@ -223,7 +223,7 @@ export default async function Home({
         </ScrollReveal>
 
         {/* CONTACT */}
-        <Section className="bg-surface pt-40 pb-56" id="contact">
+        <Section className="bg-surface pt-24 pb-32" id="contact">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-40 items-start px-6">
             <ScrollReveal className="pt-8">
               <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-8 block">
