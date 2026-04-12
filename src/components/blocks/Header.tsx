@@ -13,10 +13,10 @@ const LOCALES = ["en", "fr", "ru", "de"] as const;
 type Locale = (typeof LOCALES)[number];
 
 const FLAGS: Record<Locale, string> = {
-  en: "🇬🇧",
-  fr: "🇫🇷",
-  ru: "🇷🇺",
-  de: "🇩🇪",
+  en: "https://flagcdn.com/gb.svg",
+  fr: "https://flagcdn.com/fr.svg",
+  ru: "https://flagcdn.com/ru.svg",
+  de: "https://flagcdn.com/de.svg",
 };
 
 interface HeaderProps {
@@ -111,7 +111,7 @@ export function Header({ dict, lang }: HeaderProps) {
                   )}
                 >
                   <span className="flex items-center gap-1.5 relative z-10">
-                    <span className="text-base leading-none translate-y-[-1px]">{FLAGS[l]}</span> 
+                    <img src={FLAGS[l]} alt={`${l} flag`} className="w-3.5 h-[10px] object-cover rounded-[1px] shadow-sm drop-shadow-sm opacity-90" />
                     <span>{l.toUpperCase()}</span>
                   </span>
                   {l === lang && (
@@ -173,7 +173,8 @@ export function Header({ dict, lang }: HeaderProps) {
                   l === lang ? "text-primary font-semibold" : "text-on-surface-variant hover:text-on-surface"
                 )}
               >
-                <span className="text-lg">{FLAGS[l]}</span> {l.toUpperCase()}
+                <img src={FLAGS[l]} alt={`${l} flag`} className="w-4 h-3 object-cover rounded-[2px] shadow-sm" />
+                <span>{l.toUpperCase()}</span>
               </button>
             ))}
           </div>
