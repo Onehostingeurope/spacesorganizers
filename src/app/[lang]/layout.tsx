@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Serif, Manrope } from "next/font/google";
 import "../globals.css";
+
 import {
   getDictionary,
   hasLocale,
@@ -73,10 +74,6 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        />
       </head>
       <body className="bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col">
         {children}

@@ -1,5 +1,10 @@
 "use client";
 import React, { useRef, useState, useCallback } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export type UploadedType = "image" | "video";
 
@@ -25,47 +30,37 @@ export function UploadZone({
     async (file: File) => {
       setError(null);
       setUploaded(null);
-      setProgress(0);
+      setProgress(10); // Start progress
 
-      const fd = new FormData();
-      fd.append("file", file);
+      const isVideo = file.type.startsWith("video/");
+      const folder = isVideo ? "videos" : "images";
+      const ext = file.name.split(".").pop()?.toLowerCase() ?? "bin";
+      const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-      return new Promise<void>((resolve) => {
-        const xhr = new XMLHttpRequest();
+      try {
+        setProgress(30);
+        const { data, error: uploadError } = await supabase.storage
+          .from("hero-media")
+          .upload(filename, file, {
+            cacheControl: "31536000",
+            upsert: false,
+          });
 
-        xhr.upload.onprogress = (e) => {
-          if (e.lengthComputable) {
-            setProgress(Math.round((e.loaded / e.total) * 90));
-          }
-        };
+        if (uploadError) throw uploadError;
 
-        xhr.onload = () => {
-          setProgress(100);
-          if (xhr.status >= 200 && xhr.status < 300) {
-            const result = JSON.parse(xhr.responseText);
-            setUploaded(result.url);
-            onUploaded(result.url, (result.type as UploadedType) ?? "image");
-          } else {
-            try {
-              const err = JSON.parse(xhr.responseText);
-              setError(err.error ?? "Upload failed");
-            } catch {
-              setError("Upload failed");
-            }
-            setProgress(null);
-          }
-          resolve();
-        };
+        setProgress(90);
+        const { data: { publicUrl } } = supabase.storage
+          .from("hero-media")
+          .getPublicUrl(filename);
 
-        xhr.onerror = () => {
-          setError("Network error during upload");
-          setProgress(null);
-          resolve();
-        };
-
-        xhr.open("POST", "/api/upload");
-        xhr.send(fd);
-      });
+        setUploaded(publicUrl);
+        onUploaded(publicUrl, isVideo ? "video" : "image");
+        setProgress(100);
+      } catch (err: any) {
+        console.error("Upload error:", err);
+        setError(err.message || "Upload failed. Your file might be too large or the network is unstable.");
+        setProgress(null);
+      }
     },
     [onUploaded]
   );

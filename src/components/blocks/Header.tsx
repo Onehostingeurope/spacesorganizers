@@ -105,7 +105,7 @@ export function Header({ dict, lang }: HeaderProps) {
 
           {/* BOOK BUTTON */}
           <div className="hidden md:block">
-            <Link href={`/${lang}/book`}>
+            <Link href={`/${lang}/contact`}>
               <Button className="scale-[0.99] active:scale-100 transition-transform bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary-dim shadow-sm">
                 {dict.nav.cta}
               </Button>
@@ -157,7 +157,7 @@ export function Header({ dict, lang }: HeaderProps) {
           </div>
 
           <div className="pt-4 border-t border-outline-variant/10">
-            <Link href={`/${lang}/book`} onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href={`/${lang}/contact`} onClick={() => setIsMobileMenuOpen(false)}>
               <Button className="w-full bg-primary text-on-primary text-xs tracking-widest uppercase py-4">
                 {dict.nav.cta}
               </Button>
