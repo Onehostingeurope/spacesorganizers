@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { UploadZone } from "@/components/ui/UploadZone";
 
 interface Project {
   id: string;
@@ -25,6 +26,7 @@ function ProjectForm({
   saving: boolean;
 }) {
   const [data, setData] = useState<Partial<Project>>({ ...initial });
+  const [inputMode, setInputMode] = useState<"upload" | "url">("upload");
   const set = (key: keyof Project, val: string) => setData((d) => ({ ...d, [key]: val }));
 
   return (
@@ -49,12 +51,44 @@ function ProjectForm({
         <label className={LABEL_CLS}>Description</label>
         <textarea value={data.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={3} placeholder="Project description..." className={`${INPUT_CLS} resize-none`} />
       </div>
-      <div>
-        <label className={LABEL_CLS}>Image URL (paste link or /images/filename.jpg)</label>
-        <input value={data.image ?? ""} onChange={(e) => set("image", e.target.value)} placeholder="https://... or /images/example.jpg" className={INPUT_CLS} />
+      <div className="flex flex-col gap-2">
+        <label className={LABEL_CLS}>Image</label>
+        <div className="flex gap-1 bg-surface-container rounded-sm p-1 w-fit mb-2">
+          {(["upload", "url"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              onClick={() => setInputMode(m)}
+              className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] font-semibold font-label rounded-sm transition-all ${
+                inputMode === m
+                  ? "bg-primary text-on-primary"
+                  : "text-on-surface-variant hover:text-on-surface"
+              }`}
+            >
+              {m === "upload" ? "↑ Upload File" : "🔗 Paste URL"}
+            </button>
+          ))}
+        </div>
+
+        {inputMode === "upload" ? (
+          <UploadZone
+            onUploaded={(url) => set("image", url)}
+            accept="image/jpeg,image/png,image/webp,image/gif"
+          />
+        ) : (
+          <div>
+            <input
+              value={data.image ?? ""}
+              onChange={(e) => set("image", e.target.value)}
+              placeholder="https://example.com/image.jpg"
+              className={INPUT_CLS}
+            />
+          </div>
+        )}
+
         {data.image && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={data.image} alt="" className="mt-3 h-28 w-auto rounded object-cover" />
+          <img src={data.image} alt="Preview" className="mt-3 h-28 w-auto rounded object-cover" />
         )}
       </div>
       <div className="flex gap-3 pt-2">
