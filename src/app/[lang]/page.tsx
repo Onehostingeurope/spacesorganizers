@@ -111,7 +111,7 @@ export default async function Home({
 
   return (
     <>
-      <Header dict={dict} lang={locale} isDarkHero={isDarkHero} />
+      <Header dict={dict} lang={locale} />
       <main className="flex-1 bg-surface font-light overflow-x-hidden">
         <HeroSection dict={dict} lang={lang} slides={heroSlides} />
 
