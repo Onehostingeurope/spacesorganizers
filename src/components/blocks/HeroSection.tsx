@@ -257,7 +257,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5, delay: 2.2 }}
-        className="absolute bottom-12 left-24 flex flex-col items-center gap-4 z-10"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10"
       >
         <div className="w-[18px] h-[30px] border-2 border-primary/40 rounded-full flex justify-center p-1">
           <motion.div 
