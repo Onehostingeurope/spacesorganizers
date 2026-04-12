@@ -108,9 +108,9 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           ) : (
             <motion.div
               key={slide?.id ?? "default"}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1.15 }}
-              exit={{ opacity: 0, scale: 1.2 }}
+              initial={{ opacity: 0, scale: 1.0 }}
+              animate={{ opacity: 1, scale: 1.05 }}
+              exit={{ opacity: 0, scale: 1.05 }}
               transition={{
                 opacity: { duration: 0.8, ease: "easeOut" },
                 scale: { duration: (settings?.autoplay_speed || 15) + 2, ease: "linear" },
@@ -122,8 +122,8 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                 <img
                   src={slide.url}
                   alt={slide.alt ?? "Space Organizers"}
-                  sizes="100vw"
                   className="absolute inset-0 w-full h-full object-cover"
+                  fetchPriority="high"
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-surface-container via-surface to-surface-container" />
