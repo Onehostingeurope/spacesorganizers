@@ -19,6 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { name: "Overview", path: "/admin" },
     { name: "Leads", path: "/admin/leads" },
+    { name: "Hero Carousel", path: "/admin/hero" },
     { name: "Services", path: "/admin/services" },
     { name: "Spaces", path: "/admin/spaces" },
     { name: "Portfolio", path: "/admin/portfolio" },

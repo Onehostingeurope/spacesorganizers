@@ -62,7 +62,7 @@ export function Header({ dict, lang }: HeaderProps) {
           href={`/${lang}`}
           className="font-headline italic text-2xl font-light tracking-tight text-on-surface"
         >
-          Space Organizing
+          Space Organizers
         </Link>
 
         {/* DESKTOP NAV */}

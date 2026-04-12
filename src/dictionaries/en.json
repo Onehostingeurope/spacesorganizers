@@ -1,4 +1,4 @@
-{
+﻿{
   "nav": {
     "services": "Services",
     "portfolio": "Portfolio",
@@ -7,10 +7,10 @@
     "cta": "Book a Consultation"
   },
   "hero": {
-    "region": "French Riviera • Monaco • Cannes • Nice",
-    "title": "Space Organizing",
+    "region": "French Riviera â€¢ Monaco â€¢ Cannes â€¢ Nice",
+    "title": "Space Organizers",
     "subtitle": "Home organization, decluttering & wardrobe services on the French Riviera",
-    "description": "Practical help with decluttering, home organization, wardrobes, moving, unpacking and storage solutions — so your home feels lighter, clearer and easier to maintain.",
+    "description": "Practical help with decluttering, home organization, wardrobes, moving, unpacking and storage solutions â€” so your home feels lighter, clearer and easier to maintain.",
     "cta_primary": "Book a Consultation",
     "cta_whatsapp": "WhatsApp",
     "scroll_hint": "Discover the Atelier"
@@ -63,7 +63,7 @@
     "heading_accent": "sanctuary.",
     "description": "Take the first step toward a more organized, peaceful home. Fill out the inquiry form, and we'll reach out within 24 hours to schedule your complimentary call.",
     "serving_label": "Serving",
-    "serving": "French Riviera • Monaco • Cannes • Nice",
+    "serving": "French Riviera â€¢ Monaco â€¢ Cannes â€¢ Nice",
     "email_label": "Email",
     "phone_label": "Phone",
     "form": {
@@ -82,7 +82,7 @@
   },
   "footer": {
     "tagline": "Curated Sanctuaries on the French Riviera",
-    "description": "Practical help with decluttering, home organization, wardrobes, and storage solutions — so your home feels lighter and easier to maintain.",
+    "description": "Practical help with decluttering, home organization, wardrobes, and storage solutions â€” so your home feels lighter and easier to maintain.",
     "serving_label": "We Serve",
     "contact_label": "Contact",
     "whatsapp": "WhatsApp",
@@ -94,7 +94,7 @@
     "subheading": "At Spaces Organizers, we believe that your environment shapes your state of mind.",
     "philosophy_title": "Our Philosophy",
     "philosophy_body1": "We approach organization not just as a task of putting things away, but as an opportunity to curate your life. A well-organized space should feel intuitive, looking as beautiful as it functions.",
-    "philosophy_body2": "By blending aesthetic principles with practical systems, we craft spaces that don't just hold your belongings—they support your lifestyle, reduce daily friction, and invite a sense of profound calm.",
+    "philosophy_body2": "By blending aesthetic principles with practical systems, we craft spaces that don't just hold your belongingsâ€”they support your lifestyle, reduce daily friction, and invite a sense of profound calm.",
     "systems_title": "Why Tailored Systems Matter",
     "systems_body1": "Generic bins and arbitrary labels often fall short because they aren't designed for how you actually live.",
     "systems_body2": "We take the time to understand your habits. Do you prefer dropping keys in a tray or hanging them? Do you need visual access to your wardrobe, or prefer things tucked away? These micro-decisions form the foundation of systems that are easy to maintain long after we leave."

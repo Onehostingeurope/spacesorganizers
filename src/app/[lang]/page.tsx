@@ -13,6 +13,7 @@ import { ContactForm } from "@/components/blocks/ContactForm";
 import { ServiceCard } from "@/components/blocks/ServiceCard";
 import { Section } from "@/components/ui/Section";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
+import { getCollection } from "@/lib/db";
 
 export default async function Home({
   params,
@@ -24,13 +25,14 @@ export default async function Home({
 
   const locale = lang as Locale;
   const dict = await getDictionary(locale);
+  const heroSlides = await getCollection<any>("hero");
   const p = dict.philosophy;
 
   return (
     <>
       <Header dict={dict} lang={locale} />
       <main className="flex-1 bg-surface">
-        <HeroSection dict={dict} lang={lang} />
+        <HeroSection dict={dict} lang={lang} slides={heroSlides} />
 
         {/* PHILOSOPHY / ATELIER GRID */}
         <section className="bg-surface-container py-32 px-6 md:px-24">

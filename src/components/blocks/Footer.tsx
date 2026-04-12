@@ -29,7 +29,7 @@ export function Footer({ dict, lang }: FooterProps) {
           <div className="lg:max-w-xs">
             <Link href={`/${lang}`}>
               <p className="font-headline italic text-2xl text-on-surface tracking-tight mb-4 hover:text-primary transition-colors">
-                Space Organizing
+                Space Organizers
               </p>
             </Link>
             <p className="font-label text-[10px] tracking-[0.25em] uppercase text-on-surface-variant mb-6">
@@ -83,7 +83,10 @@ export function Footer({ dict, lang }: FooterProps) {
         {/* Bottom row */}
         <div className="border-t border-outline-variant/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant opacity-60">
-            © {new Date().getFullYear()} Space Organizing. {f.copyright}
+            © {new Date().getFullYear()} Space Organizers. {f.copyright} Design by{" "}
+            <a href="https://onehostingeurope.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity underline-offset-2">
+              OneHostingEurope
+            </a>
           </p>
           <nav className="flex flex-wrap justify-center gap-8">
             {FOOTER_LINKS(lang).map((link) => (

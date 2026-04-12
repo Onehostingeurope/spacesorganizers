@@ -1,0 +1,23 @@
+[
+  {
+    "id": "slide-1",
+    "type": "image",
+    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCxbyLt8Hv-3Fd56k4BYlXt5-e3GvaqIoOP4rmukFbJ6r32O77jPlMkmLorTMpLudhhzoZB4qg2u1Wke5HEugEXvej7hwSCcIx4kzDRdnLG5xHNEqfREli8ecmMOh_sKpk6v0bUyYl2NgePiLlYZKXXZybAbdB-uBZBSmT6N6ORuiRj_y9gOjHj5vkCXyrbY9fUG69rShB-xN5AC8phqkYZachKYw7mihfe21awBLSi12Depk1OKBeyQub5NdtkQS_U6ceK1mC-ns4",
+    "alt": "Luxury wardrobe organization",
+    "order": 1
+  },
+  {
+    "id": "slide-2",
+    "type": "image",
+    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAwIpP4aH2BvLhuNJiRyx4peAXNLZX_orDABAiUaRLoQb0YdXKMufmLiM1L4yfqrxEMAyi_hJIEqApiAgWx6ocSNce08fv88AMIyh-eLDzBuudDcG0sNGueOygNc0lL3SyO0HbJoxRKKt4Fbqab5HdmJPKeyE7cmJEnMR1atpZlbRSySyp5HD1kcyXw5kcs_X920wMrxSJkrcLdtO2-NvK9XQmwvMWDld6jelvJwjG0QNm9k2VWuIbfnr_M8XI4R0V2E_hsmXbhpF4",
+    "alt": "Pantry organization systems",
+    "order": 2
+  },
+  {
+    "id": "slide-3",
+    "type": "image",
+    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDygYhpmBudxxNndS055nDEXCZqC8utNwLG7kd7_3JkEZFyjpuxub7t2HpLoEfAV3qN8_S1cDL0PgusYWWHrCBMc3xhe4pnu3h-wAzV6wCGStgS6mV19TYVlFp9qvEnJaPeoWnNhouBghvlWTfxOc8cOrNlt_eXfflhz2wS_yylRAkOte7jSi4onDNlt2QLtgeN6vWSGeSww_z2ZVNq8-pWG3CMaQtTYvuug5JvthZCXlzoiqfz2cnnrq09du2WZFifocEZmob8Cy8",
+    "alt": "Living sanctuary design",
+    "order": 3
+  }
+]

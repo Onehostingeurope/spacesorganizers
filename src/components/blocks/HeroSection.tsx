@@ -1,37 +1,121 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import type { Dictionary } from "@/lib/dictionaries";
+
+interface HeroSlide {
+  id: string;
+  type: "image" | "video" | "youtube";
+  url: string;
+  alt?: string;
+  order?: number;
+}
 
 interface HeroSectionProps {
   dict: Dictionary;
   lang: string;
+  slides?: HeroSlide[];
 }
 
-export function HeroSection({ dict, lang }: HeroSectionProps) {
+function getYouTubeId(url: string): string {
+  const match = url.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+  );
+  return match ? match[1] : url;
+}
+
+export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
   const h = dict.hero;
+  const [current, setCurrent] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Sort slides by order
+  const sorted = [...slides].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const hasSlides = sorted.length > 0;
+
+  const next = useCallback(() => {
+    if (hasSlides) setCurrent((c) => (c + 1) % sorted.length);
+  }, [hasSlides, sorted.length]);
+
+  // Auto-advance every 6 seconds
+  useEffect(() => {
+    setIsLoaded(true);
+    if (sorted.length <= 1) return;
+    const timer = setInterval(next, 6000);
+    return () => clearInterval(timer);
+  }, [sorted.length, next]);
+
+  const slide = hasSlides ? sorted[current] : null;
 
   return (
     <section className="relative h-screen w-full flex items-center overflow-hidden">
-      {/* Background Image */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxbyLt8Hv-3Fd56k4BYlXt5-e3GvaqIoOP4rmukFbJ6r32O77jPlMkmLorTMpLudhhzoZB4qg2u1Wke5HEugEXvej7hwSCcIx4kzDRdnLG5xHNEqfREli8ecmMOh_sKpk6v0bUyYl2NgePiLlYZKXXZybAbdB-uBZBSmT6N6ORuiRj_y9gOjHj5vkCXyrbY9fUG69rShB-xN5AC8phqkYZachKYw7mihfe21awBLSi12Depk1OKBeyQub5NdtkQS_U6ceK1mC-ns4"
-          alt="Luxury closet organization"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 editorial-gradient md:block hidden" />
-        <div className="absolute inset-0 bg-surface/40 md:hidden" />
+        <AnimatePresence mode="wait">
+          {slide?.type === "youtube" ? (
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="absolute inset-0"
+            >
+              <iframe
+                src={`https://www.youtube.com/embed/${getYouTubeId(slide.url)}?autoplay=1&mute=1&loop=1&controls=0&playlist=${getYouTubeId(slide.url)}&showinfo=0&rel=0`}
+                className="absolute inset-0 w-full h-full object-cover scale-110"
+                allow="autoplay; fullscreen"
+                style={{ border: "none", pointerEvents: "none" }}
+              />
+            </motion.div>
+          ) : slide?.type === "video" ? (
+            <motion.video
+              key={slide.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              src={slide.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <motion.div
+              key={slide?.id ?? "default"}
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={
+                  slide?.url ??
+                  "https://lh3.googleusercontent.com/aida-public/AB6AXuCxbyLt8Hv-3Fd56k4BYlXt5-e3GvaqIoOP4rmukFbJ6r32O77jPlMkmLorTMpLudhhzoZB4qg2u1Wke5HEugEXvej7hwSCcIx4kzDRdnLG5xHNEqfREli8ecmMOh_sKpk6v0bUyYl2NgePiLlYZKXXZybAbdB-uBZBSmT6N6ORuiRj_y9gOjHj5vkCXyrbY9fUG69rShB-xN5AC8phqkYZachKYw7mihfe21awBLSi12Depk1OKBeyQub5NdtkQS_U6ceK1mC-ns4"
+                }
+                alt={slide?.alt ?? "Space Organizers"}
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-surface/85 via-surface/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent" />
       </div>
 
-      {/* Content */}
+      {/* CONTENT */}
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-20">
         <div className="max-w-2xl">
-          {/* Region trust indicator */}
+          {/* Region */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -82,7 +166,7 @@ export function HeroSection({ dict, lang }: HeroSectionProps) {
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
           >
             <Link href={`/${lang}/contact`} className="contents">
-              <button className="bg-primary text-on-primary px-10 py-5 rounded-DEFAULT font-medium text-sm tracking-widest uppercase hover:bg-primary-dim transition-all duration-300 shadow-lg shadow-primary/10 flex items-center justify-center gap-2">
+              <button className="bg-primary text-on-primary px-10 py-5 font-medium text-sm tracking-widest uppercase hover:bg-primary/90 transition-all duration-300 shadow-lg flex items-center justify-center gap-2">
                 {h.cta_primary}
               </button>
             </Link>
@@ -104,17 +188,35 @@ export function HeroSection({ dict, lang }: HeroSectionProps) {
         </div>
       </div>
 
+      {/* CAROUSEL DOTS */}
+      {sorted.length > 1 && (
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+          {sorted.map((s, i) => (
+            <button
+              key={s.id}
+              onClick={() => setCurrent(i)}
+              className={`transition-all duration-500 rounded-full ${
+                i === current
+                  ? "w-8 h-2 bg-primary"
+                  : "w-2 h-2 bg-on-surface/20 hover:bg-on-surface/40"
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+
       {/* Scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.8 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        className="absolute bottom-8 right-8 flex flex-col items-center gap-4"
       >
         <span className="font-label text-[10px] tracking-[0.4em] uppercase text-on-surface-variant/60">
           {h.scroll_hint}
         </span>
-        <div className="w-[1px] h-16 bg-gradient-to-b from-primary/40 to-transparent" />
+        <div className="w-[1px] h-12 bg-gradient-to-b from-primary/40 to-transparent" />
       </motion.div>
     </section>
   );

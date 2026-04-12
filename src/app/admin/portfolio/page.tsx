@@ -1,73 +1,146 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Heading, Body } from "@/components/ui/Typography";
-import { Button } from "@/components/ui/Button";
+
+interface Project {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  description?: string;
+  image?: string;
+}
+
+const INPUT_CLS = "w-full bg-transparent border-b border-outline-variant/30 py-3 text-sm focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/40";
+const LABEL_CLS = "font-label text-[10px] tracking-[0.2em] uppercase text-on-surface-variant/60 mb-1 block";
+
+function ProjectForm({
+  initial,
+  onSave,
+  onCancel,
+  saving,
+}: {
+  initial: Partial<Project>;
+  onSave: (data: Partial<Project>) => Promise<void>;
+  onCancel: () => void;
+  saving: boolean;
+}) {
+  const [data, setData] = useState<Partial<Project>>({ ...initial });
+  const set = (key: keyof Project, val: string) => setData((d) => ({ ...d, [key]: val }));
+
+  return (
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        await onSave({ ...data, slug: data.slug || data.title?.toLowerCase().replace(/\s+/g, "-") || "" });
+      }}
+      className="bg-surface-container p-8 mb-8 space-y-5 rounded-DEFAULT ghost-border"
+    >
+      <div className="grid grid-cols-2 gap-6">
+        <div>
+          <label className={LABEL_CLS}>Project Title *</label>
+          <input required value={data.title ?? ""} onChange={(e) => set("title", e.target.value)} placeholder="e.g. Monaco Wardrobe" className={INPUT_CLS} />
+        </div>
+        <div>
+          <label className={LABEL_CLS}>Category</label>
+          <input value={data.category ?? ""} onChange={(e) => set("category", e.target.value)} placeholder="e.g. Wardrobe / Pantry / Move-In" className={INPUT_CLS} />
+        </div>
+      </div>
+      <div>
+        <label className={LABEL_CLS}>Description</label>
+        <textarea value={data.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={3} placeholder="Project description..." className={`${INPUT_CLS} resize-none`} />
+      </div>
+      <div>
+        <label className={LABEL_CLS}>Image URL (paste link or /images/filename.jpg)</label>
+        <input value={data.image ?? ""} onChange={(e) => set("image", e.target.value)} placeholder="https://... or /images/example.jpg" className={INPUT_CLS} />
+        {data.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={data.image} alt="" className="mt-3 h-28 w-auto rounded object-cover" />
+        )}
+      </div>
+      <div className="flex gap-3 pt-2">
+        <button type="submit" disabled={saving} className="bg-primary text-on-primary px-8 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all disabled:opacity-50">
+          {saving ? "Saving..." : "Save Project"}
+        </button>
+        <button type="button" onClick={onCancel} className="px-8 py-3 text-xs tracking-widest uppercase font-medium text-on-surface-variant border border-outline-variant/30 hover:border-on-surface-variant transition-all">
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
 
 export default function PortfolioAdmin() {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
-  const fetchProjects = () => fetch("/api/portfolio").then(res => res.json()).then(setProjects);
-  useEffect(() => { fetchProjects() }, []);
+  const fetch_ = () => fetch("/api/portfolio").then((r) => r.json()).then(setProjects);
+  useEffect(() => { fetch_(); }, []);
 
-  const deleteProject = async (id: string) => {
-    if(confirm("Are you sure?")) {
-      await fetch(`/api/portfolio/${id}`, { method: "DELETE" });
-      fetchProjects();
-    }
+  const handleAdd = async (data: Partial<Project>) => {
+    setSaving(true);
+    await fetch("/api/portfolio", { method: "POST", body: JSON.stringify(data) });
+    setIsAdding(false);
+    await fetch_();
+    setSaving(false);
   };
 
-  const handleAdd = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const newProject = {
-      title: formData.get("title"),
-      slug: formData.get("title")?.toString().toLowerCase().replace(/\s+/g, '-'),
-      category: formData.get("category"),
-      description: formData.get("description"),
-      image: "/images/consultation-lifestyle.png"
-    };
+  const handleEdit = async (id: string, data: Partial<Project>) => {
+    setSaving(true);
+    await fetch(`/api/portfolio/${id}`, { method: "PUT", body: JSON.stringify(data) });
+    setEditingId(null);
+    await fetch_();
+    setSaving(false);
+  };
 
-    await fetch("/api/portfolio", { method: "POST", body: JSON.stringify(newProject) });
-    setIsAdding(false);
-    fetchProjects();
+  const handleDelete = async (id: string) => {
+    if (!confirm("Delete this project?")) return;
+    await fetch(`/api/portfolio/${id}`, { method: "DELETE" });
+    fetch_();
   };
 
   return (
     <div className="max-w-5xl pb-24">
-       <div className="flex justify-between items-end mb-12 border-b border-charcoal/10 pb-6">
-         <div>
-           <Heading as="h1" className="text-4xl mb-2">Portfolio</Heading>
-           <Body className="text-charcoal/60 text-base">Manage showcased organization projects.</Body>
-         </div>
-         <Button onClick={() => setIsAdding(!isAdding)} variant="primary" size="sm">
-            {isAdding ? "Cancel" : "Add Project"}
-         </Button>
+      <div className="flex justify-between items-end mb-12 border-b border-outline-variant/10 pb-6">
+        <div>
+          <h1 className="font-headline text-4xl text-on-surface mb-2 font-light">Portfolio</h1>
+          <p className="font-body text-on-surface-variant text-sm">Manage showcased transformation projects.</p>
+        </div>
+        <button onClick={() => { setIsAdding(!isAdding); setEditingId(null); }} className="bg-primary text-on-primary px-6 py-3 text-xs tracking-widest uppercase font-medium hover:bg-primary/90 transition-all">
+          {isAdding ? "Cancel" : "+ Add Project"}
+        </button>
       </div>
 
       {isAdding && (
-        <form onSubmit={handleAdd} className="bg-charcoal/5 p-8 mb-12 space-y-6">
-           <h3 className="font-serif text-2xl text-charcoal mb-4">Create Project</h3>
-           <div className="grid grid-cols-2 gap-6">
-             <input required name="title" placeholder="Project Title" className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none" />
-             <input required name="category" placeholder="Category (e.g. Pantry)" className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none" />
-           </div>
-           <textarea required name="description" placeholder="Project details" rows={3} className="w-full bg-transparent border-b border-charcoal/30 py-3 focus:outline-none resize-none"></textarea>
-           <Button type="submit">Save Project</Button>
-        </form>
+        <ProjectForm initial={{}} onSave={handleAdd} onCancel={() => setIsAdding(false)} saving={saving} />
       )}
 
       <div className="space-y-4">
-        {projects.map((proj: any) => (
-          <div key={proj.id} className="bg-softwhite p-6 border border-charcoal/10 flex justify-between items-center group">
-            <div>
-              <h3 className="font-serif text-2xl text-charcoal mb-1">{proj.title}</h3>
-              <p className="font-sans text-sm text-charcoal/50">{proj.category}</p>
-            </div>
-            <button onClick={() => deleteProject(proj.id)} className="text-red-500/50 hover:text-red-500 text-xs uppercase tracking-widest font-semibold transition-colors opacity-0 group-hover:opacity-100">Remove</button>
+        {projects.length === 0 && <p className="text-on-surface-variant/50 italic text-sm">No portfolio projects yet.</p>}
+        {projects.map((proj) => (
+          <div key={proj.id} className="bg-surface rounded-DEFAULT ghost-border overflow-hidden">
+            {editingId === proj.id ? (
+              <ProjectForm initial={proj} onSave={(d) => handleEdit(proj.id, d)} onCancel={() => setEditingId(null)} saving={saving} />
+            ) : (
+              <div className="flex gap-4 items-center p-5">
+                {proj.image && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={proj.image} alt="" className="w-20 h-16 object-cover rounded flex-shrink-0" />
+                )}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-headline text-xl text-on-surface font-light">{proj.title}</h3>
+                  <p className="font-label text-[10px] text-primary tracking-widest uppercase mt-1">{proj.category}</p>
+                  <p className="font-body text-sm text-on-surface-variant truncate mt-1">{proj.description}</p>
+                </div>
+                <div className="flex gap-4 flex-shrink-0">
+                  <button onClick={() => { setEditingId(proj.id); setIsAdding(false); }} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-primary transition-colors">Edit</button>
+                  <button onClick={() => handleDelete(proj.id)} className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors">Delete</button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
-        {projects.length === 0 && <p className="text-charcoal/40 font-light italic">No portfolio projects configured yet.</p>}
       </div>
     </div>
   );

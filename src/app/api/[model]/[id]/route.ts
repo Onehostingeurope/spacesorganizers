@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { updateRecord, deleteRecord, type Model } from "@/lib/db";
 
-const ALLOWED_MODELS: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "leads"];
+const ALLOWED_MODELS: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "leads", "hero"];
 
 export async function PUT(request: Request, { params }: { params: Promise<{ model: string, id: string }> }) {
   const resolvedParams = await params;

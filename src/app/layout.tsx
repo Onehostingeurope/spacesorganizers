@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import "./globals.css";
 
-// Root layout — minimal wrapper for non-locale paths (admin, api, etc.)
+// Root layout â€” minimal wrapper for non-locale paths (admin, api, etc.)
 // Locale-routed pages use src/app/[lang]/layout.tsx instead.
 export const metadata: Metadata = {
-  title: "Space Organizing | Luxury Home Organization French Riviera",
+  title: "Space Organizers | Luxury Home Organization French Riviera",
   description:
     "Home organization, decluttering & wardrobe services on the French Riviera.",
 };

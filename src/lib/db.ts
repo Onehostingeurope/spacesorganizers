@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-export type Model = "services" | "spaces" | "portfolio" | "testimonials" | "blog" | "faq" | "leads";
+export type Model = "services" | "spaces" | "portfolio" | "testimonials" | "blog" | "faq" | "leads" | "hero";
 
 // Lazy singleton — only created when first used (not at module eval time)
 let _client: SupabaseClient | null = null;
@@ -26,7 +26,7 @@ export async function getCollection<T>(model: Model): Promise<T[]> {
     const { data, error } = await getClient()
       .from(model)
       .select("*")
-      .order("createdAt", { ascending: true });
+      .order(model === "hero" ? "order" : "createdAt", { ascending: true });
 
     if (error) {
       console.error(`[db] getCollection(${model}):`, error.message);

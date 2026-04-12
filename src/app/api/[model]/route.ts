@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection, insertRecord, type Model } from "@/lib/db";
 
-const ALLOWED_MODELS: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "leads"];
+const ALLOWED_MODELS: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "leads", "hero"];
 
 export async function GET(request: Request, { params }: { params: Promise<{ model: string }> }) {
   const model = (await params).model as Model;

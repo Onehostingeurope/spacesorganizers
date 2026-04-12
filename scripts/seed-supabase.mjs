@@ -11,7 +11,7 @@ const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
 const slugify = (str) =>
   str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-const models = ["services", "spaces", "portfolio", "testimonials", "blog", "faq"];
+const models = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "hero"];
 
 for (const model of models) {
   const raw = readFileSync(`./data/${model}.json`, "utf-8");
