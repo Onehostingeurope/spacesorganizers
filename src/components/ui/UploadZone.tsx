@@ -30,35 +30,48 @@ export function UploadZone({
     async (file: File) => {
       setError(null);
       setUploaded(null);
-      setProgress(10); // Start progress
-
-      const isVideo = file.type.startsWith("video/");
-      const folder = isVideo ? "videos" : "images";
-      const ext = file.name.split(".").pop()?.toLowerCase() ?? "bin";
-      const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      setProgress(10);
 
       try {
-        setProgress(30);
-        const { data, error: uploadError } = await supabase.storage
-          .from("hero-media")
-          .upload(filename, file, {
-            cacheControl: "31536000",
-            upsert: false,
-          });
+        // 1. Get a Signed Upload URL from our secure API
+        const urlResponse = await fetch("/api/upload-url", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filename: file.name, fileType: file.type }),
+        });
 
-        if (uploadError) throw uploadError;
+        if (!urlResponse.ok) {
+          const errData = await urlResponse.json();
+          throw new Error(errData.error || "Failed to get upload authorization");
+        }
+
+        const { signedUrl, path } = await urlResponse.json();
+        setProgress(30);
+
+        // 2. Perform the actual upload DIRECTLY to Supabase (bypassing Vercel proxy)
+        const uploadResponse = await fetch(signedUrl, {
+          method: "PUT",
+          body: file,
+          headers: { "Content-Type": file.type },
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error("Direct upload failed. The file might be too large or the network was interrupted.");
+        }
 
         setProgress(90);
+
+        // 3. Get the public URL for the newly uploaded file
         const { data: { publicUrl } } = supabase.storage
           .from("hero-media")
-          .getPublicUrl(filename);
+          .getPublicUrl(path);
 
         setUploaded(publicUrl);
-        onUploaded(publicUrl, isVideo ? "video" : "image");
+        onUploaded(publicUrl, file.type.startsWith("video/") ? "video" : "image");
         setProgress(100);
       } catch (err: any) {
         console.error("Upload error:", err);
-        setError(err.message || "Upload failed. Your file might be too large or the network is unstable.");
+        setError(err.message || "Upload failed. Please try again.");
         setProgress(null);
       }
     },
