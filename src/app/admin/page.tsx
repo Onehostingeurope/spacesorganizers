@@ -46,6 +46,32 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* QUICK LINKS */}
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a 
+          href="/admin/hero"
+          className="group bg-surface-container-low p-6 border border-outline-variant/20 hover:border-primary transition-all flex justify-between items-center"
+        >
+          <div>
+            <span className="text-[10px] uppercase tracking-widest font-bold text-primary block mb-1">Visuals</span>
+            <span className="font-headline text-lg">Manage Hero Carousel</span>
+            <p className="text-xs text-on-surface-variant/60 mt-2 italic">Drag and reorder your main entrance images.</p>
+          </div>
+          <span className="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+        </a>
+        <a 
+          href="/admin/homepage"
+          className="group bg-surface-container-low p-6 border border-outline-variant/20 hover:border-primary transition-all flex justify-between items-center"
+        >
+          <div>
+            <span className="text-[10px] uppercase tracking-widest font-bold text-primary block mb-1">Content</span>
+            <span className="font-headline text-lg">Edit Philosophy & Sections</span>
+            <p className="text-xs text-on-surface-variant/60 mt-2 italic">Change your core mission and main page text.</p>
+          </div>
+          <span className="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+        </a>
+      </div>
+
       <div className="mt-12 bg-softwhite border border-charcoal/10 overflow-hidden shadow-sm rounded-DEFAULT">
         <div className="bg-charcoal/5 px-6 py-4 border-b border-charcoal/10 flex items-center justify-between">
           <span className="text-xs uppercase tracking-widest font-semibold text-charcoal/60">Operational Calendar</span>

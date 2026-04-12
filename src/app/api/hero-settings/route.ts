@@ -31,7 +31,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { lang, region, title, subtitle, description, autoplay_speed } = body;
+  const { lang, region, title, subtitle, description, autoplay_speed, overlay_opacity, overlay_style } = body;
 
   if (!lang) return NextResponse.json({ error: "Missing lang" }, { status: 400 });
 
@@ -46,6 +46,8 @@ export async function POST(request: Request) {
       subtitle,
       description,
       autoplay_speed: autoplay_speed ? Number(autoplay_speed) : undefined,
+      overlay_opacity: overlay_opacity !== undefined ? Number(overlay_opacity) : undefined,
+      overlay_style: overlay_style || "dark",
       updated_at: new Date().toISOString(),
     })
     .select()

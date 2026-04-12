@@ -54,7 +54,7 @@ export function Header({ dict, lang }: HeaderProps) {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out",
         isScrolled
           ? "glass-premium py-3 translate-y-2 mx-6 rounded-full w-[calc(100%-3rem)]"
-          : "bg-transparent py-8 md:py-12"
+          : "bg-transparent py-6 md:py-8"
       )}
     >
       <div className="container mx-auto px-10 md:px-16 flex items-center justify-between max-w-[1920px]">

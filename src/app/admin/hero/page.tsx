@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { UploadZone } from "@/components/ui/UploadZone";
+import { motion, Reorder, useDragControls } from "framer-motion";
+import { GripVertical } from "lucide-react";
 
 type SlideType = "image" | "video" | "youtube";
 type InputMode = "upload" | "url";
@@ -222,6 +224,8 @@ function HeroSettingsEditor() {
     subtitle: "",
     description: "",
     autoplay_speed: 15,
+    overlay_opacity: 40,
+    overlay_style: "dark",
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -238,6 +242,8 @@ function HeroSettingsEditor() {
         subtitle: data.subtitle || "",
         description: data.description || "",
         autoplay_speed: data.autoplay_speed || 15,
+        overlay_opacity: data.overlay_opacity ?? 40,
+        overlay_style: data.overlay_style || "dark",
       });
     } catch (err) {
       console.error(err);
@@ -275,7 +281,7 @@ function HeroSettingsEditor() {
   return (
     <div className="bg-surface-container p-8 mb-12 rounded-DEFAULT ghost-border">
       <div className="flex justify-between items-center mb-8">
-        <h3 className="font-headline text-2xl text-on-surface font-light">Hero Content & Speed</h3>
+        <h3 className="font-headline text-2xl text-on-surface font-light">Hero Content & Appearance</h3>
         
         {/* Lang switcher */}
         <div className="flex gap-1 bg-surface-variant/20 rounded-sm p-1">
@@ -335,8 +341,46 @@ function HeroSettingsEditor() {
                 className={`${INPUT_CLS} h-32 resize-none`}
               />
             </div>
-            <div>
-              <label className={LABEL_CLS}>Carousel Speed (Seconds: {settings.autoplay_speed}s)</label>
+
+            {/* APPEARANCE CONTROLS */}
+            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-outline-variant/10">
+               <div>
+                  <label className={LABEL_CLS}>Overlay Mode</label>
+                  <div className="flex gap-1 bg-surface-variant/20 rounded-sm p-1 mt-2">
+                    {["dark", "light"].map((mode) => (
+                      <button
+                        key={mode}
+                        type="button"
+                        onClick={() => setSettings({ ...settings, overlay_style: mode })}
+                        className={`flex-1 py-2 text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all ${
+                          settings.overlay_style === mode ? "bg-primary text-on-primary shadow-lg" : "text-on-surface-variant hover:text-on-surface"
+                        }`}
+                      >
+                        {mode}
+                      </button>
+                    ))}
+                  </div>
+               </div>
+               <div>
+                  <label className={LABEL_CLS}>Dimming Intensity ({settings.overlay_opacity}%)</label>
+                  <input
+                    type="range"
+                    min={0}
+                    max={100}
+                    step={5}
+                    value={settings.overlay_opacity}
+                    onChange={(e) => setSettings({ ...settings, overlay_opacity: Number(e.target.value) })}
+                    className="w-full accent-primary mt-4"
+                  />
+                  <div className="flex justify-between text-[8px] tracking-widest uppercase text-on-surface-variant mt-2">
+                    <span>Clear</span>
+                    <span>Solid</span>
+                  </div>
+               </div>
+            </div>
+
+            <div className="pt-4 border-t border-outline-variant/10">
+              <label className={LABEL_CLS}>Carousel Speed ({settings.autoplay_speed}s)</label>
               <input
                 type="range"
                 min={5}
@@ -344,7 +388,7 @@ function HeroSettingsEditor() {
                 step={1}
                 value={settings.autoplay_speed}
                 onChange={(e) => setSettings({ ...settings, autoplay_speed: Number(e.target.value) })}
-                className="w-full accent-primary mt-2"
+                className="w-full accent-primary mt-4"
               />
               <div className="flex justify-between text-[8px] tracking-widest uppercase text-on-surface-variant mt-2">
                 <span>Fast (5s)</span>
@@ -369,6 +413,79 @@ function HeroSettingsEditor() {
   );
 }
 
+// ─── Reorder Item ──────────────────────────────────────────────────────────
+function ReorderSlideItem({ 
+  slide, 
+  onEdit, 
+  onDelete, 
+  isEditing 
+}: { 
+  slide: Slide; 
+  onEdit: () => void; 
+  onDelete: () => void;
+  isEditing: boolean;
+}) {
+  const controls = useDragControls();
+
+  return (
+    <Reorder.Item
+      value={slide}
+      dragListener={false}
+      dragControls={controls}
+      className={`bg-surface ghost-border rounded-DEFAULT overflow-hidden transition-shadow ${isEditing ? "mb-8 ring-1 ring-primary/20" : ""}`}
+    >
+      <div className="flex gap-5 items-center p-4">
+        {/* Handle */}
+        <div 
+          className="cursor-grab active:cursor-grabbing p-2 text-on-surface-variant/30 hover:text-primary transition-colors"
+          onPointerDown={(e) => controls.start(e)}
+        >
+          <GripVertical size={20} />
+        </div>
+
+        {/* Thumbnail */}
+        <div className="w-36 h-24 flex-shrink-0 overflow-hidden rounded bg-surface-container">
+          <Preview slide={slide} />
+        </div>
+
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="font-label text-[10px] tracking-[0.2em] uppercase text-primary bg-primary/10 px-2 py-0.5 rounded-sm">
+              {slide.type}
+            </span>
+            <span className="font-label text-[10px] text-on-surface-variant/40">
+              Position #{slide.order}
+            </span>
+          </div>
+          <p className="font-body text-sm text-on-surface truncate">{slide.url}</p>
+          {slide.alt && (
+            <p className="font-label text-[10px] text-on-surface-variant/50 mt-1 italic truncate">
+              {slide.alt}
+            </p>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-col gap-2 flex-shrink-0 items-end">
+          <button
+            onClick={onEdit}
+            className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-primary transition-colors"
+          >
+            Edit
+          </button>
+          <button
+            onClick={onDelete}
+            className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </Reorder.Item>
+  );
+}
+
 // ─── Page ──────────────────────────────────────────────────────────────────
 export default function HeroAdmin() {
   const [slides, setSlides] = useState<Slide[]>([]);
@@ -386,6 +503,25 @@ export default function HeroAdmin() {
   useEffect(() => {
     fetchSlides();
   }, []);
+
+  const handleReorder = async (newOrder: Slide[]) => {
+    // Update local state immediately for snappy feel
+    const updated = newOrder.map((s, idx) => ({ ...s, order: idx + 1 }));
+    setSlides(updated);
+
+    // Save batches to DB
+    try {
+      await fetch("/api/hero", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          updates: updated.map(s => ({ id: s.id, order: s.order }))
+        })
+      });
+    } catch (err) {
+      console.error("Failed to persist reorder:", err);
+    }
+  };
 
   const handleAdd = async (data: Partial<Slide>) => {
     setSaving(true);
@@ -415,13 +551,13 @@ export default function HeroAdmin() {
   const nextOrder = slides.length + 1;
 
   return (
-    <div className="max-w-5xl pb-24">
+    <div className="max-w-5xl pb-24 text-on-surface">
       {/* Page header */}
       <div className="flex justify-between items-end mb-12 border-b border-outline-variant/10 pb-6">
         <div>
           <h1 className="font-headline text-4xl text-on-surface mb-2 font-light">Hero Carousel</h1>
           <p className="font-body text-on-surface-variant text-sm">
-            Upload images &amp; videos or paste YouTube links — they appear on the homepage hero carousel.
+            Drag slides to reorder, or upload new imagery and video for the homepage.
           </p>
         </div>
         <button
@@ -450,8 +586,8 @@ export default function HeroAdmin() {
         />
       )}
 
-      {/* Slides list */}
-      <div className="space-y-4">
+      {/* Reorderable Slides list */}
+      <Reorder.Group axis="y" values={slides} onReorder={handleReorder} className="space-y-4">
         {slides.length === 0 && !isAdding && (
           <div className="py-20 text-center border-2 border-dashed border-outline-variant/20 rounded-DEFAULT">
             <p className="font-headline text-2xl font-light text-on-surface-variant/40 mb-2">No slides yet</p>
@@ -462,9 +598,9 @@ export default function HeroAdmin() {
         )}
 
         {slides.map((slide) => (
-          <div key={slide.id} className="bg-surface ghost-border rounded-DEFAULT overflow-hidden">
+          <React.Fragment key={slide.id}>
             {editingId === slide.id ? (
-              <div className="p-6">
+              <div className="bg-surface-container p-6 rounded-DEFAULT border border-primary/20 mb-8">
                 <SlideForm
                   title="Edit Slide"
                   initial={slide}
@@ -475,50 +611,16 @@ export default function HeroAdmin() {
                 />
               </div>
             ) : (
-              <div className="flex gap-5 items-center p-4">
-                {/* Thumbnail */}
-                <div className="w-36 h-24 flex-shrink-0 overflow-hidden rounded bg-surface-container">
-                  <Preview slide={slide} />
-                </div>
-
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="font-label text-[10px] tracking-[0.2em] uppercase text-primary bg-primary/10 px-2 py-0.5 rounded-sm">
-                      {slide.type}
-                    </span>
-                    <span className="font-label text-[10px] text-on-surface-variant/40">
-                      Position #{slide.order}
-                    </span>
-                  </div>
-                  <p className="font-body text-sm text-on-surface truncate">{slide.url}</p>
-                  {slide.alt && (
-                    <p className="font-label text-[10px] text-on-surface-variant/50 mt-1 italic truncate">
-                      {slide.alt}
-                    </p>
-                  )}
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-col gap-2 flex-shrink-0 items-end">
-                  <button
-                    onClick={() => { setEditingId(slide.id); setIsAdding(false); }}
-                    className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-primary transition-colors"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(slide.id)}
-                    className="text-xs uppercase tracking-widest font-semibold text-red-400 hover:text-red-600 transition-colors"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+              <ReorderSlideItem 
+                slide={slide} 
+                onEdit={() => { setEditingId(slide.id); setIsAdding(false); }}
+                onDelete={() => handleDelete(slide.id)}
+                isEditing={editingId === slide.id}
+              />
             )}
-          </div>
+          </React.Fragment>
         ))}
-      </div>
+      </Reorder.Group>
     </div>
   );
 }

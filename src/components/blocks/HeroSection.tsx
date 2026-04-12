@@ -64,6 +64,8 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     title: settings?.title || h.title,
     subtitle: settings?.subtitle || h.subtitle,
     description: settings?.description || h.description,
+    overlayOpacity: (settings?.overlay_opacity ?? 40) / 100,
+    overlayStyle: settings?.overlay_style || "dark",
   };
 
   const slide = hasSlides ? sorted[current] : null;
@@ -124,7 +126,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
                 <img
                   src={slide.url}
                   alt={slide.alt ?? "Space Organizers"}
-                  className="absolute inset-0 w-full h-full object-cover shadow-2xl"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-br from-surface-container via-surface to-surface-container" />
@@ -133,48 +135,58 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
           )}
         </AnimatePresence>
 
-        {/* Dynamic Overlays */}
-        <div className="absolute inset-0 editorial-gradient z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-surface/40 via-transparent to-transparent z-[2]" />
+        {/* Dynamic Admin-Controlled Overlay */}
+        <div 
+          className="absolute inset-0 z-[1] transition-all duration-1000"
+          style={{ 
+            backgroundColor: content.overlayStyle === "dark" ? "black" : "white",
+            opacity: content.overlayOpacity
+          }} 
+        />
+        <div className="absolute inset-0 editorial-gradient z-[2]" />
       </div>
 
       {/* Hero Content — Editorial Layout */}
-      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start">
-        <div className="max-w-4xl">
-          {/* Tagline / Region */}
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-32 md:pt-40 lg:pt-0">
+        
+        {/* Centered Top Region Tag */}
+        <div className="w-full flex justify-center mb-16 lg:mb-20">
           <motion.div
-            initial={{ opacity: 0, x: -15 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, ease: "circOut" }}
-            className="flex items-center gap-4 mb-10"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.5 }}
+            className="flex items-center gap-6"
           >
-            <span className="w-12 h-[1px] bg-primary animate-pulse" />
-            <p className="font-label text-[10px] tracking-[0.4em] uppercase text-on-surface-variant font-bold">
+            <div className="w-8 h-[1px] bg-primary/30" />
+            <span className="font-label text-[10px] tracking-[0.5em] uppercase text-primary/60 font-medium">
               {content.region}
-            </p>
+            </span>
+            <div className="w-8 h-[1px] bg-primary/30" />
           </motion.div>
+        </div>
 
-          {/* H1 — Cinematic Reveal */}
+        <div className="max-w-4xl">
+          {/* H1 — Cinematic Reveal with Fluid Typography */}
           <div className="overflow-hidden mb-6">
             <motion.h1
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-headline text-6xl md:text-[9rem] text-on-surface leading-[0.9] font-light tracking-tighter"
+              className="font-headline text-5xl md:text-[clamp(5rem,10vw,9.5rem)] text-on-surface leading-[0.85] font-light tracking-tighter"
             >
               {content.title}
             </motion.h1>
           </div>
 
           {/* Subtitle / Description Combo */}
-          <div className="flex flex-col md:flex-row items-start gap-12 mt-12 mb-20 max-w-3xl">
+          <div className="flex flex-col md:flex-row items-start gap-12 mt-8 md:mt-12 mb-16 md:mb-20 max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.6 }}
               className="flex-1"
             >
-              <h2 className="font-headline text-2xl md:text-3xl text-primary italic font-light leading-relaxed mb-4">
+              <h2 className="font-headline text-xl md:text-3xl text-primary italic font-light leading-relaxed mb-4">
                 {content.subtitle}
               </h2>
               <div className="w-16 h-[2px] bg-outline-variant/30" />
@@ -184,7 +196,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.9 }}
-              className="font-body text-base md:text-lg text-on-surface-variant/80 leading-loose max-w-sm font-light"
+              className="font-body text-sm md:text-lg text-on-surface-variant/80 leading-loose max-w-sm font-light"
             >
               {content.description}
             </motion.p>
@@ -240,15 +252,29 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
         </div>
       )}
 
-      {/* Scroll Hint */}
+      {/* Better Scroll Hint — Minimalist Mouse Animation */}
       <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: 80 }}
-        transition={{ duration: 2, delay: 2, ease: "circInOut" }}
-        className="absolute bottom-0 left-24 w-[1px] bg-gradient-to-b from-primary to-transparent z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, delay: 2.2 }}
+        className="absolute bottom-12 left-24 flex flex-col items-center gap-4 z-10"
       >
-        <span className="absolute -top-12 left-1/2 -translate-x-1/2 font-label text-[8px] tracking-[0.4em] uppercase text-primary/60 vertical-text whitespace-nowrap">
-           Scroll to explore
+        <div className="w-[18px] h-[30px] border-2 border-primary/40 rounded-full flex justify-center p-1">
+          <motion.div 
+            animate={{ 
+              y: [0, 8, 0],
+              opacity: [0, 1, 0]
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="w-1 h-2 bg-primary rounded-full"
+          />
+        </div>
+        <span className="font-label text-[8px] tracking-[0.5em] uppercase text-primary/60 vertical-text whitespace-nowrap">
+           Scroll
         </span>
       </motion.div>
     </section>

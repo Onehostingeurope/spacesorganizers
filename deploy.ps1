@@ -6,7 +6,7 @@ param(
   [string]$Message = ""
 )
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
 # ---------------------------------------------
 # Helpers
