@@ -9,16 +9,16 @@
   --color-surface-dim: #e4e3d7;
   --color-surface: #fffcf7;
   --color-surface-variant: #eae8de;
-  --color-on-surface: #383831;
-  --color-on-surface-variant: #65655c;
+  --color-on-surface: #141412; /* Richer, darker almost-black for punchy contrast */
+  --color-on-surface-variant: #4A4A42; /* Darker variant for better subtitle readability */
 
   --color-background: #fffcf7;
   --color-on-background: #383831;
 
-  /* Primary — warm taupe */
-  --color-primary: #665d52;
-  --color-primary-dim: #5a5147;
-  --color-on-primary: #fff6ef;
+  /* Primary — richer warm taupe for higher contrast */
+  --color-primary: #4A433A;
+  --color-primary-dim: #3D372F;
+  --color-on-primary: #ffffff;
   --color-primary-container: #eee0d2;
   --color-on-primary-container: #595046;
   --color-primary-fixed: #eee0d2;
