@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "riviera": "Riviera",
+    "about": "About",
+    "cta": "Book a Consultation"
+  },
+  "hero": {
+    "region": "French Riviera • Monaco • Cannes • Nice",
+    "title": "Space Organizing",
+    "subtitle": "Home organization, decluttering & wardrobe services on the French Riviera",
+    "description": "Practical help with decluttering, home organization, wardrobes, moving, unpacking and storage solutions — so your home feels lighter, clearer and easier to maintain.",
+    "cta_primary": "Book a Consultation",
+    "cta_whatsapp": "WhatsApp",
+    "scroll_hint": "Discover the Atelier"
+  },
+  "philosophy": {
+    "label": "The Philosophy",
+    "heading": "Curating tranquility through intentional order.",
+    "quote": "\"Luxury is not about having more, but about finding the space for what truly matters. We design sanctuaries that breathe.\"",
+    "pantry_title": "Pantry Systems",
+    "pantry_desc": "Functional aesthetics for the heart of the home.",
+    "living_title": "Living Sanctuaries",
+    "living_desc": "Decluttering shared spaces for family harmony.",
+    "wardrobe_title": "Wardrobe Curation",
+    "wardrobe_desc": "Elevating your daily ritual of dressing."
+  },
+  "process": {
+    "label": "How We Work",
+    "heading": "The Spaces Process",
+    "steps": [
+      { "title": "Consultation", "description": "We meet to discuss your goals, routines, and challenges in the space." },
+      { "title": "Planning", "description": "We create a tailored organizational strategy and source premium products." },
+      { "title": "Edit & Organize", "description": "We sort, declutter, and implement intuitive systems for every item." },
+      { "title": "Styling & Setup", "description": "We add the finishing touches, ensuring the space is both functional and beautiful." }
+    ]
+  },
+  "testimonials": {
+    "label": "Sanctuary Stories",
+    "heading": "Client Experiences",
+    "reviews": [
+      { "text": "Spaces Organizers completely transformed our kitchen. It feels lighter, calmer, and everything finally has a place. It's an absolute joy to cook now.", "author": "Sarah M.", "area": "Kitchen & Pantry" },
+      { "text": "Moving into our new home was stressful, but their unpacking service made it seamless. We walked into a fully organized house.", "author": "James & Emily T.", "area": "Move-In Setup" },
+      { "text": "I used to dread going into my closet. Now it feels like a high-end boutique. Their attention to detail and aesthetic is unmatched.", "author": "Chloe R.", "area": "Master Closet" }
+    ]
+  },
+  "faq": {
+    "label": "Common Inquiries",
+    "heading": "Frequently Asked Questions",
+    "items": [
+      { "q": "What happens during a consultation?", "a": "We visit your space to assess the current systems, discuss your daily routine, and identify your goals. This helps us create a customized plan tailored perfectly to your lifestyle." },
+      { "q": "Do you work room by room or on full homes?", "a": "We offer both options. Whether you need a simple closet refresh or a full-home organizational system setup, we scale our services to fit your needs." },
+      { "q": "Do you offer move-in unpacking?", "a": "Yes, our move-in service is designed to alleviate the stress of relocating. We unpack, organize, and style your belongings so you can settle in immediately." },
+      { "q": "Can you help with decluttering before organizing?", "a": "Absolutely. We guide you through the editing process with empathy and clear decision-making frameworks, ensuring we only organize what you truly love and use." },
+      { "q": "Do you shop for organizing products?", "a": "Yes, we handle all the sourcing. We measure your spaces and procure premium storage solutions that match your home's aesthetic, presenting options for your approval." },
+      { "q": "How do I get started?", "a": "Simply book a consultation through our contact form. We will reach out to schedule an initial call to learn more about your project." }
+    ]
+  },
+  "contact": {
+    "label": "Get In Touch",
+    "heading": "Let's craft your",
+    "heading_accent": "sanctuary.",
+    "description": "Take the first step toward a more organized, peaceful home. Fill out the inquiry form, and we'll reach out within 24 hours to schedule your complimentary call.",
+    "serving_label": "Serving",
+    "serving": "French Riviera • Monaco • Cannes • Nice",
+    "email_label": "Email",
+    "phone_label": "Phone",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "service": "Service of Interest",
+      "message": "Tell us about your space",
+      "submit": "Send Inquiry"
+    }
+  },
+  "cta": {
+    "label": "Begin Your Transformation",
+    "heading": "Ready to reclaim your space?",
+    "button": "Schedule Now"
+  },
+  "footer": {
+    "tagline": "Curated Sanctuaries on the French Riviera",
+    "description": "Practical help with decluttering, home organization, wardrobes, and storage solutions — so your home feels lighter and easier to maintain.",
+    "serving_label": "We Serve",
+    "contact_label": "Contact",
+    "whatsapp": "WhatsApp",
+    "copyright": "All rights reserved."
+  },
+  "about": {
+    "label": "Our Story",
+    "heading": "Elevating the Everyday",
+    "subheading": "At Spaces Organizers, we believe that your environment shapes your state of mind.",
+    "philosophy_title": "Our Philosophy",
+    "philosophy_body1": "We approach organization not just as a task of putting things away, but as an opportunity to curate your life. A well-organized space should feel intuitive, looking as beautiful as it functions.",
+    "philosophy_body2": "By blending aesthetic principles with practical systems, we craft spaces that don't just hold your belongings—they support your lifestyle, reduce daily friction, and invite a sense of profound calm.",
+    "systems_title": "Why Tailored Systems Matter",
+    "systems_body1": "Generic bins and arbitrary labels often fall short because they aren't designed for how you actually live.",
+    "systems_body2": "We take the time to understand your habits. Do you prefer dropping keys in a tray or hanging them? Do you need visual access to your wardrobe, or prefer things tucked away? These micro-decisions form the foundation of systems that are easy to maintain long after we leave."
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "services": "Leistungen",
+    "portfolio": "Portfolio",
+    "riviera": "Riviera",
+    "about": "Über uns",
+    "cta": "Beratung buchen"
+  },
+  "hero": {
+    "region": "Côte d'Azur • Monaco • Cannes • Nizza",
+    "title": "Raumorganisation",
+    "subtitle": "Haus-Organisation, Entrümpelung & Garderoben-Services an der Côte d'Azur",
+    "description": "Praktische Hilfe beim Entrümpeln, der Heimorganisation, Garderoben, Umzug, Auspacken und Aufbewahrungslösungen — damit sich Ihr Zuhause leichter, klarer und einfacher anfühlt.",
+    "cta_primary": "Beratung buchen",
+    "cta_whatsapp": "WhatsApp",
+    "scroll_hint": "Das Atelier entdecken"
+  },
+  "philosophy": {
+    "label": "Die Philosophie",
+    "heading": "Stille durch bewusste Ordnung kuratieren.",
+    "quote": "„Luxus bedeutet nicht, mehr zu haben, sondern den Raum für das zu finden, was wirklich zählt. Wir gestalten Sanctuaries, die atmen.\u201c",
+    "pantry_title": "Vorratssysteme",
+    "pantry_desc": "Funktionale Ästhetik für das Herzstück des Hauses.",
+    "living_title": "Wohn-Sanctuaries",
+    "living_desc": "Entrümpelung gemeinsamer Räume für familiäre Harmonie.",
+    "wardrobe_title": "Garderobe Kuration",
+    "wardrobe_desc": "Ihr tägliches Anziehritual auf ein neues Niveau heben."
+  },
+  "process": {
+    "label": "Unsere Methode",
+    "heading": "Der Spaces Prozess",
+    "steps": [
+      { "title": "Beratung", "description": "Wir besprechen Ihre Ziele, Ihren Alltag und die Herausforderungen in Ihrem Raum." },
+      { "title": "Planung", "description": "Wir entwickeln eine maßgeschneiderte Organisationsstrategie und beschaffen Premium-Produkte." },
+      { "title": "Sortieren & Organisieren", "description": "Wir sortieren, entrümpeln und implementieren intuitive Systeme für jeden Gegenstand." },
+      { "title": "Styling & Einrichtung", "description": "Wir setzen den letzten Schliff, damit der Raum sowohl funktional als auch schön ist." }
+    ]
+  },
+  "testimonials": {
+    "label": "Kundengeschichten",
+    "heading": "Kundenerfahrungen",
+    "reviews": [
+      { "text": "Spaces Organizers hat unsere Küche komplett verwandelt. Sie fühlt sich leichter, ruhiger an, und alles hat endlich seinen Platz. Es ist eine absolute Freude, jetzt zu kochen.", "author": "Sarah M.", "area": "Küche & Vorrat" },
+      { "text": "Unser Einzug in das neue Haus war stressig, aber ihr Auspackservice hat alles nahtlos gemacht. Wir sind in ein vollständig organisiertes Haus eingezogen.", "author": "James & Emily T.", "area": "Einzug" },
+      { "text": "Ich habe meinen Kleiderschrank früher gemieden. Jetzt fühlt er sich wie ein Boutique-Geschäft an. Ihre Liebe zum Detail und Ästhetik ist unübertroffen.", "author": "Chloe R.", "area": "Hauptgarderobe" }
+    ]
+  },
+  "faq": {
+    "label": "Häufige Fragen",
+    "heading": "Häufig Gestellte Fragen",
+    "items": [
+      { "q": "Was passiert während einer Beratung?", "a": "Wir besuchen Ihren Raum, um die bestehenden Systeme zu bewerten, Ihren Alltag zu besprechen und Ihre Ziele zu identifizieren. So können wir einen maßgeschneiderten Plan erstellen, der perfekt auf Ihren Lebensstil zugeschnitten ist." },
+      { "q": "Arbeiten Sie Zimmer für Zimmer oder im gesamten Haus?", "a": "Wir bieten beides an. Ob Sie nur eine einfache Kleiderschrank-Auffrischung oder ein vollständiges Heimorganisationssystem benötigen — wir passen unsere Dienstleistungen an Ihre Bedürfnisse an." },
+      { "q": "Bieten Sie Auspack-Service beim Einzug an?", "a": "Ja, unser Einzugsservice ist darauf ausgelegt, den Stress eines Umzugs zu reduzieren. Wir packen aus, organisieren und arrangieren Ihre Sachen so, dass Sie sich sofort einleben können." },
+      { "q": "Können Sie beim Entrümpeln vor dem Organisieren helfen?", "a": "Absolut. Wir begleiten Sie mit Einfühlungsvermögen durch den Sortierprozess und klaren Entscheidungsrahmen, damit wir nur das organisieren, was Sie wirklich lieben und nutzen." },
+      { "q": "Kaufen Sie Organisationsprodukte ein?", "a": "Ja, wir übernehmen die gesamte Beschaffung. Wir messen Ihre Räume und beschaffen Premium-Aufbewahrungslösungen, die zur Ästhetik Ihres Hauses passen, und präsentieren Ihnen Optionen zur Genehmigung." },
+      { "q": "Wie beginne ich?", "a": "Buchen Sie einfach eine Beratung über unser Kontaktformular. Wir werden uns melden, um einen ersten Anruf zu vereinbaren und mehr über Ihr Projekt zu erfahren." }
+    ]
+  },
+  "contact": {
+    "label": "Kontakt",
+    "heading": "Lassen Sie uns Ihr",
+    "heading_accent": "Sanctuary gestalten.",
+    "description": "Machen Sie den ersten Schritt in Richtung eines organisierteren, ruhigeren Zuhauses. Füllen Sie das Anforderungsformular aus, und wir melden uns innerhalb von 24 Stunden, um Ihren kostenlosen Anruf zu planen.",
+    "serving_label": "Wir bedienen",
+    "serving": "Côte d'Azur • Monaco • Cannes • Nizza",
+    "email_label": "E-Mail",
+    "phone_label": "Telefon",
+    "form": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail-Adresse",
+      "phone": "Telefonnummer",
+      "service": "Gewünschte Leistung",
+      "message": "Erzählen Sie uns von Ihrem Raum",
+      "submit": "Anfrage senden"
+    }
+  },
+  "cta": {
+    "label": "Starten Sie Ihre Transformation",
+    "heading": "Bereit, Ihren Raum zurückzugewinnen?",
+    "button": "Jetzt buchen"
+  },
+  "footer": {
+    "tagline": "Kurierte Sanctuaries an der Côte d'Azur",
+    "description": "Praktische Hilfe beim Entrümpeln, der Heimorganisation, Garderoben und Aufbewahrungslösungen — damit sich Ihr Zuhause leichter anfühlt.",
+    "serving_label": "Regionen",
+    "contact_label": "Kontakt",
+    "whatsapp": "WhatsApp",
+    "copyright": "Alle Rechte vorbehalten."
+  },
+  "about": {
+    "label": "Unsere Geschichte",
+    "heading": "Das Alltägliche Erheben",
+    "subheading": "Bei Spaces Organizers glauben wir, dass Ihre Umgebung Ihren Geisteszustand prägt.",
+    "philosophy_title": "Unsere Philosophie",
+    "philosophy_body1": "Wir betrachten Organisation nicht nur als Aufgabe, Dinge wegzuräumen, sondern als Gelegenheit, Ihr Leben zu kuratieren. Ein gut organisierter Raum sollte intuitiv sein und genauso schön aussehen, wie er funktioniert.",
+    "philosophy_body2": "Durch die Verbindung ästhetischer Prinzipien mit praktischen Systemen schaffen wir Räume, die nicht nur Ihre Gegenstände aufbewahren — sie unterstützen Ihren Lebensstil, reduzieren tägliche Reibung und laden zu einem Gefühl tiefer Ruhe ein.",
+    "systems_title": "Warum Maßgeschneiderte Systeme Wichtig Sind",
+    "systems_body1": "Generische Behälter und beliebige Etiketten scheitern oft, weil sie nicht für die Art und Weise konzipiert sind, wie Sie tatsächlich leben.",
+    "systems_body2": "Wir nehmen uns die Zeit, Ihre Gewohnheiten zu verstehen. Diese Mikro-Entscheidungen bilden die Grundlage von Systemen, die lange nach unserem Weggang einfach zu pflegen sind."
+  }
+}

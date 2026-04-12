@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "riviera": "Riviera",
+    "about": "À propos",
+    "cta": "Réserver une consultation"
+  },
+  "hero": {
+    "region": "Côte d'Azur • Monaco • Cannes • Nice",
+    "title": "Organisation d'Espaces",
+    "subtitle": "Services d'organisation, désencombrement & dressing sur la Côte d'Azur",
+    "description": "Aide pratique pour désencombrer, organiser votre intérieur, vos armoires, votre déménagement et vos solutions de rangement — pour que votre maison se sente plus légère, plus claire et plus facile à entretenir.",
+    "cta_primary": "Réserver une consultation",
+    "cta_whatsapp": "WhatsApp",
+    "scroll_hint": "Découvrir l'Atelier"
+  },
+  "philosophy": {
+    "label": "La Philosophie",
+    "heading": "Cultiver la tranquillité par un ordre intentionnel.",
+    "quote": "« Le luxe ne consiste pas à avoir plus, mais à trouver l'espace pour ce qui compte vraiment. Nous concevons des sanctuaires qui respirent. »",
+    "pantry_title": "Systèmes de Garde-Manger",
+    "pantry_desc": "Une esthétique fonctionnelle pour le cœur de la maison.",
+    "living_title": "Sanctuaires de Vie",
+    "living_desc": "Désencombrement des espaces partagés pour l'harmonie familiale.",
+    "wardrobe_title": "Curation de Dressing",
+    "wardrobe_desc": "Sublimer votre rituel quotidien d'habillage."
+  },
+  "process": {
+    "label": "Notre Méthode",
+    "heading": "Le Processus Spaces",
+    "steps": [
+      { "title": "Consultation", "description": "Nous échangeons sur vos objectifs, vos habitudes et les défis de votre espace." },
+      { "title": "Planification", "description": "Nous créons une stratégie d'organisation sur mesure et sélectionnons des produits premium." },
+      { "title": "Tri & Organisation", "description": "Nous trions, désencombrons et mettons en place des systèmes intuitifs pour chaque objet." },
+      { "title": "Mise en Scène", "description": "Nous ajoutons la touche finale pour que l'espace soit à la fois fonctionnel et beau." }
+    ]
+  },
+  "testimonials": {
+    "label": "Témoignages",
+    "heading": "Expériences Clients",
+    "reviews": [
+      { "text": "Spaces Organizers a complètement transformé notre cuisine. Elle se sent plus légère, plus calme, et tout a enfin sa place. C'est un vrai plaisir de cuisiner maintenant.", "author": "Sarah M.", "area": "Cuisine & Garde-Manger" },
+      { "text": "Notre emménagement était stressant, mais leur service de déballage a tout simplifié. Nous avons découvert une maison parfaitement organisée.", "author": "James & Emily T.", "area": "Installation" },
+      { "text": "J'avais peur d'entrer dans mon placard. Maintenant, il ressemble à une boutique haut de gamme. Leur souci du détail est incomparable.", "author": "Chloe R.", "area": "Dressing Principal" }
+    ]
+  },
+  "faq": {
+    "label": "Questions Fréquentes",
+    "heading": "Foire Aux Questions",
+    "items": [
+      { "q": "Que se passe-t-il lors d'une consultation ?", "a": "Nous visitons votre espace pour évaluer les systèmes existants, discuter de votre quotidien et identifier vos objectifs. Cela nous permet de créer un plan personnalisé parfaitement adapté à votre style de vie." },
+      { "q": "Travaillez-vous pièce par pièce ou sur maison entière ?", "a": "Nous proposons les deux options. Que vous ayez besoin d'un simple rafraîchissement de placard ou d'un système d'organisation complet, nous adaptons nos services à vos besoins." },
+      { "q": "Proposez-vous un service de déballage lors d'un emménagement ?", "a": "Oui, notre service d'emménagement est conçu pour alléger le stress du déménagement. Nous déballons, organisons et mettons en valeur vos affaires pour que vous puissiez vous installer immédiatement." },
+      { "q": "Pouvez-vous aider à désencombrer avant d'organiser ?", "a": "Absolument. Nous vous guidons dans le processus de tri avec empathie et des méthodes de décision claires, en veillant à n'organiser que ce que vous aimez vraiment et utilisez." },
+      { "q": "Achetez-vous les produits de rangement ?", "a": "Oui, nous gérons tout le sourcing. Nous mesurons vos espaces et sélectionnons des solutions de rangement premium correspondant à l'esthétique de votre maison, en vous présentant les options pour approbation." },
+      { "q": "Comment démarrer ?", "a": "Il vous suffit de réserver une consultation via notre formulaire de contact. Nous vous contacterons pour planifier un appel initial afin d'en savoir plus sur votre projet." }
+    ]
+  },
+  "contact": {
+    "label": "Nous Contacter",
+    "heading": "Créons votre",
+    "heading_accent": "sanctuaire.",
+    "description": "Faites le premier pas vers un intérieur plus organisé et serein. Remplissez le formulaire, et nous vous répondrons dans les 24 heures pour planifier votre appel gratuit.",
+    "serving_label": "Zones desservies",
+    "serving": "Côte d'Azur • Monaco • Cannes • Nice",
+    "email_label": "E-mail",
+    "phone_label": "Téléphone",
+    "form": {
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "phone": "Numéro de téléphone",
+      "service": "Service souhaité",
+      "message": "Parlez-nous de votre espace",
+      "submit": "Envoyer la demande"
+    }
+  },
+  "cta": {
+    "label": "Commencez Votre Transformation",
+    "heading": "Prêt(e) à reconquérir votre espace ?",
+    "button": "Planifier maintenant"
+  },
+  "footer": {
+    "tagline": "Sanctuaires Curatés sur la Côte d'Azur",
+    "description": "Aide pratique pour désencombrer, organiser votre intérieur, vos armoires et trouver des solutions de rangement — pour que votre maison se sente plus légère.",
+    "serving_label": "Zones",
+    "contact_label": "Contact",
+    "whatsapp": "WhatsApp",
+    "copyright": "Tous droits réservés."
+  },
+  "about": {
+    "label": "Notre Histoire",
+    "heading": "Élever le Quotidien",
+    "subheading": "Chez Spaces Organizers, nous croyons que votre environnement façonne votre état d'esprit.",
+    "philosophy_title": "Notre Philosophie",
+    "philosophy_body1": "Nous abordons l'organisation non pas comme une simple tâche de rangement, mais comme une opportunité de curatiser votre vie. Un espace bien organisé doit être intuitif, aussi beau que fonctionnel.",
+    "philosophy_body2": "En alliant principes esthétiques et systèmes pratiques, nous créons des espaces qui ne font pas que contenir vos affaires — ils soutiennent votre style de vie, réduisent les frictions quotidiennes et invitent à un profond sentiment de calme.",
+    "systems_title": "Pourquoi des Systèmes Sur Mesure",
+    "systems_body1": "Les boîtes génériques et étiquettes arbitraires échouent souvent car elles ne sont pas conçues pour la façon dont vous vivez réellement.",
+    "systems_body2": "Nous prenons le temps de comprendre vos habitudes. Ces micro-décisions forment la base de systèmes faciles à maintenir longtemps après notre départ."
+  }
+}

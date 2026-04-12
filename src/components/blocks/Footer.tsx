@@ -1,17 +1,25 @@
 import React from "react";
 import Link from "next/link";
-
-const FOOTER_LINKS = [
-  { label: "Privacy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
-  { label: "Atelier", href: "/atelier" },
-  { label: "Press", href: "/press" },
-  { label: "Contact", href: "/contact" },
-];
+import type { Dictionary } from "@/lib/dictionaries";
 
 const SERVING = ["Monaco", "Cannes", "Nice", "Antibes", "Menton"];
 
-export function Footer() {
+interface FooterProps {
+  dict: Dictionary;
+  lang: string;
+}
+
+const FOOTER_LINKS = (lang: string) => [
+  { label: "Privacy", href: `/${lang}/privacy` },
+  { label: "Terms", href: `/${lang}/terms` },
+  { label: "Atelier", href: `/${lang}/spaces` },
+  { label: "Press", href: `/${lang}/about` },
+  { label: "Contact", href: `/${lang}/contact` },
+];
+
+export function Footer({ dict, lang }: FooterProps) {
+  const f = dict.footer;
+
   return (
     <footer className="w-full bg-surface-container border-t border-outline-variant/10">
       <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 py-20 md:py-28">
@@ -19,30 +27,27 @@ export function Footer() {
         <div className="flex flex-col lg:flex-row justify-between items-start gap-16 mb-20">
           {/* Brand */}
           <div className="lg:max-w-xs">
-            <p className="font-headline italic text-2xl text-on-surface tracking-tight mb-4">
-              Space Organizing
-            </p>
+            <Link href={`/${lang}`}>
+              <p className="font-headline italic text-2xl text-on-surface tracking-tight mb-4 hover:text-primary transition-colors">
+                Space Organizing
+              </p>
+            </Link>
             <p className="font-label text-[10px] tracking-[0.25em] uppercase text-on-surface-variant mb-6">
-              Curated Sanctuaries on the French Riviera
+              {f.tagline}
             </p>
             <p className="font-body text-sm text-on-surface-variant leading-relaxed font-light">
-              Practical help with decluttering, home organization, wardrobes,
-              and storage solutions — so your home feels lighter and easier to
-              maintain.
+              {f.description}
             </p>
           </div>
 
           {/* Serving region */}
           <div>
             <p className="font-label text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-              We Serve
+              {f.serving_label}
             </p>
             <ul className="space-y-2">
               {SERVING.map((city) => (
-                <li
-                  key={city}
-                  className="font-body text-sm text-on-surface-variant font-light"
-                >
+                <li key={city} className="font-body text-sm text-on-surface-variant font-light">
                   {city}
                 </li>
               ))}
@@ -52,7 +57,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <p className="font-label text-[10px] tracking-[0.3em] uppercase text-primary mb-6">
-              Contact
+              {f.contact_label}
             </p>
             <div className="space-y-3 font-body text-sm text-on-surface-variant font-light">
               <p>hello@spaceorganizing.com</p>
@@ -69,7 +74,7 @@ export function Footer() {
                 >
                   chat
                 </span>
-                WhatsApp
+                {f.whatsapp}
               </a>
             </div>
           </div>
@@ -78,10 +83,10 @@ export function Footer() {
         {/* Bottom row */}
         <div className="border-t border-outline-variant/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="font-label text-[10px] tracking-[0.15em] uppercase text-on-surface-variant opacity-60">
-            © {new Date().getFullYear()} Space Organizing. All rights reserved.
+            © {new Date().getFullYear()} Space Organizing. {f.copyright}
           </p>
           <nav className="flex flex-wrap justify-center gap-8">
-            {FOOTER_LINKS.map((link) => (
+            {FOOTER_LINKS(lang).map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
