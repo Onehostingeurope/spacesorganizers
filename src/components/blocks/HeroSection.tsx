@@ -74,7 +74,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     <section className="relative h-screen w-full flex items-center overflow-hidden bg-surface">
       {/* BACKGROUND */}
       <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {slide?.type === "youtube" ? (
             <motion.div
               key={slide.id}
