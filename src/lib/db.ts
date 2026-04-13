@@ -38,7 +38,7 @@ export async function getCollection<T>(model: Model, lang?: string): Promise<T[]
           : (model === "hero_settings" || model === "homepage_settings")
             ? "updated_at"
             : "createdAt",
-        { ascending: true }
+        { ascending: (model !== "hero_settings" && model !== "homepage_settings") }
       );
 
     // Filter by language for collection models that support it
