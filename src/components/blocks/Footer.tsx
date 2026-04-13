@@ -24,8 +24,8 @@ const FOOTER_LINKS = (lang: string) => [
 export function Footer({ dict, lang, contact }: FooterProps) {
   const f = dict.footer;
   const email = contact?.email || "hello@spaceorganizing.com";
-  const phone = contact?.phone || "+380 66 938 7809";
-  const safePhone = phone.replace(/[^0-9+]/g, "");
+  const phone = contact?.phone || "+380 66 938 78 09 / +33 7 45 73 79 55";
+  const safePhone = "380669387809";
 
   return (
     <footer className="w-full bg-surface-container border-t border-outline-variant/10">

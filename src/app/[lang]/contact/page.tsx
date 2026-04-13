@@ -56,7 +56,7 @@ export default async function Contact({
                     <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
                     {c.phone_label}
                   </strong>
-                  +380 66 938 78 09
+                  +380 66 938 78 09 / +33 7 45 73 79 55
                 </p>
               </div>
             </div>
