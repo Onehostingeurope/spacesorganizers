@@ -19,12 +19,13 @@ export async function GET(request: Request) {
       .from("hero_settings")
       .select("*")
       .eq("lang", lang)
-      .single();
+      .order("updated_at", { ascending: false })
+      .limit(1);
 
-    if (error && error.code !== "PGRST116") { // PGRST116 is "no rows found"
+    if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    return NextResponse.json(data || {});
+    return NextResponse.json((data && data.length > 0) ? data[0] : {});
   }
 
   const { data, error } = await supabase.from("hero_settings").select("*");
@@ -47,27 +48,51 @@ export async function POST(request: Request) {
 
   const supabase = createClient(url, key);
 
-  const { data, error } = await supabase
+  // 1. Find existing row to prevent duplicate inserts
+  const { data: existing } = await supabase
     .from("hero_settings")
-    .upsert({
-      lang,
-      region,
-      title,
-      subtitle,
-      description,
-      autoplay_speed: autoplay_speed ? Number(autoplay_speed) : undefined,
-      overlay_opacity: overlay_opacity !== undefined ? Number(overlay_opacity) : undefined,
-      overlay_style: overlay_style || "dark",
-      updated_at: new Date().toISOString(),
-    })
-    .select()
-    .single();
+    .select("id")
+    .eq("lang", lang)
+    .order("updated_at", { ascending: false })
+    .limit(1);
 
-  if (error) {
-    // If table doesn't exist, we might need to tell the user
-    console.error("Hero Settings Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  const payload = {
+    lang,
+    region,
+    title,
+    subtitle,
+    description,
+    autoplay_speed: autoplay_speed ? Number(autoplay_speed) : undefined,
+    overlay_opacity: overlay_opacity !== undefined ? Number(overlay_opacity) : undefined,
+    overlay_style: overlay_style || "dark",
+    updated_at: new Date().toISOString(),
+  };
+
+  let resultData, resultError;
+
+  if (existing && existing.length > 0) {
+    const { data, error } = await supabase
+      .from("hero_settings")
+      .update(payload)
+      .eq("id", existing[0].id)
+      .select()
+      .single();
+    resultData = data;
+    resultError = error;
+  } else {
+    const { data, error } = await supabase
+      .from("hero_settings")
+      .insert([payload])
+      .select()
+      .single();
+    resultData = data;
+    resultError = error;
   }
 
-  return NextResponse.json(data);
+  if (resultError) {
+    console.error("Hero Settings Error:", resultError);
+    return NextResponse.json({ error: resultError.message }, { status: 500 });
+  }
+
+  return NextResponse.json(resultData);
 }
