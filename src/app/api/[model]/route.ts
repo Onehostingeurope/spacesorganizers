@@ -17,12 +17,29 @@ export async function GET(request: Request, { params }: { params: Promise<{ mode
   }
 }
 
+function cleanInput(obj: any): any {
+  if (typeof obj === "string") {
+    // Replace literal &nbsp; and actual Unicode non-breaking space \u00A0
+    return obj.replace(/&nbsp;/g, " ").replace(/\u00A0/g, " ");
+  }
+  if (Array.isArray(obj)) return obj.map(cleanInput);
+  if (typeof obj === "object" && obj !== null) {
+    const newObj: any = {};
+    for (const key in obj) {
+      newObj[key] = cleanInput(obj[key]);
+    }
+    return newObj;
+  }
+  return obj;
+}
+
 export async function POST(request: Request, { params }: { params: Promise<{ model: string }> }) {
   const model = (await params).model as Model;
   if (!ALLOWED_MODELS.includes(model)) return NextResponse.json({ error: "Invalid model" }, { status: 400 });
 
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+    const body = cleanInput(rawBody);
     const newRecord = await insertRecord(model, body);
     return NextResponse.json(newRecord, { status: 201 });
   } catch (error) {
@@ -35,7 +52,8 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ mo
   if (!ALLOWED_MODELS.includes(model)) return NextResponse.json({ error: "Invalid model" }, { status: 400 });
 
   try {
-    const { updates } = await request.json(); 
+    const rawData = await request.json(); 
+    const updates = cleanInput(rawData.updates);
     if (!Array.isArray(updates)) throw new Error("Updates must be an array");
 
     const { updateRecord } = await import("@/lib/db");

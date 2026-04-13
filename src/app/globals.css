@@ -196,6 +196,8 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 .rich-text p {
   margin-bottom: 0.75rem;
