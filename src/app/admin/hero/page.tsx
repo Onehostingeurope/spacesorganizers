@@ -399,9 +399,9 @@ function HeroSettingsEditor() {
             {saving ? "Saving..." : `Save ${lang.toUpperCase()} Content`}
           </button>
           {message && (
-            <span className="text-xs text-green-600 font-bold uppercase tracking-widest flex items-center gap-2 bg-green-500/10 px-3 py-1.5 rounded">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse"></span>
-              Saved!
+            <span className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 px-3 py-1.5 rounded ${message.includes("Failed") || message.includes("error") ? "text-red-600 bg-red-500/10" : "text-green-600 bg-green-500/10"}`}>
+              <span className={`w-1.5 h-1.5 rounded-full shadow-[0_0_8px_currentColor] animate-pulse ${message.includes("Failed") || message.includes("error") ? "bg-red-500" : "bg-green-500"}`}></span>
+              {message === "Settings saved successfully!" ? "Saved!" : message}
             </span>
           )}
         </div>

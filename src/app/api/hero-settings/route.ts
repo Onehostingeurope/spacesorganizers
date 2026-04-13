@@ -48,14 +48,6 @@ export async function POST(request: Request) {
 
   const supabase = createClient(url, key);
 
-  // 1. Find existing row to prevent duplicate inserts
-  const { data: existing } = await supabase
-    .from("hero_settings")
-    .select("id")
-    .eq("lang", lang)
-    .order("updated_at", { ascending: false })
-    .limit(1);
-
   const payload = {
     lang,
     region,
@@ -68,26 +60,15 @@ export async function POST(request: Request) {
     updated_at: new Date().toISOString(),
   };
 
-  let resultData, resultError;
+  // Delete all existing for this lang to clear duplicates and missing ID constraints
+  await supabase.from("hero_settings").delete().eq("lang", lang);
 
-  if (existing && existing.length > 0) {
-    const { data, error } = await supabase
-      .from("hero_settings")
-      .update(payload)
-      .eq("id", existing[0].id)
-      .select()
-      .single();
-    resultData = data;
-    resultError = error;
-  } else {
-    const { data, error } = await supabase
-      .from("hero_settings")
-      .insert([payload])
-      .select()
-      .single();
-    resultData = data;
-    resultError = error;
-  }
+  // Insert fresh row
+  const { data: resultData, error: resultError } = await supabase
+    .from("hero_settings")
+    .insert([payload])
+    .select()
+    .single();
 
   if (resultError) {
     console.error("Hero Settings Error:", resultError);
