@@ -17,7 +17,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "group inline-flex items-center justify-center rounded-minimal font-sans font-bold uppercase tracking-[0.3em] transition-all duration-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50",
+        "group flex items-center justify-center rounded-minimal font-sans font-bold uppercase tracking-[0.3em] transition-all duration-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50",
         {
           "bg-primary text-on-primary hover:bg-on-surface hover:text-surface shadow-premium": variant === "primary",
           "border border-primary/30 bg-transparent text-primary hover:border-primary hover:bg-primary/5": variant === "secondary",
