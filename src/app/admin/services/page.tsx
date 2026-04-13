@@ -85,7 +85,7 @@ function ServiceForm({
           <div className="mt-4 p-4 bg-surface-container-high/30 border border-dashed border-outline-variant/20 rounded-DEFAULT">
             <p className="text-[9px] uppercase tracking-widest text-on-surface-variant/40 mb-2">Structure Preview</p>
             <div 
-              className="text-xs text-on-surface-variant/60 rich-text max-h-32 overflow-y-auto"
+              className="text-xs text-on-surface-variant/60 rich-text max-h-32 overflow-y-auto break-words"
               dangerouslySetInnerHTML={{ __html: data.description }}
             />
           </div>
