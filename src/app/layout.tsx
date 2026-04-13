@@ -15,6 +15,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://spacesorganizers.com'),
   title: "Space Organizers | Luxury Home Organization French Riviera",
   description:
     "Home organization, decluttering & wardrobe services on the French Riviera.",
