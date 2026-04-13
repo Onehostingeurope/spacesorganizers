@@ -14,16 +14,16 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
     <div className="group py-16 md:py-20 transition-all duration-700 ease-out border-b border-outline-variant/15 last:border-0">
       <Link
         href={href}
-        className="flex flex-col md:flex-row md:items-start justify-between gap-10 lg:gap-20 px-2 md:px-0"
+        className="flex flex-col md:flex-row md:items-start justify-between gap-10 lg:gap-20 px-2 md:px-0 text-center"
       >
         {/* Index + Title */}
-        <div className="md:w-4/12 flex items-start gap-6">
+        <div className="md:w-4/12 flex items-start justify-center gap-6">
           {index !== undefined && (
             <span className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant pt-2 flex-shrink-0">
               0{index + 1}
             </span>
           )}
-          <h3 className="font-headline text-3xl lg:text-5xl leading-tight tracking-tight text-on-surface group-hover:text-primary transition-colors duration-500 font-light">
+          <h3 className="font-headline text-3xl lg:text-5xl leading-tight tracking-tight text-on-surface group-hover:text-primary transition-colors duration-500 font-light text-center">
             {title}
           </h3>
         </div>

@@ -53,9 +53,9 @@ export default async function ServicesPage({
                     </div>
                   </div>
                 ) : null}
-                <div className="w-full md:w-1/2">
+                <div className="w-full md:w-1/2 text-center flex flex-col items-center">
                   <Heading as="h2" className="text-4xl mb-6 font-light">{service.title}</Heading>
-                  <RichText content={service.description} className="mb-8" />
+                  <RichText content={service.description} className="mb-8 w-full" />
                 </div>
               </div>
             ))}

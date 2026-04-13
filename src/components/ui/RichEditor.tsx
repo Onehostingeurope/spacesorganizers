@@ -32,7 +32,6 @@ const formats = [
   "italic",
   "underline",
   "list",
-  "bullet",
   "align",
 ];
 

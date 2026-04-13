@@ -203,10 +203,20 @@
 .rich-text p:last-child {
   margin-bottom: 0;
 }
+.rich-text .ql-align-center {
+  text-align: center;
+}
+.rich-text .ql-align-right {
+  text-align: right;
+}
+.rich-text .ql-align-justify {
+  text-align: justify;
+}
 /* Homepage Clean Block Look */
 .service-card-rich-text p {
   margin-bottom: 0.15rem;
   line-height: inherit;
+  text-align: center;
 }
 .rich-text b, .rich-text strong {
   font-weight: 600;
@@ -235,4 +245,3 @@
   margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
-
