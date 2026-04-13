@@ -41,17 +41,26 @@ export default async function Contact({
               <ContactForm />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-2">{c.email_label}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center pt-8">
+              <div className="flex flex-col items-center group cursor-default">
+                <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-3 flex items-center justify-center gap-3">
+                  <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
+                  {c.email_label}
+                </p>
                 <p className="font-body text-on-surface-variant text-sm">hello@spaceorganizing.com</p>
               </div>
-              <div>
-                <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-2">{c.phone_label}</p>
+              <div className="flex flex-col items-center group cursor-default">
+                <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-3 flex items-center justify-center gap-3">
+                  <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
+                  {c.phone_label}
+                </p>
                 <p className="font-body text-on-surface-variant text-sm">+380 66 938 78 09</p>
               </div>
-              <div>
-                <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-2">{c.serving_label}</p>
+              <div className="flex flex-col items-center group cursor-default">
+                <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-3 flex items-center justify-center gap-3">
+                  <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
+                  {c.serving_label}
+                </p>
                 <p className="font-body text-on-surface-variant text-sm">{c.serving}</p>
               </div>
             </div>

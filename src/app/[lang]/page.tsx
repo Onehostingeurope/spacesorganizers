@@ -238,20 +238,23 @@ export default async function Home({
                 {content.contact.description}
               </p>
               <div className="space-y-8 text-on-surface-variant font-sans tracking-wide text-sm leading-relaxed border-t border-outline-variant/30 pt-14">
-                <p className="flex items-center">
-                  <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-24">
+                <p className="flex items-center group cursor-default">
+                  <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-28 flex items-center gap-3">
+                    <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
                     {dict.contact.serving_label}
                   </strong>
                   {content.contact.serving}
                 </p>
-                <p className="flex items-center">
-                  <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-24">
+                <p className="flex items-center group cursor-default">
+                  <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-28 flex items-center gap-3">
+                    <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
                     {dict.contact.email_label}
                   </strong>
                   {content.contact.email}
                 </p>
-                <p className="flex items-center">
-                  <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-24">
+                <p className="flex items-center group cursor-default">
+                  <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-28 flex items-center gap-3">
+                    <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
                     {dict.contact.phone_label}
                   </strong>
                   {content.contact.phone}
