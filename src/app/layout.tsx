@@ -94,7 +94,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+
+        {/* WhatsApp / social OG tags — must be in <head> directly */}
+        <meta property="og:type"        content="website" />
+        <meta property="og:site_name"   content="Space Organizers" />
+        <meta property="og:title"       content="Space Organizers | Luxury Home Organization French Riviera" />
+        <meta property="og:description" content="Premium home organization, decluttering & wardrobe styling in Cannes, Monaco, Nice & Antibes." />
+        <meta property="og:image"       content="https://spacesorganizers.com/og-image.jpg" />
+        <meta property="og:image:width"  content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt"   content="Space Organizers — Luxury Home Organization French Riviera" />
+        <meta property="og:url"         content="https://spacesorganizers.com" />
+        <meta name="twitter:card"        content="summary_large_image" />
+        <meta name="twitter:title"       content="Space Organizers | Luxury Home Organization French Riviera" />
+        <meta name="twitter:description" content="Premium home organization, decluttering & wardrobe styling in Cannes, Monaco, Nice & Antibes." />
+        <meta name="twitter:image"       content="https://spacesorganizers.com/og-image.jpg" />
+      </head>
       <body
         className={`${notoSerif.variable} ${manrope.variable} bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col`}
       >

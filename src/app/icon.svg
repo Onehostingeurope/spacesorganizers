@@ -1,4 +1,13 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="16" fill="#111111"/>
-  <text x="16" y="23" font-family="serif" font-size="22" font-weight="normal" fill="#FCFBF9" text-anchor="middle">S</text>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" fill="#2a2520"/>
+  <text
+    x="32"
+    y="47"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="42"
+    font-style="italic"
+    font-weight="300"
+    fill="#fffcf7"
+    text-anchor="middle"
+  >S</text>
 </svg>
