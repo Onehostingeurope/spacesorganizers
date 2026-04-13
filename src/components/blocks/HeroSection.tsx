@@ -16,6 +16,7 @@ interface HeroSectionProps {
   dict: Dictionary;
   lang: string;
   slides?: HeroSlide[];
+  heroSettings?: any;
 }
 
 function getYouTubeId(url: string): string {
@@ -25,11 +26,10 @@ function getYouTubeId(url: string): string {
   return match ? match[1] : url;
 }
 
-export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
+export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSectionProps) {
   const h = dict.hero;
   const [current, setCurrent] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [settings, setSettings] = useState<any>(null);
 
   // Sort slides by order
   const sorted = [...slides].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -39,33 +39,23 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
     if (hasSlides) setCurrent((c) => (c + 1) % sorted.length);
   }, [hasSlides, sorted.length]);
 
-  // Fetch dynamic settings (text + speed)
-  useEffect(() => {
-    fetch(`/api/hero-settings?lang=${lang}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.lang) setSettings(data);
-      })
-      .catch((err) => console.error("Hero settings fetch error:", err));
-  }, [lang]);
-
   // Auto-advance
   useEffect(() => {
     setIsLoaded(true);
     if (sorted.length <= 1) return;
-    const delay = (settings?.autoplay_speed || 15) * 1000;
+    const delay = (heroSettings?.autoplay_speed || 15) * 1000;
     const timer = setInterval(next, delay);
     return () => clearInterval(timer);
-  }, [sorted.length, next, settings?.autoplay_speed]);
+  }, [sorted.length, next, heroSettings?.autoplay_speed]);
 
   // Content Fallbacks
   const content = {
-    region: settings?.region || h.region,
-    title: settings?.title || h.title,
-    subtitle: settings?.subtitle || h.subtitle,
-    description: settings?.description || h.description,
-    overlayOpacity: settings?.overlay_opacity ?? 40,
-    overlayStyle: settings?.overlay_style || "dark",
+    region: heroSettings?.region || h.region,
+    title: heroSettings?.title || h.title,
+    subtitle: heroSettings?.subtitle || h.subtitle,
+    description: heroSettings?.description || h.description,
+    overlayOpacity: heroSettings?.overlay_opacity ?? 40,
+    overlayStyle: heroSettings?.overlay_style || "dark",
   };
 
   const slide = hasSlides ? sorted[current] : null;
@@ -113,7 +103,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
               exit={{ opacity: 0, scale: 1.05 }}
               transition={{
                 opacity: { duration: 0.8, ease: "easeOut" },
-                scale: { duration: (settings?.autoplay_speed || 15) + 2, ease: "linear" },
+                scale: { duration: (heroSettings?.autoplay_speed || 15) + 2, ease: "linear" },
               }}
               className="absolute inset-0"
             >

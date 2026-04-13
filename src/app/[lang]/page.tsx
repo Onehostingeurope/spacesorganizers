@@ -113,7 +113,7 @@ export default async function Home({
     <>
       <Header dict={dict} lang={locale} />
       <main className="flex-1 bg-surface font-light overflow-x-hidden">
-        <HeroSection dict={dict} lang={lang} slides={heroSlides} />
+        <HeroSection dict={dict} lang={lang} slides={heroSlides} heroSettings={heroSettings} />
 
         {/* PHILOSOPHY / ATELIER GRID */}
         <section className="bg-surface-container py-20 md:py-32 px-6 md:px-24">
