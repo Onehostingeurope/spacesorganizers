@@ -2,13 +2,62 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { Header } from "@/components/blocks/Header";
 import { Footer } from "@/components/blocks/Footer";
 import { CTASection } from "@/components/blocks/CTASection";
-import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
+import { getDictionary, hasLocale, LOCALES, type Locale } from "@/lib/dictionaries";
 import { getCollection } from "@/lib/db";
 import { RichText } from "@/components/ui/RichText";
 import { Carousel } from "@/components/ui/Carousel";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+const baseUrl = "https://spacesorganizers.com";
+
+export async function generateStaticParams() {
+  return LOCALES.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const locale = hasLocale(lang) ? (lang as Locale) : "en";
+
+  const titles: Record<Locale, string> = {
+    en: "Home Organization Services in Cannes, Monaco & Nice | Space Organizers",
+    fr: "Services d'organisation de maison à Cannes, Monaco & Nice | Space Organizers",
+    ru: "Услуги по организации дома в Каннах, Монако и Ницце | Space Organizers",
+    de: "Heimorganisation in Cannes, Monaco & Nizza | Space Organizers",
+  };
+  const descriptions: Record<Locale, string> = {
+    en: "Discover our luxury home organization services on the French Riviera: wardrobe styling, decluttering, kitchen organization, moving assistance & more. Serving Cannes, Monaco, Nice, Antibes.",
+    fr: "Découvrez nos services de luxe : organisation de garde-robe, désencombrement, cuisine, déménagement et plus encore. Intervenant à Cannes, Monaco, Nice, Antibes et toute la Côte d'Azur.",
+    ru: "Откройте для себя наши роскошные услуги: организация гардероба, расхламление, кухня, помощь при переезде и многое другое. Работаем в Каннах, Монако, Ницце и Антибе.",
+    de: "Entdecken Sie unsere Luxusleistungen: Garderobenorganisation, Entrümpelung, Küche, Umzugshilfe und mehr. In Cannes, Monaco, Nizza und Antibes tätig.",
+  };
+
+  return {
+    title: titles[locale],
+    description: descriptions[locale],
+    keywords: [
+      "home organizer Cannes", "professional organizer Monaco", "luxury decluttering French Riviera",
+      "wardrobe organization Nice", "rangement maison Cannes", "organisateur Monaco",
+    ],
+    alternates: {
+      canonical: `${baseUrl}/${locale}/services`,
+      languages: Object.fromEntries(LOCALES.map((l) => [l, `${baseUrl}/${l}/services`])),
+    },
+    openGraph: {
+      title: titles[locale],
+      description: descriptions[locale],
+      url: `${baseUrl}/${locale}/services`,
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    },
+  };
+}
 
 export default async function ServicesPage({
   params,
@@ -23,6 +72,15 @@ export default async function ServicesPage({
 
   return (
     <>
+      <JsonLd
+        lang={locale}
+        page="services"
+        services={services.map((s: any) => ({ title: s.title, description: s.description || "" }))}
+        breadcrumbs={[
+          { name: "Home", url: `${baseUrl}/${locale}` },
+          { name: "Services", url: `${baseUrl}/${locale}/services` },
+        ]}
+      />
       <Header dict={dict} lang={locale} />
 
       <main>
