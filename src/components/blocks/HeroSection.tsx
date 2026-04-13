@@ -199,8 +199,24 @@ export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSecti
               rel="noopener noreferrer"
               className="group flex items-center gap-4 py-4 text-xs tracking-[0.2em] font-bold uppercase text-on-surface hover:text-primary transition-all duration-300"
             >
-              <span className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
-                <span className="material-symbols-outlined text-[14px]">chat</span>
+              <span className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 group-hover:bg-[#25D366] transition-all duration-500">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32"
+                  width="18"
+                  height="18"
+                  aria-label="WhatsApp"
+                >
+                  <path
+                    d="M16 0C7.164 0 0 7.163 0 16c0 2.822.736 5.472 2.027 7.773L0 32l8.437-2.01A15.93 15.93 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0Z"
+                    fill="#25D366"
+                    className="group-hover:fill-white transition-colors duration-500"
+                  />
+                  <path
+                    d="M23.5 19.893c-.322-.161-1.905-.938-2.2-1.047-.296-.107-.512-.161-.727.161-.215.322-.833 1.047-1.02 1.262-.188.215-.376.241-.698.08-.322-.16-1.36-.501-2.59-1.596-.957-.853-1.603-1.905-1.791-2.227-.188-.322-.02-.496.141-.656.145-.144.322-.376.483-.564.16-.188.215-.322.322-.537.107-.215.054-.403-.027-.564-.08-.161-.727-1.754-.996-2.4-.263-.63-.53-.545-.727-.555l-.618-.01c-.215 0-.564.08-.86.376-.295.295-1.127 1.1-1.127 2.682s1.154 3.112 1.315 3.327c.16.215 2.27 3.47 5.502 4.864.77.333 1.37.531 1.838.68.772.245 1.475.21 2.031.128.619-.092 1.905-.778 2.174-1.53.268-.752.268-1.396.188-1.53-.08-.134-.295-.215-.617-.376Z"
+                    fill="#fff"
+                  />
+                </svg>
               </span>
               {h.cta_whatsapp}
             </a>
