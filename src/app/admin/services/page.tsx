@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { UploadZone } from "@/components/ui/UploadZone";
 import { LangTabs } from "@/components/ui/LangTabs";
+import { Reorder } from "framer-motion";
 
 interface Service {
   id: string;
@@ -11,6 +12,7 @@ interface Service {
   intro?: string;
   image?: string;
   gallery?: string[];
+  carouselSpeed?: number;
   idealClient?: string;
   included?: string[];
 }
@@ -81,22 +83,35 @@ function ServiceForm({
       </div>
       <div className="flex flex-col gap-4">
         <div>
-          <label className={LABEL_CLS}>Gallery Images</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-3">
-            {data.gallery?.map((img, idx) => (
-              <div key={idx} className="relative group rounded overflow-hidden aspect-[4/5] bg-surface border border-outline-variant/20">
+          <label className={LABEL_CLS}>Gallery Images (Drag to Reorder)</label>
+          <Reorder.Group 
+            axis="x"
+            values={data.gallery || []} 
+            onReorder={(newOrder) => set("gallery", newOrder)} 
+            className="flex flex-wrap gap-4 mb-3"
+            style={{ listStyleType: "none", padding: 0, margin: 0 }}
+          >
+            {data.gallery?.map((img) => (
+              <Reorder.Item 
+                key={img} 
+                value={img} 
+                className="relative group rounded overflow-hidden aspect-[4/5] bg-surface border border-outline-variant/20 cursor-grab active:cursor-grabbing w-[calc(50%-8px)] sm:w-[calc(25%-12px)] flex-shrink-0"
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img} alt="" className="w-full h-full object-cover" />
+                <img src={img} alt="" className="w-full h-full object-cover pointer-events-none select-none" draggable={false} />
                 <button 
                   type="button"
-                  onClick={() => set("gallery", data.gallery!.filter((_, i) => i !== idx))}
-                  className="absolute top-2 right-2 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs shadow-md"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    set("gallery", data.gallery!.filter((i) => i !== img));
+                  }}
+                  className="absolute top-2 right-2 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs shadow-md z-10 hover:bg-red-600"
                 >
                   ✕
                 </button>
-              </div>
+              </Reorder.Item>
             ))}
-          </div>
+          </Reorder.Group>
           
           <div className="flex gap-1 bg-surface-container rounded-sm p-1 w-fit mb-3">
             {(["upload", "url"] as const).map((m) => (
@@ -138,6 +153,23 @@ function ServiceForm({
               />
             </div>
           )}
+        </div>
+
+        <div>
+           <label className={LABEL_CLS}>Carousel Auto-slide Speed ({data.carouselSpeed ?? 4}s)</label>
+           <input
+             type="range"
+             min={2}
+             max={10}
+             step={1}
+             value={data.carouselSpeed ?? 4}
+             onChange={(e) => set("carouselSpeed", Number(e.target.value))}
+             className="w-full accent-primary mt-4"
+           />
+           <div className="flex justify-between text-[8px] tracking-widest uppercase text-on-surface-variant mt-2 mb-4">
+             <span>Fast (2s)</span>
+             <span>Relaxed (10s)</span>
+           </div>
         </div>
       </div>
 

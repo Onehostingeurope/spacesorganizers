@@ -42,8 +42,8 @@ export default async function ServicesPage({
                 className={`flex flex-col ${idx % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-12 lg:gap-24`}
               >
                 {(service.gallery && service.gallery.length > 0) ? (
-                  <div className="w-full md:w-1/2">
-                    <Carousel images={service.gallery} altPrefix={service.title} />
+                  <div className="w-full pl-0 md:w-1/2">
+                    <Carousel images={service.gallery} altPrefix={service.title} speed={service.carouselSpeed || service.carousel_speed || 4} />
                   </div>
                 ) : service.image ? (
                   <div className="w-full md:w-1/2">
