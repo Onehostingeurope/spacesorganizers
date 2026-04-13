@@ -9,6 +9,13 @@ interface RichTextProps {
 export function RichText({ content, className }: RichTextProps) {
   if (!content) return null;
 
+  // Final decoding guard: ensure literal &lt;, &gt;, and &nbsp; are handled properly
+  const decodedContent = content
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\u00A0/g, ' ');
+
   return (
     <div
       className={cn(
@@ -16,7 +23,7 @@ export function RichText({ content, className }: RichTextProps) {
         "flex flex-col gap-4",
         className
       )}
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: decodedContent }}
     />
   );
 }
