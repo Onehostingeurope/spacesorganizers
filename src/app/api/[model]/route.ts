@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCollection, insertRecord, deleteRecords, type Model } from "@/lib/db";
 
 const ALLOWED_MODELS: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "leads", "hero"];
@@ -41,6 +42,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ mod
     const rawBody = await request.json();
     const body = cleanInput(rawBody);
     const newRecord = await insertRecord(model, body);
+    
+    // Force revalidation
+    revalidatePath("/", "layout");
+
     return NextResponse.json(newRecord, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to insert record" }, { status: 500 });
@@ -60,6 +65,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ mo
     
     await Promise.all(updates.map((u: any) => updateRecord(model, u.id, u)));
 
+    // Ensure frontend is fresh
+    revalidatePath("/", "layout");
+
     return NextResponse.json({ success: true, count: updates.length });
   } catch (error) {
     return NextResponse.json({ error: "Failed to update records" }, { status: 500 });
@@ -76,8 +84,10 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ m
       return NextResponse.json({ error: "Invalid or empty IDs array" }, { status: 400 });
     }
 
-    const success = await deleteRecords(model, ids);
-    if (!success) throw new Error("Batch deletion failed at DB layer");
+    await deleteRecords(model, ids);
+    
+    // Ensure frontend is fresh
+    revalidatePath("/", "layout");
 
     return NextResponse.json({ success: true, count: ids.length });
   } catch (error) {

@@ -10,11 +10,17 @@ export function RichText({ content, className }: RichTextProps) {
   if (!content) return null;
 
   // Final decoding guard: ensure literal &lt;, &gt;, and &nbsp; are handled properly
-  const decodedContent = content
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/\u00A0/g, ' ');
+  // We use multiple passes to catch double or triple escaped versions (&amp;nbsp;)
+  let decodedContent = content || "";
+  for (let i = 0; i < 3; i++) {
+    if (!decodedContent.includes("&") && !decodedContent.includes("\u00A0")) break;
+    decodedContent = decodedContent
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&') 
+      .replace(/\u00A0/g, ' ');
+  }
 
   return (
     <div

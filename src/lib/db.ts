@@ -24,6 +24,28 @@ function getClient(): SupabaseClient | null {
   return _client;
 }
 
+/**
+ * Deep cleans strings in any object/array, removing problematic white-space characters
+ * and common encoding issues like literal &nbsp; strings.
+ */
+function deepSanitize(obj: any): any {
+  if (typeof obj === "string") {
+    return obj
+      .replace(/&nbsp;/g, " ")
+      .replace(/\u00A0/g, " ")
+      .replace(/&amp;nbsp;/g, " ");
+  }
+  if (Array.isArray(obj)) return obj.map(deepSanitize);
+  if (typeof obj === "object" && obj !== null) {
+    const newObj: any = {};
+    for (const key in obj) {
+      newObj[key] = deepSanitize(obj[key]);
+    }
+    return newObj;
+  }
+  return obj;
+}
+
 export async function getCollection<T>(model: Model, lang?: string): Promise<T[]> {
   try {
     const client = getClient();
@@ -53,7 +75,7 @@ export async function getCollection<T>(model: Model, lang?: string): Promise<T[]
       console.error(`[db] getCollection(${model}):`, error.message);
       return [];
     }
-    return (data ?? []) as T[];
+    return deepSanitize(data ?? []) as T[];
   } catch (e: any) {
     console.error(`[db] getCollection(${model}) fatal:`, e.message);
     return [];
@@ -74,7 +96,7 @@ export async function insertRecord<T extends Record<string, unknown>>(
     .single();
 
   if (error) throw new Error(`[db] insertRecord(${model}): ${error.message}`);
-  return data as T;
+  return deepSanitize(data) as T;
 }
 
 export async function updateRecord<T extends Record<string, unknown>>(
@@ -96,7 +118,7 @@ export async function updateRecord<T extends Record<string, unknown>>(
     console.error(`[db] updateRecord(${model}):`, error.message);
     return null;
   }
-  return data as T;
+  return deepSanitize(data) as T;
 }
 
 export async function deleteRecord(model: Model, id: string): Promise<boolean> {

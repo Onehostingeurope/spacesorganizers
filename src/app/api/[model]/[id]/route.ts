@@ -52,6 +52,10 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ m
   try {
     const success = await deleteRecord(model, id);
     if (!success) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    
+    // Force revalidation
+    revalidatePath("/", "layout");
+
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to delete record" }, { status: 500 });
