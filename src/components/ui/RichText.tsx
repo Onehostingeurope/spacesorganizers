@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { cn, decodeHTMLEntities } from "@/lib/utils";
+import React from "react";
+import { cn } from "@/lib/utils";
 
 interface RichTextProps {
   content: string;
@@ -7,41 +7,24 @@ interface RichTextProps {
 }
 
 export function RichText({ content, className }: RichTextProps) {
-  // Use the server-side safe decoder for the initial state
-  const [decoded, setDecoded] = useState(() => decodeHTMLEntities(content));
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !content) return;
-    
-    try {
-      const txt = document.createElement("textarea");
-      let last = content;
-      let current = content;
-      
-      // Multi-layer entity decoding: &amp;lt;p&amp;gt; -> &lt;p&gt; -> <p>
-      for (let i = 0; i < 5; i++) {
-        txt.innerHTML = current;
-        current = txt.value;
-        if (current === last) break;
-        last = current;
-      }
-      
-      setDecoded(current);
-    } catch (e) {
-      setDecoded(content);
-    }
-  }, [content]);
-
   if (!content) return null;
+
+  // Split by newlines and filter out empty strings
+  const paragraphs = content.split(/\n+/).filter(p => p.trim().length > 0);
 
   return (
     <div
       className={cn(
         "rich-text font-body text-base md:text-lg text-on-surface-variant leading-relaxed font-light",
-        "flex flex-col gap-4",
+        "flex flex-col gap-5", // Increased gap for better spacing
         className
       )}
-      dangerouslySetInnerHTML={{ __html: decoded }}
-    />
+    >
+      {paragraphs.map((p, i) => (
+        <p key={i} className="text-center w-full">
+          {p.trim()}
+        </p>
+      ))}
+    </div>
   );
 }
