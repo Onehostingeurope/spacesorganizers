@@ -10,6 +10,7 @@ interface Service {
   description: string;
   intro?: string;
   image?: string;
+  gallery?: string[];
   idealClient?: string;
   included?: string[];
 }
@@ -78,45 +79,66 @@ function ServiceForm({
           <input value={data.idealClient ?? ""} onChange={(e) => set("idealClient", e.target.value)} placeholder="Who is this for?" className={INPUT_CLS} />
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1 bg-surface-container rounded-sm p-1 w-fit">
-          {(["upload", "url"] as const).map((m) => (
-            <button
-              key={m}
-              type="button"
-              onClick={() => setInputMode(m)}
-              className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] font-semibold font-label rounded-sm transition-all ${
-                inputMode === m
-                  ? "bg-primary text-on-primary"
-                  : "text-on-surface-variant hover:text-on-surface"
-              }`}
-            >
-              {m === "upload" ? "↑ Upload File" : "🔗 Paste URL"}
-            </button>
-          ))}
-        </div>
-
-        {inputMode === "upload" ? (
-          <UploadZone
-            onUploaded={(url) => set("image", url)}
-            accept="image/jpeg,image/png,image/webp,image/gif"
-          />
-        ) : (
-          <div>
-            <label className={LABEL_CLS}>Image URL</label>
-            <input
-              value={data.image ?? ""}
-              onChange={(e) => set("image", e.target.value)}
-              placeholder="https://example.com/image.jpg"
-              className={INPUT_CLS}
-            />
+      <div className="flex flex-col gap-4">
+        <div>
+          <label className={LABEL_CLS}>Gallery Images</label>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-3">
+            {data.gallery?.map((img, idx) => (
+              <div key={idx} className="relative group rounded overflow-hidden aspect-[4/5] bg-surface border border-outline-variant/20">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={img} alt="" className="w-full h-full object-cover" />
+                <button 
+                  type="button"
+                  onClick={() => set("gallery", data.gallery!.filter((_, i) => i !== idx))}
+                  className="absolute top-2 right-2 bg-red-500 text-white w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs shadow-md"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
           </div>
-        )}
+          
+          <div className="flex gap-1 bg-surface-container rounded-sm p-1 w-fit mb-3">
+            {(["upload", "url"] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setInputMode(m)}
+                className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] font-semibold font-label rounded-sm transition-all ${
+                  inputMode === m
+                    ? "bg-primary text-on-primary"
+                    : "text-on-surface-variant hover:text-on-surface"
+                }`}
+              >
+                {m === "upload" ? "↑ Upload File" : "🔗 Paste URL"}
+              </button>
+            ))}
+          </div>
 
-        {data.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={data.image} alt="Preview" className="mt-3 h-24 w-auto rounded object-cover" />
-        )}
+          {inputMode === "upload" ? (
+            <UploadZone
+              multiple={true}
+              onUploaded={(url) => setData((prev) => ({ ...prev, gallery: [...(prev.gallery || []), url] }))}
+              accept="image/jpeg,image/png,image/webp,image/gif"
+            />
+          ) : (
+            <div>
+              <input
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (e.currentTarget.value) {
+                      set("gallery", [...(data.gallery || []), e.currentTarget.value]);
+                      e.currentTarget.value = "";
+                    }
+                  }
+                }}
+                placeholder="Paste URL and press Enter..."
+                className={INPUT_CLS}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex gap-3 pt-2">

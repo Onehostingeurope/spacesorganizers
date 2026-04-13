@@ -6,6 +6,7 @@ import { Footer } from "@/components/blocks/Footer";
 import { CTASection } from "@/components/blocks/CTASection";
 import { Section } from "@/components/ui/Section";
 import { Heading, Subheading, Body } from "@/components/ui/Typography";
+import { Carousel } from "@/components/ui/Carousel";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
 import { getCollection } from "@/lib/db";
 
@@ -40,13 +41,17 @@ export default async function ServicesPage({
                 key={service.id}
                 className={`flex flex-col ${idx % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-12 lg:gap-24`}
               >
-                {service.image && (
+                {(service.gallery && service.gallery.length > 0) ? (
+                  <div className="w-full md:w-1/2">
+                    <Carousel images={service.gallery} altPrefix={service.title} />
+                  </div>
+                ) : service.image ? (
                   <div className="w-full md:w-1/2">
                     <div className="relative aspect-[4/5] overflow-hidden rounded-DEFAULT">
                       <Image src={service.image} alt={service.title} fill className="object-cover" />
                     </div>
                   </div>
-                )}
+                ) : null}
                 <div className="w-full md:w-1/2">
                   <Heading as="h2" className="text-4xl mb-6 font-light">{service.title}</Heading>
                   <Body className="mb-8 italic">{service.description}</Body>

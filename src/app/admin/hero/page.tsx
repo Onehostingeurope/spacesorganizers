@@ -398,7 +398,12 @@ function HeroSettingsEditor() {
           >
             {saving ? "Saving..." : `Save ${lang.toUpperCase()} Content`}
           </button>
-          {message && <span className="text-xs text-primary italic">{message}</span>}
+          {message && (
+            <span className="text-xs text-green-600 font-bold uppercase tracking-widest flex items-center gap-2 bg-green-500/10 px-3 py-1.5 rounded">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse"></span>
+              Saved!
+            </span>
+          )}
         </div>
       </form>
     </div>

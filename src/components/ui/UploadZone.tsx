@@ -20,12 +20,14 @@ export function UploadZone({
   label = "Upload File",
   value,
   h,
+  multiple,
 }: {
   onUploaded: (url: string, type: UploadedType) => void;
   accept?: string;
   label?: string;
   value?: string;
   h?: string;
+  multiple?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -89,9 +91,14 @@ export function UploadZone({
     [onUploaded]
   );
 
-  const handleFiles = (files: FileList | null) => {
+  const handleFiles = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
-    upload(files[0]);
+    for (let i = 0; i < files.length; i++) {
+      await upload(files[i]);
+    }
+    if (multiple) {
+      setTimeout(() => setUploaded(null), 800);
+    }
   };
 
   const onDrop = (e: React.DragEvent) => {
@@ -128,6 +135,7 @@ export function UploadZone({
           ref={inputRef}
           type="file"
           accept={accept}
+          multiple={multiple}
           className="hidden"
           onChange={(e) => handleFiles(e.target.files)}
         />
