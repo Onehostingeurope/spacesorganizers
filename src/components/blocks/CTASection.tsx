@@ -32,11 +32,13 @@ export function CTASection({ dict, lang, data }: CTASectionProps) {
             {description}
           </p>
         )}
-        <Link href={`/${lang}/contact`} className="contents">
-          <Button size="lg" className="px-16">
-            {dict.cta.button}
-          </Button>
-        </Link>
+        <div className="flex justify-center">
+          <Link href={`/${lang}/contact`}>
+            <Button size="lg" className="px-16">
+              {dict.cta.button}
+            </Button>
+          </Link>
+        </div>
       </div>
     </Section>
   );
