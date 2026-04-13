@@ -204,7 +204,7 @@ export function HeroSection({ dict, lang, slides = [] }: HeroSectionProps) {
             </Link>
 
             <a
-              href="https://wa.me/33640608120"
+              href="https://wa.me/380669387809"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-4 py-4 text-xs tracking-[0.2em] font-bold uppercase text-on-surface hover:text-primary transition-all duration-300"
