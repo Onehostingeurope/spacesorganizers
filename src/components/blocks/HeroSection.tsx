@@ -138,7 +138,7 @@ export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSecti
       </div>
       
       {/* Hero Content — Editorial Layout */}
-      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-32 md:pt-40 lg:pt-0">
+      <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-24 flex flex-col items-start pt-32 md:pt-40 lg:pt-48">
         
 
 
@@ -149,7 +149,7 @@ export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSecti
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-headline text-5xl md:text-[clamp(3.5rem,7vw,7rem)] text-on-surface leading-[1] font-light tracking-tight drop-shadow-sm"
+              className="font-headline text-5xl md:text-[clamp(3.5rem,6.5vw,6rem)] text-on-surface leading-[1] font-light tracking-tight drop-shadow-sm"
             >
               {content.title}
             </motion.h1>
