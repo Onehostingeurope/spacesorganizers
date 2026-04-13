@@ -23,8 +23,8 @@ export function Button({
           "border border-primary/30 bg-transparent text-primary hover:border-primary hover:bg-primary/5": variant === "secondary",
           "bg-transparent text-on-surface-variant/60 hover:text-on-surface": variant === "ghost",
           "h-12 px-8 text-[9px]": size === "sm",
-          "h-16 px-12 py-5 text-[10px]": size === "md",
-          "h-20 px-16 py-6 text-[11px]": size === "lg",
+          "h-16 px-12 text-[10px]": size === "md",
+          "h-20 px-16 text-[11px]": size === "lg",
         },
         className
       )}
