@@ -1,15 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/blocks/Header";
 import { Footer } from "@/components/blocks/Footer";
 import { CTASection } from "@/components/blocks/CTASection";
-import { Section } from "@/components/ui/Section";
-import { Heading, Subheading, Body } from "@/components/ui/Typography";
-import { Carousel } from "@/components/ui/Carousel";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
 import { getCollection } from "@/lib/db";
 import { RichText } from "@/components/ui/RichText";
+import { Carousel } from "@/components/ui/Carousel";
 
 export default async function ServicesPage({
   params,
@@ -25,57 +24,150 @@ export default async function ServicesPage({
   return (
     <>
       <Header dict={dict} lang={locale} />
-      <main className="flex-1 pt-24 md:pt-32">
-        <Section className="bg-surface pb-20 border-b border-outline-variant/10">
-          <div className="max-w-4xl mx-auto text-center">
-            <Subheading className="mb-4 opacity-70">{dict.nav.services}</Subheading>
-            <Heading as="h1" className="mb-8 font-light">
-              {dict.nav.services}
-            </Heading>
-            {/* Decorative line */}
-            <div className="flex justify-center mb-16">
-              <span className="block w-14 h-[2px] bg-primary rounded-full" />
-            </div>
-            {/* Scroll Indicator */}
-            <div className="flex flex-col items-center gap-3 mt-4 animate-bounce-slow">
-              <div className="w-8 h-8 rounded-full border border-on-surface/30 flex items-center justify-center">
-                <span className="font-label text-[9px] tracking-[0.15em] text-on-surface/40">0</span>
-              </div>
-              <div className="w-[1px] h-10 bg-on-surface/20" />
-              <span className="font-label text-[9px] tracking-[0.35em] uppercase text-on-surface/40">Scroll</span>
-            </div>
-          </div>
-        </Section>
 
-        <Section className="bg-surface-container-low">
-          <div className="max-w-6xl mx-auto space-y-32">
-            {services.map((service: any, idx: number) => (
-              <div
-                key={service.id}
-                className={`flex flex-col ${idx % 2 === 1 ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-12 lg:gap-24`}
-              >
-                {(service.gallery && service.gallery.length > 0) ? (
-                  <div className="w-full pl-0 md:w-1/2">
-                    <Carousel images={service.gallery} altPrefix={service.title} speed={service.carouselSpeed || service.carousel_speed || 4} />
-                  </div>
-                ) : service.image ? (
-                  <div className="w-full md:w-1/2">
-                    <div className="relative aspect-[4/5] overflow-hidden rounded-DEFAULT">
-                      <Image src={service.image} alt={service.title} fill className="object-cover" />
-                    </div>
-                  </div>
-                ) : null}
-                <div className="w-full md:w-1/2 text-center flex flex-col items-center">
-                  <Heading as="h2" className="text-4xl mb-6 font-light">{service.title}</Heading>
-                  <RichText content={service.description} className="mb-8 w-full" />
-                </div>
-              </div>
-            ))}
+      <main>
+
+        {/* ══ HERO ══════════════════════════════════════════════════════════ */}
+        <section className="relative bg-[#fffcf7] flex flex-col items-center justify-center pb-20 pt-40 px-6 overflow-hidden">
+          {/* Background texture lines */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg, rgba(74,67,58,0.03) 0px, rgba(74,67,58,0.03) 1px, transparent 1px, transparent 80px)",
+            }}
+          />
+
+          <div className="relative z-10 text-center max-w-4xl mx-auto">
+            <span className="font-label text-[9px] uppercase tracking-[0.45em] text-on-surface-variant/40 block mb-8">
+              {dict.nav.services}
+            </span>
+            <h1 className="font-headline text-[clamp(4rem,10vw,9rem)] font-light leading-[0.9] tracking-[-0.03em] text-on-surface">
+              {dict.nav.services}
+            </h1>
+
           </div>
-        </Section>
+
+          {/* Scroll cue — animated mouse indicator */}
+          <div className="mt-10 flex flex-col items-center gap-4 z-10">
+            <div className="w-[18px] h-[30px] border-2 border-primary rounded-full flex justify-center p-1 shadow-sm">
+              <div
+                className="w-1 h-2 bg-primary rounded-full animate-bounce-slow"
+                style={{ animationDuration: "1.6s" }}
+              />
+            </div>
+            <span className="font-label text-[8px] tracking-[0.5em] uppercase text-primary whitespace-nowrap drop-shadow-sm">
+              Scroll
+            </span>
+          </div>
+        </section>
+
+        {/* ══ SERVICE LIST ══════════════════════════════════════════════════ */}
+        <section className="bg-[#fffcf7]">
+          {services.map((service: any, idx: number) => {
+            const isEven = idx % 2 === 0;
+            const hasGallery = service.gallery && service.gallery.length > 0;
+            const hasImage = !hasGallery && !!service.image;
+
+            return (
+              <article
+                key={service.id}
+                className="border-t border-outline-variant/15 last:border-b"
+              >
+                <div
+                  className={`max-w-[1540px] mx-auto flex flex-col ${
+                    isEven ? "md:flex-row" : "md:flex-row-reverse"
+                  } min-h-[80vh]`}
+                >
+                  {/* ── Image / Carousel pane ── */}
+                  <div className="relative w-full md:w-[55%] overflow-hidden bg-surface-container-low">
+                    {hasGallery ? (
+                      <div className="h-full min-h-[56vw] md:min-h-0">
+                        <Carousel
+                          images={service.gallery}
+                          altPrefix={service.title}
+                          speed={service.carouselSpeed || service.carousel_speed || 4}
+                        />
+                      </div>
+                    ) : hasImage ? (
+                      <div className="relative h-full min-h-[56vw] md:min-h-0">
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width:768px) 100vw, 55vw"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-full min-h-[56vw] md:min-h-0 bg-surface-container-high flex items-center justify-center">
+                        <span
+                          className="font-headline text-[120px] font-light leading-none select-none"
+                          style={{ color: "rgba(74,67,58,0.06)" }}
+                        >
+                          0{idx + 1}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Service number — top-left badge */}
+                    <span
+                      className="absolute top-8 left-8 font-label text-[9px] tracking-[0.35em] uppercase z-10"
+                      style={{
+                        color: "rgba(255,252,247,0.75)",
+                        textShadow: "0 1px 4px rgba(0,0,0,0.25)",
+                      }}
+                    >
+                      0{idx + 1} / {String(services.length).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* ── Text pane ── */}
+                  <div
+                    className={`w-full md:w-[45%] flex flex-col justify-center px-10 md:px-16 lg:px-20 py-20 md:py-0 ${
+                      isEven ? "" : ""
+                    }`}
+                  >
+                    {/* Service number */}
+                    <span className="font-label text-[8px] uppercase tracking-[0.45em] text-on-surface-variant/35 block mb-8">
+                      Service 0{idx + 1}
+                    </span>
+
+                    <h2 className="font-headline text-[clamp(2.2rem,4vw,4.5rem)] font-light leading-[1.05] tracking-[-0.02em] text-on-surface mb-8">
+                      {service.title}
+                    </h2>
+
+                    <div className="w-10 h-[1px] bg-primary/50 mb-8" />
+
+                    <div className="font-body text-on-surface-variant/70 text-base leading-[1.85] font-light mb-12 max-w-md">
+                      <RichText
+                        content={service.description}
+                        className="service-card-rich-text"
+                      />
+                    </div>
+
+                    <Link
+                      href={`/${lang}/contact`}
+                      className="group inline-flex items-center gap-4 font-label text-[9px] uppercase tracking-[0.35em] text-on-surface hover:text-primary transition-colors duration-500 self-start"
+                    >
+                      <span className="relative">
+                        Book a Consultation
+                        <span className="absolute -bottom-1 left-0 w-0 group-hover:w-full h-[1px] bg-primary transition-all duration-500" />
+                      </span>
+                      <span className="transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500">
+                        →
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </section>
 
         <CTASection dict={dict} lang={lang} />
       </main>
+
       <Footer dict={dict} lang={lang} />
     </>
   );
