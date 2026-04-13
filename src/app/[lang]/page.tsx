@@ -123,7 +123,7 @@ export default async function Home({
                 <span className="font-label text-xs tracking-[0.2em] uppercase text-primary mb-4 block">
                   {content.phi.label}
                 </span>
-                <h3 className="font-headline text-5xl md:text-6xl text-on-surface leading-tight font-light tracking-tight">
+                <h3 className="font-headline text-5xl md:text-6xl text-on-surface leading-tight font-light tracking-tight whitespace-pre-line">
                   {content.phi.heading}
                 </h3>
               </div>
