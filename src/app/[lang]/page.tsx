@@ -104,7 +104,7 @@ export default async function Home({
       heading_accent: homepageSettings?.contact_heading_accent || dict.contact.heading_accent,
       description: homepageSettings?.contact_description || dict.contact.description,
       serving: homepageSettings?.contact_serving || dict.contact.serving,
-      email: homepageSettings?.company_email || "hello@spaceorganizing.com",
+      email: homepageSettings?.company_email || "arranginggarderobs@gmail.com",
       phone: homepageSettings?.company_phone || "+380 66 938 78 09",
     }
   };

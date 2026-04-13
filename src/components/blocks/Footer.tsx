@@ -23,7 +23,7 @@ const FOOTER_LINKS = (lang: string) => [
 
 export function Footer({ dict, lang, contact }: FooterProps) {
   const f = dict.footer;
-  const email = contact?.email || "hello@spaceorganizing.com";
+  const email = contact?.email || "arranginggarderobs@gmail.com";
   const phone = contact?.phone || "+380 66 938 78 09 / +33 7 45 73 79 55";
   const safePhone = "380669387809";
 

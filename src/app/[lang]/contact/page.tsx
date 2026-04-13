@@ -49,7 +49,7 @@ export default async function Contact({
                     <span className="w-5 h-[2px] bg-primary rotate-[-60deg] transition-transform duration-500 group-hover:rotate-[-40deg]"></span>
                     {c.email_label}
                   </strong>
-                  hello@spaceorganizing.com
+                  arranginggarderobs@gmail.com
                 </p>
                 <p className="flex items-center group cursor-default">
                   <strong className="font-bold uppercase tracking-[0.3em] text-[10px] text-on-surface w-28 flex items-center gap-3">

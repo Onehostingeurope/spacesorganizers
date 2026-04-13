@@ -139,7 +139,7 @@ async function syncDictionaries() {
       contact_heading_accent: dict.contact.heading_accent,
       contact_description: dict.contact.description,
       contact_serving: dict.contact.serving,
-      company_email: "hello@spaceorganizing.com",
+      company_email: "arranginggarderobs@gmail.com",
       company_phone: "+380 66 938 78 09"
     };
 

@@ -344,7 +344,7 @@ export default function HomepageAdmin() {
                 <p className="text-[10px] text-on-surface-variant italic mb-4">Values used in Header, Footer, and Contact sections.</p>
                 <div>
                   <label className={LABEL_CLS}>Public Email</label>
-                  <input value={settings.company_email || ""} onChange={(e) => update("company_email", e.target.value)} placeholder="hello@spaceorganizing.com" className={INPUT_CLS} />
+                  <input value={settings.company_email || ""} onChange={(e) => update("company_email", e.target.value)} placeholder="arranginggarderobs@gmail.com" className={INPUT_CLS} />
                 </div>
                 <div>
                   <label className={LABEL_CLS}>Public Phone</label>
