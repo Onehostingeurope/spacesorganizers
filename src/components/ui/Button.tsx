@@ -30,11 +30,13 @@ export function Button({
       )}
       {...props}
     >
-      <span className="translate-x-0 group-hover:-translate-x-2 transition-transform duration-700 ease-in-out">
-        {children}
-      </span>
-      <span className="ml-4 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">
-        &rarr;
+      <span className="relative flex items-center justify-center gap-0">
+        <span className="translate-x-0 group-hover:-translate-x-3 transition-transform duration-700 ease-in-out">
+          {children}
+        </span>
+        <span className="absolute right-0 translate-x-6 opacity-0 group-hover:translate-x-5 group-hover:opacity-100 transition-all duration-700 ease-in-out">
+          →
+        </span>
       </span>
     </button>
   );
