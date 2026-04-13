@@ -32,6 +32,18 @@ export default async function ServicesPage({
             <Heading as="h1" className="mb-8 font-light">
               {dict.nav.services}
             </Heading>
+            {/* Decorative line */}
+            <div className="flex justify-center mb-16">
+              <span className="block w-14 h-[2px] bg-primary rounded-full" />
+            </div>
+            {/* Scroll Indicator */}
+            <div className="flex flex-col items-center gap-3 mt-4 animate-bounce-slow">
+              <div className="w-8 h-8 rounded-full border border-on-surface/30 flex items-center justify-center">
+                <span className="font-label text-[9px] tracking-[0.15em] text-on-surface/40">0</span>
+              </div>
+              <div className="w-[1px] h-10 bg-on-surface/20" />
+              <span className="font-label text-[9px] tracking-[0.35em] uppercase text-on-surface/40">Scroll</span>
+            </div>
           </div>
         </Section>
 
