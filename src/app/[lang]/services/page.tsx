@@ -9,6 +9,7 @@ import { Heading, Subheading, Body } from "@/components/ui/Typography";
 import { Carousel } from "@/components/ui/Carousel";
 import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
 import { getCollection } from "@/lib/db";
+import { RichText } from "@/components/ui/RichText";
 
 export default async function ServicesPage({
   params,
@@ -54,7 +55,7 @@ export default async function ServicesPage({
                 ) : null}
                 <div className="w-full md:w-1/2">
                   <Heading as="h2" className="text-4xl mb-6 font-light">{service.title}</Heading>
-                  <Body className="mb-8 italic">{service.description}</Body>
+                  <RichText content={service.description} className="mb-8" />
                 </div>
               </div>
             ))}

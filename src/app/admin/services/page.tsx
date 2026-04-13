@@ -62,9 +62,64 @@ function ServiceForm({
         <label className={LABEL_CLS}>Short Intro</label>
         <input value={data.intro ?? ""} onChange={(e) => set("intro", e.target.value)} placeholder="One-line intro statement" className={INPUT_CLS} />
       </div>
-      <div>
+      <div className="space-y-2">
         <label className={LABEL_CLS}>Full Description *</label>
-        <textarea required value={data.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={3} placeholder="Full description..." className={`${INPUT_CLS} resize-none`} />
+        {/* RICH TOOLBAR */}
+        <div className="flex gap-2 mb-2 p-2 bg-surface border border-outline-variant/20 rounded-sm">
+          {[
+            { tag: "b", label: "Bold" },
+            { tag: "i", label: "Italic" },
+            { tag: "center", label: "Center" },
+            { tag: "br", label: "Line Break", single: true },
+          ].map((btn) => (
+            <button
+              key={btn.tag}
+              type="button"
+              onClick={() => {
+                const textarea = document.getElementById("description-field") as HTMLTextAreaElement;
+                if (!textarea) return;
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                const text = textarea.value;
+                const selected = text.substring(start, end);
+                const before = text.substring(0, start);
+                const after = text.substring(end);
+                
+                let newVal;
+                if (btn.single) {
+                  newVal = `${before}<${btn.tag}/>${after}`;
+                } else {
+                  newVal = `${before}<${btn.tag}>${selected}</${btn.tag}>${after}`;
+                }
+                
+                set("description", newVal);
+              }}
+              className="px-3 py-1 text-[9px] uppercase tracking-widest font-bold border border-outline-variant/30 hover:bg-primary hover:text-on-primary hover:border-primary transition-all rounded-sm"
+            >
+              {btn.label}
+            </button>
+          ))}
+        </div>
+        <textarea 
+          id="description-field"
+          required 
+          value={data.description ?? ""} 
+          onChange={(e) => set("description", e.target.value)} 
+          rows={6} 
+          placeholder="Full description..." 
+          className={`${INPUT_CLS} resize-none font-mono text-[13px]`} 
+        />
+        
+        {/* PREVIEW */}
+        {data.description && (
+          <div className="mt-4 p-6 bg-surface border border-dashed border-outline-variant/40 rounded-DEFAULT">
+            <p className={LABEL_CLS}>Live Preview</p>
+            <div 
+              className="font-body text-sm text-on-surface-variant leading-relaxed rich-text"
+              dangerouslySetInnerHTML={{ __html: data.description }}
+            />
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-2 gap-6">
         <div>
