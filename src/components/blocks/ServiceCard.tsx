@@ -17,7 +17,7 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
         className="flex flex-col md:flex-row md:items-start justify-between gap-10 lg:gap-20 px-2 md:px-0"
       >
         {/* Index + Title */}
-        <div className="md:w-5/12 flex items-start gap-6">
+        <div className="md:w-4/12 flex items-start gap-6">
           {index !== undefined && (
             <span className="font-label text-[10px] tracking-[0.3em] text-on-surface-variant pt-2 flex-shrink-0">
               0{index + 1}
@@ -29,10 +29,10 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
         </div>
 
         {/* Description */}
-        <div className="md:w-5/12">
+        <div className="md:w-6/12">
           <RichText 
             content={description} 
-            className="text-on-surface-variant text-base lg:text-lg leading-relaxed font-light italic" 
+            className="text-on-surface-variant text-base lg:text-lg leading-relaxed font-light" 
           />
         </div>
 
