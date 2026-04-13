@@ -19,8 +19,8 @@ export default async function PrivacyPolicy({
   const dict = await getDictionary(locale);
 
   // Grab the master email to use in the contact section dynamically
-  const { entries: settings } = await getCollection("homepage_settings");
-  const homepageSettings = settings.find((s) => s.lang === locale) || settings[0];
+  const settings = await getCollection<any>("homepage_settings");
+  const homepageSettings = settings.find((s: any) => s.lang === locale) || settings[0];
   const email = homepageSettings?.contactEmail || "arranginggarderobs@gmail.com";
   const phone = homepageSettings?.contactPhone || "";
 
