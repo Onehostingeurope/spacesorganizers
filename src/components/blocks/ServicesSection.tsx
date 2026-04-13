@@ -32,7 +32,7 @@ export function ServicesSection({ services, lang, dict, data }: ServicesSectionP
         </div>
 
         <div className="border-t border-outline-variant/15">
-          {services.slice(0, 4).map((service, idx) => (
+          {services.map((service, idx) => (
             <ServiceCard
               key={service.id || idx}
               index={idx}

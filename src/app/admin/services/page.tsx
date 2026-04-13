@@ -50,6 +50,8 @@ function ServiceForm({
     await onSave({
       ...data,
       slug: data.slug || data.title?.toLowerCase().replace(/\s+/g, "-") || "",
+      // Auto-populate primary image from gallery if missing
+      image: data.image || (data.gallery && data.gallery.length > 0 ? data.gallery[0] : ""),
       included: typeof data.included === "string"
         ? (data.included as unknown as string).split(",").map((s) => s.trim())
         : data.included ?? [],
@@ -331,9 +333,9 @@ export default function ServicesAdmin() {
                   onChange={() => toggleSelect(service.id)}
                   className="w-4 h-4 rounded border-outline-variant/30 text-primary focus:ring-primary bg-transparent cursor-pointer"
                 />
-                {service.image && (
+                {(service.image || (service.gallery && service.gallery.length > 0)) && (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={service.image} alt="" className="w-20 h-16 object-cover rounded flex-shrink-0" />
+                  <img src={service.image || service.gallery?.[0]} alt="" className="w-20 h-16 object-cover rounded flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
                   <h3 className="font-headline text-xl text-on-surface font-light">{service.title}</h3>
