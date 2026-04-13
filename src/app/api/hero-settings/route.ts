@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+
+export const dynamic = "force-dynamic";
 
 // We use the service role key to ensure we can create/update settings
 export async function GET(request: Request) {
@@ -74,6 +77,9 @@ export async function POST(request: Request) {
     console.error("Hero Settings Error:", resultError);
     return NextResponse.json({ error: resultError.message }, { status: 500 });
   }
+
+  // Clear caches for all language variants of the homepage
+  revalidatePath("/", "layout");
 
   return NextResponse.json(resultData);
 }

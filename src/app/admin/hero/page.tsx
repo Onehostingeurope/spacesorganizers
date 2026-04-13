@@ -234,7 +234,7 @@ function HeroSettingsEditor() {
   const fetchSettings = async (l: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/hero-settings?lang=${l}`);
+      const res = await fetch(`/api/hero-settings?lang=${l}&t=${Date.now()}`);
       const data = await res.json();
       const rawSpeed = data.autoplay_speed || 15;
       setSettings({
@@ -270,6 +270,9 @@ function HeroSettingsEditor() {
       if (res.ok) {
         setMessage("Settings saved successfully!");
         setTimeout(() => setMessage(""), 3000);
+      } else {
+        const errData = await res.json();
+        setMessage(`Failed: ${errData.error || "Server Error"}`);
       }
     } catch (err) {
       console.error(err);
