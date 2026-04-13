@@ -198,6 +198,11 @@
 .rich-text p:last-child {
   margin-bottom: 0;
 }
+/* Homepage Clean Block Look */
+.service-card-rich-text p {
+  margin-bottom: 0.15rem;
+  line-height: inherit;
+}
 .rich-text b, .rich-text strong {
   font-weight: 600;
   color: var(--color-on-surface);

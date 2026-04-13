@@ -32,7 +32,7 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
         <div className="md:w-6/12">
           <RichText 
             content={description} 
-            className="text-on-surface-variant text-base lg:text-lg leading-relaxed font-light" 
+            className="service-card-rich-text text-on-surface-variant text-base lg:text-lg leading-relaxed font-light" 
           />
         </div>
 
