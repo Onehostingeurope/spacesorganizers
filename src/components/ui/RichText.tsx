@@ -1,7 +1,5 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { cn, decodeHTMLEntities } from "@/lib/utils";
 
 interface RichTextProps {
   content: string;
@@ -9,7 +7,8 @@ interface RichTextProps {
 }
 
 export function RichText({ content, className }: RichTextProps) {
-  const [decoded, setDecoded] = useState(content);
+  // Use the server-side safe decoder for the initial state
+  const [decoded, setDecoded] = useState(() => decodeHTMLEntities(content));
 
   useEffect(() => {
     if (typeof window === "undefined" || !content) return;

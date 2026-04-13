@@ -128,7 +128,7 @@ export default async function Home({
                 </h3>
               </div>
               <div className="md:col-span-12 lg:col-span-4 lg:col-start-8">
-                <p className="font-body text-on-surface-variant leading-relaxed italic text-lg">
+                <p className="font-body text-on-surface-variant leading-relaxed text-lg">
                   {content.phi.quote}
                 </p>
               </div>
@@ -232,9 +232,9 @@ export default async function Home({
               <h3 className="font-headline text-5xl md:text-7xl leading-tight mb-8 tracking-tight">
                 {content.contact.heading}{" "}
                 <br />
-                <span className="italic text-primary">{content.contact.heading_accent}</span>
+                <span className="text-primary">{content.contact.heading_accent}</span>
               </h3>
-              <p className="font-body text-xl lg:text-3xl text-on-surface-variant leading-relaxed font-light mb-14 italic">
+              <p className="font-body text-xl lg:text-3xl text-on-surface-variant leading-relaxed font-light mb-14">
                 {content.contact.description}
               </p>
               <div className="space-y-8 text-on-surface-variant font-sans tracking-wide text-sm leading-relaxed border-t border-outline-variant/30 pt-14">
