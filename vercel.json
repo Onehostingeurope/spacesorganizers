@@ -1,0 +1,11 @@
+{
+  "alias": [
+    "spacesorganizers.com",
+    "www.spacesorganizers.com"
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}
