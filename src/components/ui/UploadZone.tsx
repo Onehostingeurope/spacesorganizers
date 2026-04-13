@@ -79,6 +79,7 @@ export function UploadZone({
         setUploaded(publicUrl);
         onUploaded(publicUrl, file.type.startsWith("video/") ? "video" : "image");
         setProgress(100);
+        setTimeout(() => setProgress(null), 500);
       } catch (err: any) {
         console.error("Upload error:", err);
         setError(err.message || "Upload failed. Please try again.");
