@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import { Noto_Serif, Manrope } from "next/font/google";
-import "../globals.css";
-
 import {
   getDictionary,
   hasLocale,
@@ -9,18 +6,6 @@ import {
   type Locale,
 } from "@/lib/dictionaries";
 import { notFound } from "next/navigation";
-
-const notoSerif = Noto_Serif({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const manrope = Manrope({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-sans",
-  display: "swap",
-});
 
 export async function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
@@ -56,7 +41,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
@@ -68,16 +53,8 @@ export default async function RootLayout({
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html
-      lang={lang}
-      className={`${notoSerif.variable} ${manrope.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-      </head>
-      <body className="bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col">
-        {children}
-      </body>
-    </html>
+    <div className="contents">
+      {children}
+    </div>
   );
 }

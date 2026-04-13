@@ -41,8 +41,8 @@ export default async function Home({
     getCollection<any>("homepage_settings")
   ]);
 
-  const heroSettings = heroSettingsData.find(s => s.lang === lang) || heroSettingsData[0];
-  const homepageSettings = homepageSettingsData.find(s => s.lang === lang) || homepageSettingsData[0];
+  const heroSettings = heroSettingsData.find(s => s.lang === lang) || null;
+  const homepageSettings = homepageSettingsData.find(s => s.lang === lang) || null;
 
   const isDarkHero = false; // Overlays removed
 
