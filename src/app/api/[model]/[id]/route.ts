@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { updateRecord, deleteRecord, type Model } from "@/lib/db";
 
 const ALLOWED_MODELS: Model[] = ["services", "spaces", "portfolio", "testimonials", "blog", "faq", "leads", "hero"];
@@ -14,6 +15,10 @@ export async function PUT(request: Request, { params }: { params: Promise<{ mode
     const body = await request.json();
     const updated = await updateRecord(model, id, body);
     if (!updated) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    
+    // Force revalidation of all public pages to ensure data is live
+    revalidatePath("/", "layout");
+    
     return NextResponse.json(updated);
   } catch (error) {
     return NextResponse.json({ error: "Failed to update record" }, { status: 500 });

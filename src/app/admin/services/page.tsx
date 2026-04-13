@@ -21,6 +21,15 @@ interface Service {
 const INPUT_CLS = "w-full bg-transparent border-b border-outline-variant/30 py-3 text-sm focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/40";
 const LABEL_CLS = "font-label text-[10px] tracking-[0.2em] uppercase text-on-surface-variant/60 mb-1 block";
 
+function stripHtml(html: string) {
+  if (typeof window === "undefined") return html;
+  const doc = new ShadDOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || "";
+}
+
+// More reliable regex-based strip for simple server/client consistency
+const cleanHtml = (str: string) => str.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
+
 function ServiceForm({
   initial,
   onSave,
@@ -329,7 +338,7 @@ export default function ServicesAdmin() {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-headline text-xl text-on-surface font-light">{service.title}</h3>
                   <p className="font-label text-[10px] text-on-surface-variant/50 tracking-widest uppercase mt-1">{service.slug}</p>
-                  <p className="font-body text-sm text-on-surface-variant truncate mt-1">{service.description}</p>
+                  <p className="font-body text-sm text-on-surface-variant truncate mt-1">{cleanHtml(service.description)}</p>
                 </div>
                 <div className="flex gap-4 flex-shrink-0">
                   <button onClick={() => { setEditingId(service.id); setIsAdding(false); setConfirmingId(null); }} className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant hover:text-primary transition-colors">Edit</button>
