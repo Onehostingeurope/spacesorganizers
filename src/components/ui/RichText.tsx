@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface RichTextProps {
@@ -7,22 +9,31 @@ interface RichTextProps {
 }
 
 export function RichText({ content, className }: RichTextProps) {
-  if (!content) return null;
+  const [decoded, setDecoded] = useState(content);
 
-  // Final decoding guard: ensure literal &lt;, &gt;, and &nbsp; are handled properly
-  // We use multiple passes (5) to catch deeply escaped versions
-  let decodedContent = content || "";
-  for (let i = 0; i < 5; i++) {
-    if (!decodedContent.includes("&") && !decodedContent.includes("\u00A0")) break;
-    decodedContent = decodedContent
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&amp;/g, '&')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/\u00A0/g, ' ');
-  }
+  useEffect(() => {
+    if (typeof window === "undefined" || !content) return;
+    
+    try {
+      const txt = document.createElement("textarea");
+      let last = content;
+      let current = content;
+      
+      // Multi-layer entity decoding: &amp;lt;p&amp;gt; -> &lt;p&gt; -> <p>
+      for (let i = 0; i < 5; i++) {
+        txt.innerHTML = current;
+        current = txt.value;
+        if (current === last) break;
+        last = current;
+      }
+      
+      setDecoded(current);
+    } catch (e) {
+      setDecoded(content);
+    }
+  }, [content]);
+
+  if (!content) return null;
 
   return (
     <div
@@ -31,7 +42,7 @@ export function RichText({ content, className }: RichTextProps) {
         "flex flex-col gap-4",
         className
       )}
-      dangerouslySetInnerHTML={{ __html: decodedContent }}
+      dangerouslySetInnerHTML={{ __html: decoded }}
     />
   );
 }

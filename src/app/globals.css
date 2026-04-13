@@ -199,10 +199,18 @@
   max-width: 100%;
   overflow-x: hidden;
   font-style: normal !important; /* Italic Lock: prevents parent leaks */
-  text-align: center;
+  text-align: center !important; /* Universal center alignment */
+}
+.rich-text * {
+  font-style: normal !important;
+  text-align: center !important;
+}
+.rich-text i, .rich-text em {
+  font-style: italic !important; /* Allow intentional italics inside rich text */
 }
 .rich-text p {
   margin-bottom: 0.75rem;
+  text-align: center !important;
 }
 .rich-text p:last-child {
   margin-bottom: 0;
