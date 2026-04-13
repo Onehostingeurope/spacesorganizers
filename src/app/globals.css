@@ -198,6 +198,8 @@
   word-break: break-word;
   max-width: 100%;
   overflow-x: hidden;
+  font-style: normal !important; /* Italic Lock: prevents parent leaks */
+  text-align: center;
 }
 .rich-text p {
   margin-bottom: 0.75rem;
