@@ -48,7 +48,7 @@ export default async function Contact({
               </div>
               <div>
                 <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-2">{c.phone_label}</p>
-                <p className="font-body text-on-surface-variant text-sm">+33 (0) 6 40 60 81 20</p>
+                <p className="font-body text-on-surface-variant text-sm">+380 66 938 78 09</p>
               </div>
               <div>
                 <p className="font-label font-bold text-[10px] tracking-[0.3em] uppercase text-on-surface mb-2">{c.serving_label}</p>

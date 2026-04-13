@@ -140,7 +140,7 @@ async function syncDictionaries() {
       contact_description: dict.contact.description,
       contact_serving: dict.contact.serving,
       company_email: "hello@spaceorganizing.com",
-      company_phone: "+33 (0) 6 40 60 81 20"
+      company_phone: "+380 66 938 78 09"
     };
 
     // Filter to existing columns

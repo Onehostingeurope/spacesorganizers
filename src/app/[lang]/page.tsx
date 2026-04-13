@@ -105,7 +105,7 @@ export default async function Home({
       description: homepageSettings?.contact_description || dict.contact.description,
       serving: homepageSettings?.contact_serving || dict.contact.serving,
       email: homepageSettings?.company_email || "hello@spaceorganizing.com",
-      phone: homepageSettings?.company_phone || "+33 (0) 6 40 60 81 20",
+      phone: homepageSettings?.company_phone || "+380 66 938 78 09",
     }
   };
 

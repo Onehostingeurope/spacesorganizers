@@ -348,7 +348,7 @@ export default function HomepageAdmin() {
                 </div>
                 <div>
                   <label className={LABEL_CLS}>Public Phone</label>
-                  <input value={settings.company_phone || ""} onChange={(e) => update("company_phone", e.target.value)} placeholder="+33 (0) 6 40 60 81 20" className={INPUT_CLS} />
+                  <input value={settings.company_phone || ""} onChange={(e) => update("company_phone", e.target.value)} placeholder="+380 66 938 78 09" className={INPUT_CLS} />
                 </div>
               </div>
             </div>
