@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { UploadZone } from "@/components/ui/UploadZone";
 import { LangTabs } from "@/components/ui/LangTabs";
 import { Reorder } from "framer-motion";
+import { RichEditor } from "@/components/ui/RichEditor";
 
 interface Service {
   id: string;
@@ -62,60 +63,20 @@ function ServiceForm({
         <label className={LABEL_CLS}>Short Intro</label>
         <input value={data.intro ?? ""} onChange={(e) => set("intro", e.target.value)} placeholder="One-line intro statement" className={INPUT_CLS} />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-4">
         <label className={LABEL_CLS}>Full Description *</label>
-        {/* RICH TOOLBAR */}
-        <div className="flex gap-2 mb-2 p-2 bg-surface border border-outline-variant/20 rounded-sm">
-          {[
-            { tag: "b", label: "Bold" },
-            { tag: "i", label: "Italic" },
-            { tag: "center", label: "Center" },
-            { tag: "br", label: "Line Break", single: true },
-          ].map((btn) => (
-            <button
-              key={btn.tag}
-              type="button"
-              onClick={() => {
-                const textarea = document.getElementById("description-field") as HTMLTextAreaElement;
-                if (!textarea) return;
-                const start = textarea.selectionStart;
-                const end = textarea.selectionEnd;
-                const text = textarea.value;
-                const selected = text.substring(start, end);
-                const before = text.substring(0, start);
-                const after = text.substring(end);
-                
-                let newVal;
-                if (btn.single) {
-                  newVal = `${before}<${btn.tag}/>${after}`;
-                } else {
-                  newVal = `${before}<${btn.tag}>${selected}</${btn.tag}>${after}`;
-                }
-                
-                set("description", newVal);
-              }}
-              className="px-3 py-1 text-[9px] uppercase tracking-widest font-bold border border-outline-variant/30 hover:bg-primary hover:text-on-primary hover:border-primary transition-all rounded-sm"
-            >
-              {btn.label}
-            </button>
-          ))}
-        </div>
-        <textarea 
-          id="description-field"
-          required 
+        <RichEditor 
           value={data.description ?? ""} 
-          onChange={(e) => set("description", e.target.value)} 
-          rows={6} 
-          placeholder="Full description..." 
-          className={`${INPUT_CLS} resize-none font-mono text-[13px]`} 
+          onChange={(content) => set("description", content)} 
+          placeholder="Craft a beautiful description of this service..."
         />
         
-        {/* PREVIEW */}
+        {/* SMALL LOGICAL PREVIEW FOR VALIDATION */}
         {data.description && (
-          <div className="mt-4 p-6 bg-surface border border-dashed border-outline-variant/40 rounded-DEFAULT">
-            <p className={LABEL_CLS}>Live Preview</p>
+          <div className="mt-4 p-4 bg-surface-container-high/30 border border-dashed border-outline-variant/20 rounded-DEFAULT">
+            <p className="text-[9px] uppercase tracking-widest text-on-surface-variant/40 mb-2">Structure Preview</p>
             <div 
-              className="font-body text-sm text-on-surface-variant leading-relaxed rich-text"
+              className="text-xs text-on-surface-variant/60 rich-text max-h-32 overflow-y-auto"
               dangerouslySetInnerHTML={{ __html: data.description }}
             />
           </div>
