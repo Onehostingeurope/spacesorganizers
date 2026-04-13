@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { RichText } from "../ui/RichText";
 
 interface ServiceCardProps {
   title: string;
@@ -29,9 +30,10 @@ export function ServiceCard({ title, description, href, index }: ServiceCardProp
 
         {/* Description */}
         <div className="md:w-5/12">
-          <p className="font-body text-on-surface-variant text-base lg:text-lg leading-relaxed font-light italic">
-            {description}
-          </p>
+          <RichText 
+            content={description} 
+            className="text-on-surface-variant text-base lg:text-lg leading-relaxed font-light italic" 
+          />
         </div>
 
         {/* CTA arrow */}

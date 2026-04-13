@@ -23,7 +23,7 @@ const LABEL_CLS = "font-label text-[10px] tracking-[0.2em] uppercase text-on-sur
 
 function stripHtml(html: string) {
   if (typeof window === "undefined") return html;
-  const doc = new ShadDOMParser().parseFromString(html, 'text/html');
+  const doc = new DOMParser().parseFromString(html, 'text/html');
   return doc.body.textContent || "";
 }
 
