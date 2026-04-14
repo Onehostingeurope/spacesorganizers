@@ -24,8 +24,9 @@ const FOOTER_LINKS = (lang: string) => [
 export function Footer({ dict, lang, contact }: FooterProps) {
   const f = dict.footer;
   const email = contact?.email || "arranginggarderobs@gmail.com";
-  const phone = contact?.phone || "+380 66 938 78 09 / +33 7 45 73 79 55";
-  const safePhone = "380669387809";
+  const phone = contact?.phone || "+380 66 938 78 09";
+  // Extract digits for WhatsApp link (take the first number if multiple provided)
+  const safePhone = (contact?.phone || "380669387809").replace(/\D/g, "").split(/[ /]/)[0];
 
   return (
     <footer className="w-full bg-surface-container border-t border-outline-variant/10">

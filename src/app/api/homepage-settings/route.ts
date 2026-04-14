@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -60,6 +63,9 @@ export async function POST(request: Request) {
     console.error("Homepage Settings Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  // Clear caches for the entire site to reflect homepage content changes
+  revalidatePath("/", "layout");
 
   return NextResponse.json(data);
 }
