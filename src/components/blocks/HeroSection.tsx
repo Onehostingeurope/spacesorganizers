@@ -149,7 +149,7 @@ export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSecti
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-headline text-5xl md:text-[clamp(3.5rem,6.5vw,6rem)] text-on-surface leading-[1] font-light tracking-tight drop-shadow-sm"
+              className="font-headline text-4xl sm:text-5xl md:text-[clamp(3.5rem,6.5vw,6rem)] text-on-surface leading-[1] font-light tracking-tight drop-shadow-sm"
             >
               {content.title}
             </motion.h1>

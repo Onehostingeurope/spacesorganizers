@@ -51,7 +51,7 @@ export function ContactForm({ subtitle }: { subtitle?: string }) {
           <span className="font-label text-[9px] uppercase tracking-[0.4em] text-primary/60 block mb-4">
             Reservation
           </span>
-          <p className="font-body text-charcoal text-xs md:text-sm tracking-wide font-bold px-4 whitespace-nowrap">
+          <p className="font-body text-charcoal text-xs md:text-sm tracking-wide font-bold px-4 max-w-[280px] md:max-w-none mx-auto break-words leading-relaxed">
             {subtitle}
           </p>
           {/* Subtle decorative dot */}
