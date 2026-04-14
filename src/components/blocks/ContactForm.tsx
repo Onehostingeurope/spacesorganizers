@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
-export function ContactForm() {
+export function ContactForm({ subtitle }: { subtitle?: string }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,6 +46,11 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
+      {subtitle && (
+        <p className="font-body text-charcoal/60 text-sm tracking-wide mb-2 italic">
+          {subtitle}
+        </p>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
           <label htmlFor="name" className="block text-sm font-medium text-charcoal tracking-wide">Name</label>

@@ -75,7 +75,7 @@ export default async function Contact({
               </div>
             </div>
             <div className="bg-surface p-12 md:p-20 shadow-premium rounded-DEFAULT ghost-border">
-              <ContactForm />
+              <ContactForm subtitle={dict.contact.form_subtitle} />
             </div>
           </div>
         </Section>

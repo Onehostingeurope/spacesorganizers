@@ -262,7 +262,7 @@ export default async function Home({
               </div>
             </ScrollReveal>
             <ScrollReveal variant="slide-left" delay={0.3} className="bg-surface p-12 md:p-20 shadow-premium rounded-DEFAULT ghost-border">
-              <ContactForm />
+              <ContactForm subtitle={dict.contact.form_subtitle} />
             </ScrollReveal>
           </div>
         </Section>
