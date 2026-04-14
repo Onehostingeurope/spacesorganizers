@@ -47,9 +47,16 @@ export function ContactForm({ subtitle }: { subtitle?: string }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {subtitle && (
-        <p className="font-body text-charcoal/60 text-sm tracking-wide mb-2 italic">
-          {subtitle}
-        </p>
+        <div className="text-center mb-12 pb-10 border-b border-outline-variant/15 relative">
+          <span className="font-label text-[9px] uppercase tracking-[0.4em] text-primary/60 block mb-4">
+            Reservation
+          </span>
+          <p className="font-body text-charcoal/80 text-sm md:text-base tracking-wide font-light italic px-4">
+            {subtitle}
+          </p>
+          {/* Subtle decorative dot */}
+          <div className="absolute -bottom-[3px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-surface border border-outline-variant rotate-45" />
+        </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
