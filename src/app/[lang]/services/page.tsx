@@ -209,7 +209,7 @@ export default async function ServicesPage({
                       className="group inline-flex items-center gap-4 font-label text-[9px] uppercase tracking-[0.35em] text-on-surface hover:text-primary transition-colors duration-500 self-start"
                     >
                       <span className="relative">
-                        Book a Consultation
+                        {dict.nav.cta}
                         <span className="absolute -bottom-1 left-0 w-0 group-hover:w-full h-[1px] bg-primary transition-all duration-500" />
                       </span>
                       <span className="transform translate-x-0 group-hover:translate-x-2 transition-transform duration-500">

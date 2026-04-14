@@ -26,7 +26,7 @@ export default async function BookPage({
               Reservation
             </span>
             <h1 className="font-headline text-5xl md:text-6xl text-on-surface leading-tight font-light mb-6">
-              Book a Consultation
+              {dict.nav.cta}
             </h1>
             <p className="font-body text-lg text-on-surface-variant max-w-2xl mx-auto font-light leading-relaxed">
               Select a time that works best for you. We will connect via Google Meet to discuss your space and vision.
