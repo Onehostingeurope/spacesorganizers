@@ -224,9 +224,9 @@ export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSecti
         </div>
       </div>
 
-      {/* Progress Indicator */}
+      {/* Progress Indicator — Desktop Only */}
       {sorted.length > 1 && (
-        <div className="absolute bottom-16 right-24 flex items-end gap-6 z-20">
+        <div className="hidden md:flex absolute bottom-16 right-24 items-end gap-6 z-20">
            <div className="flex flex-col gap-2">
               {sorted.map((s, i) => (
                 <button
@@ -247,12 +247,12 @@ export function HeroSection({ dict, lang, slides = [], heroSettings }: HeroSecti
         </div>
       )}
 
-      {/* Better Scroll Hint — Minimalist Mouse Animation */}
+      {/* Better Scroll Hint — Desktop Only */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5, delay: 2.2 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10"
+        className="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-4 z-10"
       >
         <div className="w-[18px] h-[30px] border-2 border-primary rounded-full flex justify-center p-1 shadow-sm">
           <motion.div 
