@@ -107,15 +107,22 @@ export async function updateRecord<T extends Record<string, unknown>>(
   const client = getClient();
   if (!client) return null;
 
+  // Strip immutable fields that shouldn't be updated
+  const { id: _id, createdAt: _ca, updatedAt: _ua, ...cleanPayload } = payload as any;
+
   const { data, error } = await client
     .from(model)
-    .update({ ...payload, updatedAt: new Date().toISOString() })
+    .update({ ...cleanPayload, updatedAt: new Date().toISOString() })
     .eq("id", id)
     .select()
     .single();
 
   if (error) {
-    console.error(`[db] updateRecord(${model}):`, error.message);
+    console.error(`[db] updateRecord(${model}) Error:`, {
+      message: error.message,
+      id,
+      payload: cleanPayload,
+    });
     return null;
   }
   return deepSanitize(data) as T;

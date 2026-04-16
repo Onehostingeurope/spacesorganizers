@@ -10,12 +10,13 @@ interface TestimonialsProps {
     label: string;
     heading: string;
   };
+  reviews?: { text: string; author: string; area: string }[];
 }
 
-export function Testimonials({ dict, data }: TestimonialsProps) {
+export function Testimonials({ dict, data, reviews: propReviews }: TestimonialsProps) {
   const label = data?.label || dict.testimonials.label;
   const heading = data?.heading || dict.testimonials.heading;
-  const reviews = dict.testimonials.reviews; // Reviews still from dict/collection logic
+  const reviews = propReviews || dict.testimonials.reviews; // Reviews from prop or dict
 
   return (
     <Section className="bg-surface-container lg:py-48">

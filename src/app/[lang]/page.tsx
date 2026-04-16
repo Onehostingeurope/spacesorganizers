@@ -34,6 +34,13 @@ export default async function Home({
   const services = await getCollection<any>("services", lang);
   const spaces = await getCollection<any>("spaces", lang);
   const portfolio = await getCollection<any>("portfolio", lang);
+  const testimonials = await getCollection<any>("testimonials", lang);
+  const faqItems = await getCollection<any>("faq", lang);
+
+  const faqForSchema = faqItems.map((item: any) => ({
+    q: item.question || item.title || "",
+    a: item.answer || item.content || item.description || "",
+  }));
   
   // Fetch dynamic settings directly for reliability (avoiding internal API fetch in RSC)
   const [heroSettingsData, homepageSettingsData] = await Promise.all([
@@ -211,11 +218,11 @@ export default async function Home({
         </ScrollReveal>
 
         <ScrollReveal variant="slide-up">
-           <Testimonials dict={dict} data={content.testimonials} />
+           <Testimonials dict={dict} data={content.testimonials} reviews={testimonials} />
         </ScrollReveal>
 
         <ScrollReveal variant="slide-up" className="bg-surface-container py-24 md:py-32">
-          <FAQAccordion dict={dict} data={content.faq} />
+          <FAQAccordion dict={dict} data={content.faq} items={faqForSchema} />
         </ScrollReveal>
 
         <ScrollReveal variant="scale">

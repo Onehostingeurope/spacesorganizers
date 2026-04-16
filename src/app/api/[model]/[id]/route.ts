@@ -30,15 +30,23 @@ export async function PUT(request: Request, { params }: { params: Promise<{ mode
   try {
     const rawBody = await request.json();
     const body = cleanInput(rawBody);
+    
+    // Attempt update
     const updated = await updateRecord(model, id, body);
-    if (!updated) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    
+    if (!updated) {
+      // If updateRecord returns null, it's either not found or a DB error logged in updateRecord
+      // We'll return 400 for a general failure or 404 if we want to be specific, 
+      // but since updateRecord logs the error, let's returning a clear message.
+      return NextResponse.json({ error: "Update failed. See server logs." }, { status: 400 });
+    }
     
     // Force revalidation of all public pages to ensure data is live
     revalidatePath("/", "layout");
     
     return NextResponse.json(updated);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to update record" }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || "Failed to update record" }, { status: 500 });
   }
 }
 

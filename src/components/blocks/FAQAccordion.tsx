@@ -13,13 +13,14 @@ interface FAQAccordionProps {
     label: string;
     heading: string;
   };
+  items?: { q: string; a: string }[];
 }
 
-export function FAQAccordion({ dict, data }: FAQAccordionProps) {
+export function FAQAccordion({ dict, data, items: propItems }: FAQAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const label = data?.label || dict.faq.label;
   const heading = data?.heading || dict.faq.heading;
-  const items = dict.faq.items;
+  const items = propItems || dict.faq.items;
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import React from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -81,7 +82,7 @@ export default async function FAQPage({
       />
       <Header dict={dict} lang={locale} />
       <main className="flex-1 pt-24">
-        <FAQAccordion dict={dict} />
+        <FAQAccordion dict={dict} items={faqForSchema} />
         <CTASection dict={dict} lang={lang} />
       </main>
       <Footer dict={dict} lang={lang} />
