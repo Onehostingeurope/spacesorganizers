@@ -64,7 +64,9 @@ export default async function FAQPage({
   const dict = await getDictionary(locale);
   const faqItems = await getCollection<any>("faq", lang);
 
-  const faqForSchema = faqItems.map((item: any) => ({
+  const faqData = faqItems.map((item: any) => ({
+    q: item.question || item.title || "",
+    a: item.answer || item.content || item.description || "",
     question: item.question || item.title || "",
     answer: item.answer || item.content || item.description || "",
   }));
@@ -74,7 +76,7 @@ export default async function FAQPage({
       <JsonLd
         lang={locale}
         page="faq"
-        faqItems={faqForSchema}
+        faqItems={faqData}
         breadcrumbs={[
           { name: "Home", url: `${baseUrl}/${locale}` },
           { name: "FAQ", url: `${baseUrl}/${locale}/faq` },
@@ -82,7 +84,7 @@ export default async function FAQPage({
       />
       <Header dict={dict} lang={locale} />
       <main className="flex-1 pt-24">
-        <FAQAccordion dict={dict} items={faqForSchema} />
+        <FAQAccordion dict={dict} items={faqData} />
         <CTASection dict={dict} lang={lang} />
       </main>
       <Footer dict={dict} lang={lang} />

@@ -37,9 +37,11 @@ export default async function Home({
   const testimonials = await getCollection<any>("testimonials", lang);
   const faqItems = await getCollection<any>("faq", lang);
 
-  const faqForSchema = faqItems.map((item: any) => ({
+  const faqData = faqItems.map((item: any) => ({
     q: item.question || item.title || "",
     a: item.answer || item.content || item.description || "",
+    question: item.question || item.title || "",
+    answer: item.answer || item.content || item.description || "",
   }));
   
   // Fetch dynamic settings directly for reliability (avoiding internal API fetch in RSC)
@@ -222,7 +224,7 @@ export default async function Home({
         </ScrollReveal>
 
         <ScrollReveal variant="slide-up" className="bg-surface-container py-24 md:py-32">
-          <FAQAccordion dict={dict} data={content.faq} items={faqForSchema} />
+          <FAQAccordion dict={dict} data={content.faq} items={faqData} />
         </ScrollReveal>
 
         <ScrollReveal variant="scale">
