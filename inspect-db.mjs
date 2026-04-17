@@ -17,15 +17,15 @@ async function inspect() {
     console.log("Columns in homepage_settings:", Object.keys(data[0] || {}));
   }
 
-  const { data: heroData, error: heroError } = await supabase
-    .from("hero_settings")
+  const { data: blogData, error: blogError } = await supabase
+    .from("blog")
     .select("*")
     .limit(1);
 
-  if (heroError) {
-    console.error("Error fetching hero_settings:", heroError);
+  if (blogError) {
+    console.error("Error fetching blog:", blogError);
   } else {
-    console.log("Columns in hero_settings:", Object.keys(heroData[0] || {}));
+    console.log("Columns in blog:", Object.keys(blogData[0] || {}));
   }
 }
 

@@ -26,9 +26,9 @@ export default async function Blog({
       <main className="flex-1 pt-24">
         <Section className="bg-surface text-center pb-20 border-b border-outline-variant/10">
           <div className="max-w-3xl mx-auto px-6">
-            <Subheading className="mb-4">The Journal</Subheading>
-            <Heading as="h1" className="mb-6 font-light">
-              Insights &amp; Inspiration
+            <Subheading className="mb-4">{dict.nav.academy}</Subheading>
+            <Heading as="h1" className="mb-6 font-light italic">
+              Knowledge &amp; Curation
             </Heading>
             <Body className="italic">
               Expert advice, behind-the-scenes looks at our projects, and practical guides to elevating your everyday environment.
