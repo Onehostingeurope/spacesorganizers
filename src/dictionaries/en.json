@@ -5,7 +5,13 @@
     "riviera": "Spaces",
     "academy": "Academy",
     "about": "About",
-    "cta": "Schedule Your Consultation"
+    "cta": "Schedule Your Consultation",
+    "academy_links": {
+      "home": "Home",
+      "videos": "Videos",
+      "about": "About",
+      "inquire": "Inquire"
+    }
   },
   "hero": {
     "region": "French Riviera • Monaco • Cannes • Nice",

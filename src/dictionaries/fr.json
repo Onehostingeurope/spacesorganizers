@@ -5,7 +5,13 @@
     "riviera": "Espaces",
     "academy": "Académie",
     "about": "À propos",
-    "cta": "Planifier votre consultation"
+    "cta": "Planifier votre consultation",
+    "academy_links": {
+      "home": "Accueil",
+      "videos": "Vidéos",
+      "about": "À propos",
+      "inquire": "Demander"
+    }
   },
   "hero": {
     "region": "Côte d'Azur • Monaco • Cannes • Nice",

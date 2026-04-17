@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import type { Dictionary } from "@/lib/dictionaries";
@@ -35,11 +35,20 @@ export function Header({ dict, lang }: HeaderProps) {
     { label: dict.nav.services, href: `/${lang}/services` },
     { label: dict.nav.portfolio, href: `/${lang}/portfolio` },
     { label: dict.nav.riviera, href: `/${lang}/spaces` },
-    { label: dict.nav.academy, href: `/${lang}/blog` },
+    { 
+      label: dict.nav.academy, 
+      href: `/${lang}/blog`,
+      subLinks: [
+        { label: dict.nav.academy_links.home, href: `/${lang}/blog/curating-digital-canvas` },
+        { label: dict.nav.academy_links.videos, href: `/${lang}/blog/ritual-of-watching` },
+        { label: dict.nav.academy_links.about, href: `/${lang}/blog/architectural-about-page` },
+        { label: dict.nav.academy_links.inquire, href: `/${lang}/blog/residential-landing-systems` },
+      ]
+    },
     { label: dict.nav.about, href: `/${lang}/about` },
   ];
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -47,9 +56,7 @@ export function Header({ dict, lang }: HeaderProps) {
 
   function switchLanguage(newLang: Locale) {
     if (newLang === lang) return;
-    // Set cookie so refresh/next navigation remembers the choice
     document.cookie = `NEXT_LOCALE=${newLang};path=/;max-age=31536000;SameSite=Lax`;
-    // Replace the locale segment in the current path
     const newPath = pathname.replace(/^\/(en|fr|ru|de)/, `/${newLang}`);
     startTransition(() => {
       router.push(newPath || `/${newLang}`);
@@ -82,16 +89,34 @@ export function Header({ dict, lang }: HeaderProps) {
         {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-12">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "group relative font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant hover:text-primary transition-all duration-300 hover:-translate-y-0.5",
-                !isScrolled && "drop-shadow-sm"
+            <div key={link.href} className="group relative py-2">
+              <Link
+                href={link.href}
+                className={cn(
+                  "flex items-center gap-1.5 font-label text-[10px] uppercase tracking-[0.3em] text-on-surface-variant hover:text-primary transition-all duration-300 hover:-translate-y-0.5",
+                  !isScrolled && "drop-shadow-sm"
+                )}
+              >
+                <span className="animate-underline">{link.label}</span>
+                {link.subLinks && <ChevronDown size={10} className="transition-transform group-hover:rotate-180" />}
+              </Link>
+              
+              {link.subLinks && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+                  <div className="bg-surface glass-premium border border-outline-variant/10 py-5 min-w-[220px] rounded-DEFAULT shadow-premium overflow-hidden">
+                    {link.subLinks.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className="block px-8 py-3.5 font-label text-[9px] uppercase tracking-[0.2em] text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-colors"
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               )}
-            >
-              <span className="animate-underline">{link.label}</span>
-            </Link>
+            </div>
           ))}
         </nav>
 
@@ -99,7 +124,7 @@ export function Header({ dict, lang }: HeaderProps) {
         <div className="flex items-center gap-10">
           {/* LANGUAGE SWITCHER */}
           <div className="hidden lg:flex items-center gap-3 font-label text-[9px] tracking-[0.2em] uppercase">
-            {LOCALES.map((l, i) => (
+            {LOCALES.map((l) => (
               <React.Fragment key={l}>
                 <button
                   onClick={() => switchLanguage(l)}
@@ -112,7 +137,7 @@ export function Header({ dict, lang }: HeaderProps) {
                   )}
                 >
                   <span className="flex items-center gap-1.5 relative z-10">
-                    <img src={FLAGS[l]} alt={`${l} flag`} className="w-3.5 h-[10px] object-cover rounded-[1px] shadow-sm drop-shadow-sm opacity-90" />
+                    <img src={FLAGS[l]} alt={`${l} flag`} className="w-3.5 h-[10px] object-cover rounded-[1px] shadow-sm opacity-90" />
                     <span>{l.toUpperCase()}</span>
                   </span>
                   {l === lang && (
@@ -147,48 +172,71 @@ export function Header({ dict, lang }: HeaderProps) {
       </div>
 
       {/* MOBILE MENU */}
-      {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-surface border-t border-outline-variant/10 shadow-lg md:hidden flex flex-col px-6 py-8 space-y-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-2xl font-headline text-on-surface hover:opacity-70 transition-opacity"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-
-          {/* Mobile language switcher */}
-          <div className="flex gap-4 pt-2">
-            {LOCALES.map((l) => (
-              <button
-                key={l}
-                onClick={() => {
-                  switchLanguage(l);
-                  setIsMobileMenuOpen(false);
-                }}
-                className={cn(
-                  "flex items-center gap-2 font-label text-xs tracking-[0.2em] uppercase transition-colors",
-                  l === lang ? "text-primary font-semibold" : "text-on-surface-variant hover:text-on-surface"
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 right-0 bg-surface border-t border-outline-variant/10 shadow-lg md:hidden flex flex-col px-6 py-8 space-y-6 max-h-[80vh] overflow-y-auto"
+          >
+            {navLinks.map((link) => (
+              <div key={link.href} className="flex flex-col space-y-4">
+                <Link
+                  href={link.href}
+                  className="text-2xl font-headline text-on-surface hover:opacity-70 transition-opacity flex items-center justify-between"
+                  onClick={() => !link.subLinks && setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+                
+                {link.subLinks && (
+                  <div className="flex flex-col space-y-4 pl-6 border-l border-outline-variant/10">
+                    {link.subLinks.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className="text-lg font-headline text-on-surface-variant hover:text-primary transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              >
-                <img src={FLAGS[l]} alt={`${l} flag`} className="w-4 h-3 object-cover rounded-[2px] shadow-sm" />
-                <span>{l.toUpperCase()}</span>
-              </button>
+              </div>
             ))}
-          </div>
 
-          <div className="pt-4 border-t border-outline-variant/10">
-            <Link href={`/${lang}/contact`} onClick={() => setIsMobileMenuOpen(false)}>
-              <Button className="w-full bg-primary text-on-primary text-xs tracking-widest uppercase py-4">
-                {dict.nav.cta}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      )}
+            {/* Mobile language switcher */}
+            <div className="flex gap-4 pt-4 border-t border-outline-variant/10">
+              {LOCALES.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => {
+                    switchLanguage(l);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={cn(
+                    "flex items-center gap-2 font-label text-xs tracking-[0.2em] uppercase transition-colors",
+                    l === lang ? "text-primary font-semibold" : "text-on-surface-variant hover:text-on-surface"
+                  )}
+                >
+                  <img src={FLAGS[l]} alt={`${l} flag`} className="w-4 h-3 object-cover rounded-[2px] shadow-sm" />
+                  <span>{l.toUpperCase()}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="pt-4">
+              <Link href={`/${lang}/contact`} onClick={() => setIsMobileMenuOpen(false)}>
+                <Button className="w-full bg-primary text-on-primary text-xs tracking-widest uppercase py-4">
+                  {dict.nav.cta}
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
