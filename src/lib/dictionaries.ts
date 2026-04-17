@@ -1,12 +1,8 @@
 import "server-only";
-import type enDict from "../dictionaries/en.json";
+import { Locale, Dictionary } from "./types";
 
-export const LOCALES = ["en", "fr", "ru", "de"] as const;
-export type Locale = (typeof LOCALES)[number];
-export const DEFAULT_LOCALE: Locale = "en";
-
-// Use the English JSON as the canonical type shape
-export type Dictionary = typeof enDict;
+export { LOCALES, DEFAULT_LOCALE } from "./types";
+export type { Locale, Dictionary } from "./types";
 
 const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   en: () => import("../dictionaries/en.json").then((m) => m.default as Dictionary),
@@ -16,7 +12,8 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
 };
 
 export function hasLocale(locale: string): locale is Locale {
-  return LOCALES.includes(locale as Locale);
+  const LOCALES = ["en", "fr", "ru", "de"];
+  return LOCALES.includes(locale as any);
 }
 
 export async function getDictionary(locale: Locale): Promise<Dictionary> {

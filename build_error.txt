@@ -1,0 +1,93 @@
+﻿
+> spaceorganizers@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js inferred your workspace root, but it may not be correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ΓÜá Warning: Ne...not be correct.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ We detected multiple lockfiles and selected the directory of C:\Users\ca\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if 
+it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\ca\Desktop\antigravity\spaceorganizers\package-lock.json
+
+Γû▓ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts:1:1
+You're importing a module that depends on "server-only". This API is only available in Server Components in the App 
+Router, but you are using it in the Pages Router.
+    Learn more: https://nextjs.org/docs/app/building-your-application/rendering/server-components
+[31m[1m>[0m [90m1 |[0m [36mimport[0m [32m"server-only"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m2 |[0m [36mimport[0m [36mtype[0m enDict [36mfrom[0m [32m"../dictionaries/en.json"[0m;
+  [90m3 |[0m
+  [90m4 |[0m [36mexport[0m [36mconst[0m [33mLOCALES[0m = [[32m"en"[0m, [32m"fr"[0m, [32m"ru"[0m, 
+[32m"de"[0m] [36mas[0m [36mconst[0m;
+
+Ecmascript file had an error
+
+Import traces:
+  Server Component:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/testimonials/page.tsx
+
+  App Route:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts
+    ./Desktop/antigravity/spaceorganizers/src/app/sitemap.ts
+    ./Desktop/antigravity/spaceorganizers/src/app/sitemap--route-entry.js
+
+  Client Component Browser:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts [Client Component Browser]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Client Component Browser]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts [Client Component SSR]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Client Component SSR]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Server Component]
+
+
+./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts:1:1
+'server-only' cannot be imported from a Client Component module
+[31m[1m>[0m [90m1 |[0m [36mimport[0m [32m"server-only"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m2 |[0m [36mimport[0m [36mtype[0m enDict [36mfrom[0m [32m"../dictionaries/en.json"[0m;
+  [90m3 |[0m
+  [90m4 |[0m [36mexport[0m [36mconst[0m [33mLOCALES[0m = [[32m"en"[0m, [32m"fr"[0m, [32m"ru"[0m, 
+[32m"de"[0m] [36mas[0m [36mconst[0m;
+
+It should only be used from a Server Component.
+
+Import traces:
+  Server Component:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/testimonials/page.tsx
+
+  App Route:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts
+    ./Desktop/antigravity/spaceorganizers/src/app/sitemap.ts
+    ./Desktop/antigravity/spaceorganizers/src/app/sitemap--route-entry.js
+
+  Client Component Browser:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts [Client Component Browser]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Client Component Browser]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts [Client Component SSR]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Client Component SSR]
+    ./Desktop/antigravity/spaceorganizers/src/app/[lang]/blog/[slug]/page.tsx [Server Component]
+
+
+    at <unknown> (./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts:1:1)
+    at <unknown> (./Desktop/antigravity/spaceorganizers/src/lib/dictionaries.ts:1:1)

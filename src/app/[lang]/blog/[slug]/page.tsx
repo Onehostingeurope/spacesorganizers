@@ -1,61 +1,44 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import React from "react";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Header } from "@/components/blocks/Header";
 import { Footer } from "@/components/blocks/Footer";
 import { CTASection } from "@/components/blocks/CTASection";
 import { Section } from "@/components/ui/Section";
 import { Heading, Subheading, Body } from "@/components/ui/Typography";
-import { getDictionary, hasLocale, type Locale } from "@/lib/dictionaries";
+import { getDictionary, hasLocale } from "@/lib/dictionaries";
+import { Locale } from "@/lib/types";
+import { getCollection } from "@/lib/db";
 import { RichText } from "@/components/ui/RichText";
 
-export default function BlogPost() {
-  const params = useParams();
-  const lang = params.lang as string;
-  const slug = params.slug as string;
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ lang: string; slug: string }>;
+}) {
+  const { lang, slug } = await params;
+  
+  if (!hasLocale(lang)) notFound();
+  const locale = lang as Locale;
 
-  const [article, setArticle] = useState<any>(null);
-  const [dict, setDict] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!hasLocale(lang)) return;
-
-    const fetchData = async () => {
-      try {
-        const [d, articlesRes] = await Promise.all([
-          getDictionary(lang as Locale),
-          fetch(`/api/blog?lang=${lang}`).then(res => res.json())
-        ]);
-        
-        const found = articlesRes.find((a: any) => a.slug === slug);
-        if (found) {
-          setArticle(found);
-          setDict(d);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching article:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [lang, slug]);
-
-  if (loading) return <div className="min-h-screen bg-surface flex items-center justify-center font-label text-xs tracking-widest uppercase">Loading Artistry...</div>;
-  if (!article || !dict) return notFound();
+  // Fetch data on the server
+  const [dict, articles] = await Promise.all([
+    getDictionary(locale),
+    getCollection<any>("blog", locale)
+  ]);
+  
+  const article = articles.find((a: any) => a.slug === slug);
+  if (!article) return notFound();
 
   return (
     <>
-      <Header dict={dict} lang={lang} />
+      <Header dict={dict} lang={locale} />
       <main className="flex-1 bg-surface pt-24">
         {/* HERO */}
         <Section className="pb-20 border-b border-outline-variant/10">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <Subheading className="mb-6 opacity-60 uppercase tracking-[0.4em]">{article.category}</Subheading>
-            <Heading as="h1" className="text-4xl md:text-6xl mb-8 font-light italic leading-tight">
+            <Heading as="h1" className="text-4xl md:text-6xl mb-8 font-light italic leading-tight text-on-surface">
               {article.title}
             </Heading>
             {article.date && (
@@ -93,19 +76,12 @@ export default function BlogPost() {
             <div className="prose prose-stone prose-lg max-w-none">
                 <RichText content={article.content} />
             </div>
-            
-            {/* STITCH COMPONENT INJECTOR (Optional Feature) */}
-            {article.content?.includes("stitch-container") && (
-                <div className="mt-20 p-8 bg-surface-container-low rounded-DEFAULT border border-outline-variant/10 text-center">
-                    <Body className="text-sm italic opacity-60">Interactive design preview enabled.</Body>
-                </div>
-            )}
           </div>
         </Section>
 
-        <CTASection dict={dict} lang={lang} />
+        <CTASection dict={dict} lang={locale} />
       </main>
-      <Footer dict={dict} lang={lang} />
+      <Footer dict={dict} lang={locale} />
     </>
   );
 }

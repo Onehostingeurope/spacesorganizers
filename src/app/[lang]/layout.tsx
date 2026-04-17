@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import {
   getDictionary,
   hasLocale,
-  LOCALES,
-  type Locale,
 } from "@/lib/dictionaries";
+import { LOCALES, Locale } from "@/lib/types";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
 

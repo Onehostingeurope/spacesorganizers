@@ -7,10 +7,8 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import type { Dictionary } from "@/lib/dictionaries";
+import { Dictionary, Locale, LOCALES } from "@/lib/types";
 
-const LOCALES = ["en", "fr", "ru", "de"] as const;
-type Locale = (typeof LOCALES)[number];
 
 const FLAGS: Record<Locale, string> = {
   en: "https://flagcdn.com/gb.svg",
